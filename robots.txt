@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://deutsch-einfach.online/sitemap.xml
+Sitemap: https://deutscheinfach.github.io/sehrgothe/sitemap.xml

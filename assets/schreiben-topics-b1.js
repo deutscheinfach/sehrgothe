@@ -1,4 +1,4 @@
-/* Deutsch Einfach — B1 Schreiben — Themendaten
+/* sehrgut — B1 Schreiben — Themendaten
    الأسماء كيف ما هوما فاللائحة لي صيفطتي (Schreiben B1).
    soon: true = المحتوى ما زال ما وصلش — البطاقة كتبان "قريباً"
    وماكتحلش. ملي يوصل المحتوى ديال موضوع كنحيدو soon.

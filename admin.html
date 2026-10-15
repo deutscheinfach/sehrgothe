@@ -6,7 +6,7 @@
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deutsch Einfach – لوحة الإدارة</title>
+<title>sehrgut – لوحة الإدارة</title>
 <link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
 <script src="assets/progress.js?v=222ee4fc"></script>
 <link rel="stylesheet" href="assets/site-header.css?v=35abe044">
@@ -95,10 +95,10 @@
 <!-- seo:start (tools/seo.py) -->
 <meta name="robots" content="noindex, follow">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Deutsch Einfach">
-<meta property="og:title" content="Deutsch Einfach – لوحة الإدارة">
-<meta property="og:url" content="https://deutsch-einfach.online/admin.html">
-<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:site_name" content="sehrgut">
+<meta property="og:title" content="sehrgut – لوحة الإدارة">
+<meta property="og:url" content="https://deutscheinfach.github.io/sehrgothe/admin.html">
+<meta property="og:image" content="https://deutscheinfach.github.io/sehrgothe/assets/icon-512.png">
 <meta property="og:locale" content="ar_MA">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/icon-48.png" sizes="48x48">
@@ -108,6 +108,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e3163f">
 <!-- seo:end -->
+<script src="assets/region.js?v=1"></script>
 </head>
 <body>
 <div id="site-header" data-active="training"></div>
@@ -250,12 +251,12 @@ try {
     await new Promise(function () {});   // نوقفو هنا بلا خطأ
 }
 const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
-    apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-    authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
-    projectId: "deutsch-einfach-4c81f",
-    storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
-    messagingSenderId: "152448766933",
-    appId: "1:152448766933:web:f7824c4db8ab3caccbe35c"
+    apiKey: "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
+    authDomain: "sehrgothe.firebaseapp.com",
+    projectId: "sehrgothe",
+    storageBucket: "sehrgothe.firebasestorage.app",
+    messagingSenderId: "1066728503518",
+    appId: "1:1066728503518:web:b350728d7b20f1064d2a4f"
 });
 const auth = authMod.getAuth(app);
 const db = fs.getFirestore(app);
@@ -441,7 +442,7 @@ async function liveCount() {
 
 /* الحسابات اللي ف Authentication وما عندهمش وثيقة كاملة ف users
    (تسجلو والتسجيل طاح، ولا دخلو للشات قبل) — الـWorker كيكمّلهم. */
-const WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+const WORKER = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
 async function syncUsers(me) {
     const note = $("adm-sync-note");
     note.hidden = false; note.className = "adm-note"; note.textContent = "كنقارنو الحسابات مع Authentication…";
@@ -668,7 +669,7 @@ function paintUser() {
                       + (res.status === 400 ? " (دير Deploy لـ cloudflare-worker.js الجديد)" : ""));
             }
             const email = data.email || d.email || "";
-            const msg = "السلام 👋\nهادي كلمة السر الجديدة ديالك ف Deutsch Einfach:\n\n"
+            const msg = "السلام 👋\nهادي كلمة السر الجديدة ديالك ف sehrgut:\n\n"
                 + "الإيميل: " + email + "\nكلمة السر: " + data.password
                 + "\n\nملي تدخل، الموقع غادي يطلب منك تبدلها بوحدة ديالك.";
             pwOut.hidden = false;

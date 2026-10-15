@@ -16,7 +16,7 @@
 
     /* VAPID public key — Firebase Console → Paramètres du projet →
        Cloud Messaging → Certificats Web Push. عمومي، ماشي سر. */
-    window.__DE_VAPID_KEY = window.__DE_VAPID_KEY || "BEUXkJWtTGvpCGRHIsr-yjUNTE4_3iXvCkjrXozcw4jxmFGBuwZNAsXp3HGo9W3KrEJGrmV-T41dDm5BnpJL8gc";
+    window.__DE_VAPID_KEY = window.__DE_VAPID_KEY || ""; /* sehrgut: SEHRGUT-SETUP.md §1.6 */
 
     if (window.__deApp) return;
 
@@ -69,9 +69,9 @@
                         if (reg.active) { reg.active.postMessage({ type: "de-precache" }); store("de-precache-at", String(Date.now())); }
                     }).catch(function () { /* */ });
                 }
-                if (window.__deutschEinfachIsPremium === true) premiumOffline();
+                if (window.__sehrgutIsPremium === true) premiumOffline();
                 else document.addEventListener("de-premium", function () {
-                    if (window.__deutschEinfachIsPremium === true) premiumOffline();
+                    if (window.__sehrgutIsPremium === true) premiumOffline();
                 }, { once: true });
             }, 1500);
         });
@@ -80,13 +80,13 @@
     var premiumRunning = false;
     function premiumOffline() {
         if (premiumRunning || !window.__deStore || !window.caches) return;
-        var auth = window.__deutschEinfachAuth;
+        var auth = window.__sehrgutAuth;
         var user = auth && auth.currentUser;
         if (!user) return;
         var mark = "de-offline-at:" + user.uid;
         if (Date.now() - Number(read(mark) || 0) < 12 * 3600 * 1000) return;
         premiumRunning = true;
-        var WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+        var WORKER = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
         var WEEK = 7 * 24 * 3600 * 1000;
         fetch("offline.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (off) {
             if (!off) return;
@@ -138,7 +138,7 @@
             }
             function next() {
                 if (i >= jobs.length || failures > 8 || navigator.onLine === false
-                    || window.__deutschEinfachIsPremium !== true) return Promise.resolve();
+                    || window.__sehrgutIsPremium !== true) return Promise.resolve();
                 var job = jobs[i++];
                 if (fetched > 3) progress(false);
                 return fresh(job.key).then(function (ok) {
@@ -267,7 +267,7 @@
             card = document.createElement("div");
             card.className = "de-app";
             card.setAttribute("role", "dialog");
-            card.setAttribute("aria-label", "Deutsch Einfach app");
+            card.setAttribute("aria-label", "sehrgut app");
             document.body.appendChild(card);
         }
         card.innerHTML = "";
@@ -278,7 +278,7 @@
 
         if (install) {
             var r = row('<img src="assets/icon-192.png" alt="">',
-                "<b>📲 زيد Deutsch Einfach للتيليفون</b>بحال تطبيق — كيتحل بضغطة، بلا Play Store.",
+                "<b>📲 زيد sehrgut للتيليفون</b>بحال تطبيق — كيتحل بضغطة، بلا Play Store.",
                 isIOS && !deferred ? "كيفاش؟" : "زيد");
             r.btn.addEventListener("click", function () {
                 if (deferred) {
@@ -365,7 +365,7 @@
         return new Promise(function (resolve) {
             var tries = 0;
             (function wait() {
-                var a = window.__deutschEinfachAuth;
+                var a = window.__sehrgutAuth;
                 if (a && a.currentUser) return resolve(a.currentUser);
                 if (a && tries > 6) return resolve(a.currentUser || null);
                 if (++tries > 40) return resolve(null);
@@ -400,7 +400,7 @@
         bg.className = "de-ask-bg";
         bg.innerHTML =
             '<div class="de-ask" role="dialog" aria-modal="true" aria-labelledby="de-ask-h">' +
-            '<div class="de-ask-top"><img src="assets/icon-192.png" alt=""><div><b>Deutsch Einfach</b><small>deutsch-einfach.online</small></div></div>' +
+            '<div class="de-ask-top"><img src="assets/icon-192.png" alt=""><div><b>sehrgut</b><small>deutscheinfach.github.io/sehrgothe</small></div></div>' +
             '<h3 id="de-ask-h">🔔 بغيتي نفكروك بالتمرين كل نهار؟</h3>' +
             "<p>إشعار واحد ف النهار مع <b>7 د الليل</b> باش تبقى منتظم وتوجد لـ telc. بلا إزعاج، وتقدر توقفو فأي وقت.</p>" +
             '<div class="de-ask-demo"><img src="assets/icon-192.png" alt=""><div><b>🔥 ما تقطعش اليوم!</b>10 دقايق ديال Lesen كيفرقو ف telc.</div></div>' +
@@ -468,7 +468,7 @@
             '<div class="de-inst" role="dialog" aria-modal="true" aria-labelledby="de-inst-t">' +
             '<button type="button" class="de-inst-x" aria-label="سد">×</button>' +
             '<div class="de-inst-top"><img src="assets/icon-192.png" alt="">' +
-            '<div><b id="de-inst-t">ثبت Deutsch Einfach كتطبيق</b><span>وصول سريع بدون متصفح، بحال تطبيق حقيقي</span></div></div>' +
+            '<div><b id="de-inst-t">ثبت sehrgut كتطبيق</b><span>وصول سريع بدون متصفح، بحال تطبيق حقيقي</span></div></div>' +
             '<div class="de-inst-btns"><button type="button" class="de-inst-go">' + DL + "تثبيت</button>" +
             '<button type="button" class="de-inst-no">ليس الآن</button></div>' +
             "</div>";
@@ -508,12 +508,12 @@
                 return;
             }
             if (installedApp || read(INSTALLED_KEY) === "1") {
-                tip('<span class="de-inst-ok">✓ التطبيق ديجا مزيد ف هاد الجهاز.</span><br>حلو من الأيقونة ديال Deutsch Einfach.');
+                tip('<span class="de-inst-ok">✓ التطبيق ديجا مزيد ف هاد الجهاز.</span><br>حلو من الأيقونة ديال sehrgut.');
                 return;
             }
             tip(/Android/i.test(navigator.userAgent)
                 ? "ف Chrome: ضغط على <b>⋮</b> (فوق) ← <b>Installer l'application</b> ولا <b>Ajouter à l'écran d'accueil</b>."
-                : "ف Chrome ولا Edge: ضغط على الأيقونة <b>⊕</b> ف بار العنوان (فوق)، ولا <b>⋮</b> ← <b>Installer Deutsch Einfach</b>.");
+                : "ف Chrome ولا Edge: ضغط على الأيقونة <b>⊕</b> ف بار العنوان (فوق)، ولا <b>⋮</b> ← <b>Installer sehrgut</b>.");
         });
     }
 

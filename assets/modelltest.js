@@ -77,7 +77,7 @@
         }
         return out;
     }
-    function premium() { return window.__deutschEinfachIsPremium === true; }
+    function premium() { return window.__sehrgutIsPremium === true; }
     function lastResult(n) {
         const P = window.DEProgress;
         if (!P) return null;

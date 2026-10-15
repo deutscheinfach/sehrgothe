@@ -27,7 +27,7 @@
 (function () {
     "use strict";
 
-    const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+    const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
     const TIMEOUT_MS = 20000;
     const MISS_MS = 60000;
 
@@ -59,7 +59,7 @@
     const DISK_TTL = 3 * 24 * 3600 * 1000;
     function lastUid() {
         try {
-            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            const a = JSON.parse(localStorage.getItem("sehrgutLastAccount") || "null");
             return a && a.premium === true && a.uid ? a.uid : "";
         } catch (e) { return ""; }
     }
@@ -113,12 +113,12 @@
 
     function currentUser() {
         /* site-header.js عندو Firebase محمّل — كناخدو منو */
-        const auth = window.__deutschEinfachAuth;
+        const auth = window.__sehrgutAuth;
         if (auth && auth.currentUser) return auth.currentUser;
         /* داخل «اختبر نفسك» / Modelltest (iframe): الصفحة الأم ديجا عارفة
            الحساب — Firebase ديال الـiframe كيتعطل ومايلحقش. */
         try {
-            const up = window.parent !== window && window.parent.__deutschEinfachAuth;
+            const up = window.parent !== window && window.parent.__sehrgutAuth;
             return (up && up.currentUser) || null;
         } catch (error) {
             return null;
@@ -219,13 +219,13 @@
     window.__lesenPremiumFetch = function (themaId) {
         const user = currentUser();
         /* الكاش ديال المتصفح: ف اللحظة، بلا ما نتسناو Firebase */
-        const uid = user ? user.uid : (window.__deutschEinfachIsPremium ? lastUid() : "");
+        const uid = user ? user.uid : (window.__sehrgutIsPremium ? lastUid() : "");
         const saved = diskGet(uid, themaId);
         if (saved) {
             state.done.set(uid + "|" + themaId, saved);
             return Promise.resolve(saved);
         }
-        if (!user && (window.__deutschEinfachIsPremium || window.parent !== window)) {
+        if (!user && (window.__sehrgutIsPremium || window.parent !== window)) {
             return waitUser(10000).then(function (late) {
                 return late ? window.__lesenPremiumFetch(themaId) : { ok: false, why: "ماشي داخل بحساب." };
             });
@@ -315,7 +315,7 @@
        كيبان دغيا. اللي ديجا محفوظ ما كيتعاودش. */
     let prefetching = null;
     window.__lesenPremiumPrefetch = function (ids) {
-        if (!window.__deutschEinfachIsPremium || !Array.isArray(ids) || !ids.length) return;
+        if (!window.__sehrgutIsPremium || !Array.isArray(ids) || !ids.length) return;
         const user = currentUser();
         if (!user) return;
         const todo = ids.filter(function (id) {
@@ -325,7 +325,7 @@
         const run = { left: todo.slice() };
         prefetching = run;
         function next() {
-            if (prefetching !== run || !run.left.length || !window.__deutschEinfachIsPremium) return;
+            if (prefetching !== run || !run.left.length || !window.__sehrgutIsPremium) return;
             const id = run.left.shift();
             Promise.resolve(window.__lesenPremiumFetch(id)).catch(function () {}).then(function () {
                 setTimeout(next, 120);
@@ -339,7 +339,7 @@
        بـ 403 بلا فايدة). الخطأ ما كيبانش — إلا بركو من بعد، كيتعاود الطلب. */
     window.__lesenPremiumWarm = function (themaId) {
         try {
-            if (!window.__deutschEinfachIsPremium || !currentUser()) return;
+            if (!window.__sehrgutIsPremium || !currentUser()) return;
             window.__lesenPremiumFetch(themaId);
         } catch (error) { /* غير تسريع */ }
     };

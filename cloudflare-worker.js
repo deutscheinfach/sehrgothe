@@ -1,11 +1,11 @@
-// Deutsch Einfach - Schreiben Correction Worker (B1 + B2)
+// sehrgut - Schreiben Correction Worker (B1 + B2)
 // Gemini API backend
 //
 // Required Cloudflare secret:
 // GEMINI_API_KEY
 //
 // Optional environment variables:
-// ALLOWED_ORIGIN = https://deutsch-einfach.online,https://deutscheinfach.github.io
+// ALLOWED_ORIGIN = https://deutscheinfach.github.io
 //                  (يقدر يكون أكثر من واحد، مفصولين بفاصلة)
 // GEMINI_MODEL   = gemini-3.6-flash
 
@@ -37,9 +37,7 @@ export default {
 
        ALLOWED_ORIGIN فالـdashboard: دومينات مفصولين بفاصلة. */
     const ALLOWED = (env.ALLOWED_ORIGIN
-        || "https://deutsch-einfach.online,"
-         + "https://www.deutsch-einfach.online,"
-         + "https://deutscheinfach.github.io")
+        || "https://deutscheinfach.github.io")
       .split(",")
       .map((one) => one.trim())
       .filter(Boolean);
@@ -132,6 +130,28 @@ export default {
       }
 
       /*
+       * البلاد ديال الحساب: POST {"region": {tz, langs, phone, seen}, idToken}
+       * كيرجع {region, free}. الصفحات كيعيطو ليه مرة ف كل جلسة.
+       */
+      if (body.region && typeof body.region === "object") {
+        let regionClaims;
+        try {
+          regionClaims = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse(
+            { error: "not_signed_in", details: authError.message },
+            401,
+            allowedOrigin
+          );
+        }
+        if (!regionStore(env)) {
+          return jsonResponse({ error: "KV binding REGIONS is not configured." }, 500, allowedOrigin);
+        }
+        const region = await resolveRegion(env, request, regionClaims.sub, body.region);
+        return jsonResponse({ region, free: regionIsFree(region) }, 200, allowedOrigin);
+      }
+
+      /*
        * نص موضوع Premium. كيرجع غير للمشتركين.
        * النصوص كيسكنو فـ KV، ماشي فالـ repo — الـ repo عام.
        */
@@ -167,7 +187,7 @@ export default {
 
         let subscribed;
         try {
-          subscribed = await hasActiveSubscription(claims.sub, body.idToken);
+          subscribed = await hasAccess(env, request, claims.sub, body.idToken);
         } catch (lookupError) {
           return jsonResponse(
             { error: "subscription_lookup_failed", details: lookupError.message },
@@ -232,7 +252,7 @@ export default {
 
         let lesenSubscribed;
         try {
-          lesenSubscribed = await hasActiveSubscription(lesenClaims.sub, body.idToken);
+          lesenSubscribed = await hasAccess(env, request, lesenClaims.sub, body.idToken);
         } catch (lookupError) {
           return jsonResponse(
             { error: "subscription_lookup_failed", details: lookupError.message },
@@ -994,7 +1014,7 @@ async function translationCacheKey(text) {
   const bytes = new TextEncoder().encode("v1|" + text);
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   const hex = [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  return "https://translate-cache.deutsch-einfach.online/" + hex;
+  return "https://translate-cache.sehrgut.invalid/" + hex;
 }
 
 async function cacheGet(key) {
@@ -1021,7 +1041,7 @@ async function cachePut(key, value) {
  * بالمفاتيح العمومية ديال Google، ومن بعد كيقرا الاشتراك من Firestore.
  */
 
-const FIREBASE_PROJECT_ID = "deutsch-einfach-4c81f";
+const FIREBASE_PROJECT_ID = "sehrgothe";
 
 const FIREBASE_JWKS_URL =
   "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
@@ -1174,6 +1194,91 @@ function hasActiveSubscription(uid, idToken) {
 
   SUB_PENDING.set(uid, pending);
   return pending;
+}
+
+/* ===== البلاد: المغرب بالاشتراك، الباقي مجاني مع الإعلانات =====
+
+   المغرب: Premium بالفلوس عبر WhatsApp (بحال قبل).
+   أي بلاد أخرى: المحتوى كامل مجاني، والصفحات كيبينو إعلانات.
+
+   الـVPN كيبدل غير الـIP. إذن ما كنعتامدوش عليه بوحدو — كنجمعو
+   علامات بزاف، وإلا وحدة منهم قالت «المغرب» → الحساب مغربي:
+     1. البلاد ديال الـIP (Cloudflare: request.cf.country)
+     2. المنطقة الزمنية ديال الجهاز (Africa/Casablanca) — الـVPN ما كيبدلهاش
+     3. الرقم ديال التيليفون (+212) اللي تعطى ف التسجيل
+     4. لغة المتصفح (ar-MA, fr-MA…) من الطلب ومن الجهاز
+     5. الجهاز سبق ليه تعرّف بلي مغربي (حساب آخر ف نفس المتصفح)
+
+   «المغرب» كيتقفل: ملي الحساب ولا MA ما كيرجعش. حساب تسجل بالـVPN
+   كيولي MA أول ما يتحل بلا VPN، ولا أول ما الجهاز يبين المنطقة ديالو.
+   باش ترجع حساب (مثلا واحد سافر للمغرب): مسح region-<uid> من KV. */
+
+const MA_TIMEZONES = ["Africa/Casablanca", "Africa/El_Aaiun"];
+/* XX = ما معروفش، T1 = Tor. بجوج ماشي مجانيين. */
+const UNKNOWN_REGIONS = ["", "??", "XX", "T1"];
+const REGION_MEMO = new Map();
+const REGION_MEMO_TTL = 60 * 1000;
+
+function regionStore(env) {
+  return env.REGIONS || env.TOPICS || null;
+}
+
+function regionIsFree(region) {
+  return /^[A-Z]{2}$/.test(region || "") && region !== "MA" && !UNKNOWN_REGIONS.includes(region);
+}
+
+function moroccoSignals(request, hint) {
+  const why = [];
+  const cf = request.cf || {};
+  if (cf.country === "MA") why.push("ip");
+  if (MA_TIMEZONES.includes(cf.timezone)) why.push("ip-tz");
+
+  const header = request.headers.get("Accept-Language") || "";
+  if (/(^|[,\s])[a-z]{2,3}-MA\b/i.test(header)) why.push("accept-language");
+
+  if (hint && typeof hint === "object") {
+    if (MA_TIMEZONES.includes(String(hint.tz || ""))) why.push("device-tz");
+    const langs = Array.isArray(hint.langs) ? hint.langs.slice(0, 10) : [];
+    if (langs.some((l) => /^[a-z]{2,3}-MA$/i.test(String(l)))) why.push("device-lang");
+    const phone = String(hint.phone || "").replace(/[^\d+]/g, "");
+    if (/^(\+|00)212/.test(phone)) why.push("phone");
+    if (hint.seen === true) why.push("device-seen");
+  }
+  return why;
+}
+
+async function resolveRegion(env, request, uid, hint) {
+  const store = regionStore(env);
+  const key = "region-" + uid;
+
+  const memo = REGION_MEMO.get(uid);
+  let stored = memo && memo.exp > Date.now()
+    ? memo.value
+    : ((await store.get(key)) || "");
+
+  let next = stored;
+  if (stored !== "MA") {
+    if (moroccoSignals(request, hint).length) {
+      next = "MA";
+    } else if (!stored || UNKNOWN_REGIONS.includes(stored)) {
+      next = String((request.cf && request.cf.country) || "XX").toUpperCase();
+    }
+  }
+
+  if (next !== stored) await store.put(key, next);
+
+  if (REGION_MEMO.size >= 500) REGION_MEMO.delete(REGION_MEMO.keys().next().value);
+  REGION_MEMO.set(uid, { value: next, exp: Date.now() + REGION_MEMO_TTL });
+  return next;
+}
+
+/* المحتوى المدفوع: بلاد مجانية، ولا اشتراك. */
+async function hasAccess(env, request, uid, idToken) {
+  if (regionStore(env)) {
+    const region = await resolveRegion(env, request, uid, null);
+    if (regionIsFree(region)) return true;
+  }
+  return hasActiveSubscription(uid, idToken);
 }
 
 async function lookupSubscription(uid, idToken) {

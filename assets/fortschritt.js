@@ -298,7 +298,7 @@
             skills: SKILLS.map(function (sk) {
                 return [sk.name, skillAvg(results, sk.key).avg];
             }),
-            shareText: (streak > 1 ? streak + " يوم متتالي كنقرا الألمانية 🔥" : "كنقرا الألمانية مع Deutsch Einfach 🔥") +
+            shareText: (streak > 1 ? streak + " يوم متتالي كنقرا الألمانية 🔥" : "كنقرا الألمانية مع sehrgut 🔥") +
                 (results.length ? " · " + results.length + " تمرين" : "")
         });
     }

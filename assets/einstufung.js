@@ -359,7 +359,7 @@
             max: r.total,
             rows: r.skills.map(function (s) { return [SKILLS[s[0]].de, s[1], s[2]]; }),
             shareText: "عرفت المستوى ديالي ف الألمانية: " + r.level + " 🇩🇪 — دوز الاختبار بالمجان ف 10 دقايق:",
-            url: "https://deutsch-einfach.online/einstufungstest.html"
+            url: "https://deutscheinfach.github.io/sehrgothe/einstufungstest.html"
         });
     }
 

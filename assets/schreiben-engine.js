@@ -1,4 +1,4 @@
-/* Deutsch Einfach — Schreiben Engine (B1 و B2)
+/* sehrgut — Schreiben Engine (B1 و B2)
    Requires: schreiben-topics-b2.js (SCHREIBEN_B2_TOPICS) ولا
    schreiben-topics-b1.js (SCHREIBEN_B1_TOPICS) loaded first,
    a global TOPIC_ID string ("01".."41") set on the page,
@@ -9,7 +9,7 @@
    Example: "https://deutscheinfach-correction.YOURNAME.workers.dev"
    See /worker/cloudflare-worker.js + SETUP-GUIDE.md
    ========================================================== */
-const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+const CORRECTION_ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
 
 /* فتح الاتصال مع الـ Worker من دابا.
    الـ handshake (DNS + TCP + TLS) كياخذ نص ثانية تقريبا ف 4G،
@@ -208,7 +208,7 @@ function renderAd(box, text) {
     }
 
     // ---------- render header ----------
-    document.title = "Telc " + (topic.level || LEVEL.toUpperCase()) + " Schreiben: " + topic.title + " | Deutsch Einfach";
+    document.title = "Telc " + (topic.level || LEVEL.toUpperCase()) + " Schreiben: " + topic.title + " | sehrgut";
     document.getElementById("task-title").textContent = topic.title;
     document.getElementById("task-sub").textContent =
         topic.level + " · " + topic.type;
@@ -639,7 +639,7 @@ function renderAd(box, text) {
        وكيبان دغيا بلا ما نتسناو Firebase والـ Worker. */
     function cacheKey() {
         try {
-            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            const a = JSON.parse(localStorage.getItem("sehrgutLastAccount") || "null");
             if (!a || a.premium !== true || !a.uid) return "";
             /* بلا أنترنت والتصريح سالا (diag.js): ما كنعطيوش المحفوظ */
             if (navigator.onLine === false && window.__deOfflinePass && !window.__deOfflinePass.ok(a.uid)) return "";
@@ -664,7 +664,7 @@ function renderAd(box, text) {
     async function loadPremiumTopic(id) {
         /* Firebase ما جاوبش ف 15 ثانية = مشكل ف الأنترنت (ماشي صفحة خاوية للأبد) */
         const idToken = await Promise.race([
-            window.__deutschEinfachIdToken || Promise.resolve(null),
+            window.__sehrgutIdToken || Promise.resolve(null),
             new Promise(function (_, fail) {
                 setTimeout(function () { const e = new Error("timeout"); e.code = "network"; fail(e); }, 15000);
             })

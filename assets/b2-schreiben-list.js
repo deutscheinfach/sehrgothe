@@ -142,7 +142,7 @@
 
     /* ---------- فتح الأقفال للمشتركين ---------- */
     (async function () {
-        const isPremium = await (window.__deutschEinfachPremiumReady || Promise.resolve(false));
+        const isPremium = await (window.__sehrgutPremiumReady || Promise.resolve(false));
         if (!isPremium) return;
 
         grid.querySelectorAll("[data-premium]").forEach(function (btn) {

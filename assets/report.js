@@ -108,12 +108,12 @@
         fb = Promise.all([import(FB + "firebase-app.js"), import(FB + "firebase-auth.js"), import(FB + "firebase-firestore.js")])
             .then(function (m) {
                 var app = m[0].getApps().length ? m[0].getApp() : m[0].initializeApp({
-                    apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-                    authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
-                    projectId: "deutsch-einfach-4c81f",
-                    storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
-                    messagingSenderId: "152448766933",
-                    appId: "1:152448766933:web:f7824c4db8ab3caccbe35c"
+                    apiKey: "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
+                    authDomain: "sehrgothe.firebaseapp.com",
+                    projectId: "sehrgothe",
+                    storageBucket: "sehrgothe.firebasestorage.app",
+                    messagingSenderId: "1066728503518",
+                    appId: "1:1066728503518:web:b350728d7b20f1064d2a4f"
                 });
                 var auth = m[1].getAuth(app);
                 return new Promise(function (resolve) {

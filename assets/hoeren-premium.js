@@ -16,7 +16,7 @@
 (function () {
     "use strict";
 
-    const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+    const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
     const cache = {};
 
     try {
@@ -50,11 +50,11 @@
 
     async function tokenNow() {
         let user = window.__hoerenUser
-            || (window.__deutschEinfachAuth && window.__deutschEinfachAuth.currentUser);
+            || (window.__sehrgutAuth && window.__sehrgutAuth.currentUser);
         /* داخل «اختبر نفسك» / Modelltest: الحساب ديال الصفحة الأم */
         if (!user) {
             try {
-                const up = window.parent !== window && window.parent.__deutschEinfachAuth;
+                const up = window.parent !== window && window.parent.__sehrgutAuth;
                 user = (up && up.currentUser) || null;
             } catch (e) { user = null; }
         }
@@ -105,12 +105,12 @@
 
     /* الصفحة كتناديه ملي auth كيجاوب (window.__hoerenUser)، قبل ما فحص
        Firestore ديال الواجهة يسالي. كيخدم غير إلا آخر حالة معروفة كانت
-       Premium (site-header.js كيحطها ف __deutschEinfachIsPremium): غير
+       Premium (site-header.js كيحطها ف __sehrgutIsPremium): غير
        المشترك ما كنضربوش الـ Worker بـ 403. إلا الحدس كان غالط، الجواب
        كيتنقص وصفحة المشترك العادية كتبقى كيف كانت. */
     window.__hoerenPremiumEarly = function () {
         try {
-            if (!window.__deutschEinfachIsPremium) return;
+            if (!window.__sehrgutIsPremium) return;
             const match = /(?:^|\/)(b1|b2)-hoeren-(teil[123])(?:\.html)?$/.exec(location.pathname);
             if (!match) return;
             window.__hoerenPremiumLoad(match[1] === "b1" ? "b1-" + match[2] : match[2]);

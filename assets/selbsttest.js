@@ -79,7 +79,7 @@
     }
     function fmt(n) { return (Math.round(n * 2) / 2).toString().replace(".", ","); }
     function pad(n) { return String(n).padStart(2, "0"); }
-    function premium() { return window.__deutschEinfachIsPremium === true; }
+    function premium() { return window.__sehrgutIsPremium === true; }
 
     /* ---------- اختيار المواضيع (⚙ حدا «بدا») ----------
        كنخزنو اللي مسدودين (ماشي اللي مختارين): موضوع جديد كيتزاد
@@ -337,7 +337,7 @@
     function warm() {
         if ((state && !state.done) || !premium()) return;
         /* الاشتراك كيتعرف من الكاش قبل Firebase: نتسناو الحساب */
-        const auth = window.__deutschEinfachAuth;
+        const auth = window.__sehrgutAuth;
         if (!auth || !auth.currentUser) { warmTimer = setTimeout(warm, 300); return; }
         const L = chosenLevel();
         if (pre && pre.level === L) return;

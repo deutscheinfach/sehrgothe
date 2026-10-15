@@ -14,10 +14,10 @@
     const EMBEDDED = new URLSearchParams(location.search).get("embed") === "1";
     /* داخل «اختبر نفسك» / Modelltest: الصفحة الأم ديجا عارفة واش الحساب
        Premium — كناخدو الجواب ديالها دغيا بلا ما نتسناو Firebase ديال الـiframe. */
-    if (EMBEDDED && window.__deutschEinfachIsPremium === undefined) {
+    if (EMBEDDED && window.__sehrgutIsPremium === undefined) {
         try {
-            const up = window.parent !== window ? window.parent.__deutschEinfachIsPremium : undefined;
-            if (up === true || up === false) window.__deutschEinfachIsPremium = up;
+            const up = window.parent !== window ? window.parent.__sehrgutIsPremium : undefined;
+            if (up === true || up === false) window.__sehrgutIsPremium = up;
         } catch (error) { /* */ }
     }
 
@@ -107,17 +107,17 @@
     /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
     const HEADS = {
         "":        { h1: "Leseverstehen",     lead: "امتحانات كاملة — كل امتحان فيه الأجزاء الخمسة ديال Lesen.",
-                     title: "Telc B2 Lesen – Übungen mit Lösungen | Deutsch Einfach" },
+                     title: "Telc B2 Lesen – Übungen mit Lösungen | sehrgut" },
         "teil1":   { h1: "Teil 1",            lead: "Überschriften zuordnen",
-                     title: "Telc B2 Lesen Teil 1 – Übungen online | Deutsch Einfach" },
+                     title: "Telc B2 Lesen Teil 1 – Übungen online | sehrgut" },
         "teil2":   { h1: "Teil 2",            lead: "Multiple Choice",
-                     title: "Telc B2 Lesen Teil 2 – Übungen online | Deutsch Einfach" },
+                     title: "Telc B2 Lesen Teil 2 – Übungen online | sehrgut" },
         "teil3":   { h1: "Teil 3",            lead: "Anzeigen zuordnen",
-                     title: "Telc B2 Lesen Teil 3 – Übungen online | Deutsch Einfach" },
+                     title: "Telc B2 Lesen Teil 3 – Übungen online | sehrgut" },
         "sprach1": { h1: "Sprachbausteine 1", lead: "Grammatik im Text",
-                     title: "Telc B2 Sprachbausteine Teil 1 – Übungen | Deutsch Einfach" },
+                     title: "Telc B2 Sprachbausteine Teil 1 – Übungen | sehrgut" },
         "sprach2": { h1: "Sprachbausteine 2", lead: "Wortschatz im Text",
-                     title: "Telc B2 Sprachbausteine Teil 2 – Übungen | Deutsch Einfach" }
+                     title: "Telc B2 Sprachbausteine Teil 2 – Übungen | sehrgut" }
     };
 
     /* صفحة Prüfungen (امتحانات كاملة) مخبية دابا — الكود باقي.
@@ -332,7 +332,7 @@
 
     function card(topic) {
         /* المشترك عندو گاع المواضيع — ماعندوش علاش يشوف PRO */
-        const shut = topic.locked && !window.__deutschEinfachIsPremium;
+        const shut = topic.locked && !window.__sehrgutIsPremium;
 
         const node = document.createElement("a");
         node.className = "lesen-card" + (shut ? " locked" : "");
@@ -439,20 +439,20 @@
         if (topic.locked) {
             /* داخل «اختبر نفسك» / Modelltest: حتى يجي الجواب ديال الاشتراك
                كنبينو «كنجيبو…» بدل القفل (de-premium كيعاود الرسم). */
-            if (window.__deutschEinfachIsPremium === undefined && EMBEDDED && !embedForce) {
+            if (window.__sehrgutIsPremium === undefined && EMBEDDED && !embedForce) {
                 const wait = window.__deSkeleton ? window.__deSkeleton("topic") : document.createElement("div");
                 stack.appendChild(wait);
                 if (window.__deNetHint) window.__deNetHint(wait);
                 /* Firebase تعطل؟ من بعد 6 ثواني كنسولو الـ Worker نيشان —
                    هو اللي كيتحقق من الحساب والاشتراك على كل حال. */
                 setTimeout(function () {
-                    if (window.__deutschEinfachIsPremium !== undefined || !stillWanted()) return;
+                    if (window.__sehrgutIsPremium !== undefined || !stillWanted()) return;
                     embedForce = true;
                     renderPart(stack, topic, part, stillWanted);
                 }, 6000);
                 return;
             }
-            if (!window.__deutschEinfachIsPremium && !embedForce) { gate(); return; }
+            if (!window.__sehrgutIsPremium && !embedForce) { gate(); return; }
 
             const loading = window.__deSkeleton ? window.__deSkeleton("topic") : document.createElement("div");
             stack.appendChild(loading);
@@ -622,7 +622,7 @@
     }
 
     function examCard(exam) {
-        const shut = exam.locked && !window.__deutschEinfachIsPremium;
+        const shut = exam.locked && !window.__sehrgutIsPremium;
         const node = document.createElement("a");
         node.className = "lesen-card exam-card" + (shut ? " locked" : "");
         node.href = examUrl(exam.n, "teil1");
@@ -710,7 +710,7 @@
     let renderedPremium, renderedState;
 
     function openExam(n, part, push) {
-        renderedPremium = window.__deutschEinfachIsPremium;
+        renderedPremium = window.__sehrgutIsPremium;
         renderedState = window.__dePremiumState;
         const exam = examFor(n);
         if (!exam) { close(push); return; }
@@ -780,7 +780,7 @@
             pts.className = "exam-tab-pts";
             pts.textContent = EXAM_MAX[p.key] + "P";
             tab.append(kind, nr, pts);
-            if (exam.parts[p.key].locked && !window.__deutschEinfachIsPremium) tab.classList.add("is-locked");
+            if (exam.parts[p.key].locked && !window.__sehrgutIsPremium) tab.classList.add("is-locked");
             tab.addEventListener("click", function () { go(p.key); });
             tabs.appendChild(tab);
         });
@@ -1076,7 +1076,7 @@
     }
 
     function open(themaId, part, push) {
-        renderedPremium = window.__deutschEinfachIsPremium;
+        renderedPremium = window.__sehrgutIsPremium;
         renderedState = window.__dePremiumState;
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (!topic) { close(push); return; }
@@ -1240,7 +1240,7 @@
 
         if (detail.hidden) return;
         /* نفس الاشتراك ونفس الحالة (ماشي «مشكل ف الأنترنت» اللي تصلح) → والو */
-        if (window.__deutschEinfachIsPremium === renderedPremium
+        if (window.__sehrgutIsPremium === renderedPremium
             && renderedState !== "error") return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");

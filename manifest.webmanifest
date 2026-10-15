@@ -1,6 +1,6 @@
 {
-  "name": "Deutsch Einfach — telc B1/B2",
-  "short_name": "Deutsch Einfach",
+  "name": "sehrgut — telc B1/B2",
+  "short_name": "sehrgut",
   "description": "تمرّن على امتحان telc B1 و B2 بالدارجة: Lesen، Hören، Schreiben، Sprechen وامتحانات كاملة بالوقت.",
   "lang": "ar",
   "dir": "rtl",
@@ -31,7 +31,7 @@
   "related_applications": [
     {
       "platform": "webapp",
-      "url": "https://deutsch-einfach.online/manifest.webmanifest"
+      "url": "https://deutscheinfach.github.io/sehrgothe/manifest.webmanifest"
     }
   ]
 }

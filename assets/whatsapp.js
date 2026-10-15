@@ -1,4 +1,4 @@
-/* ===== WhatsApp ديال Deutsch Einfach =====
+/* ===== WhatsApp ديال sehrgut =====
 
    رقم واحد لكاع الموقع، ورسالة مرتبة بالدارجة كتوصل جاهزة:
    العرض، القسم، الموضوع، والإيميل ديال الحساب (إلا كان داخل)
@@ -17,7 +17,7 @@
 
     function accountEmail() {
         try {
-            var auth = window.__deutschEinfachAuth;
+            var auth = window.__sehrgutAuth;
             return (auth && auth.currentUser && auth.currentUser.email) || "";
         } catch (e) {
             return "";
@@ -38,9 +38,9 @@
         var lines = ["السلام عليكم 👋"];
 
         if (o.offer) {
-            lines.push("بغيت نشترك ف Premium ديال Deutsch Einfach.");
+            lines.push("بغيت نشترك ف Premium ديال sehrgut.");
         } else {
-            lines.push("عندي سؤال على Premium ديال Deutsch Einfach.");
+            lines.push("عندي سؤال على Premium ديال sehrgut.");
         }
         lines.push("");
         if (o.offer) lines.push("📦 العرض: " + o.offer);

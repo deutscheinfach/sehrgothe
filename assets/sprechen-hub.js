@@ -149,7 +149,7 @@
        الموضوع كتبان ف اللحظة بلا Worker. */
     let prefetched = false;
     function prefetchAll() {
-        if (prefetched || !window.__deutschEinfachIsPremium || typeof window.__lesenPremiumFetch !== "function") return;
+        if (prefetched || !window.__sehrgutIsPremium || typeof window.__lesenPremiumFetch !== "function") return;
         prefetched = true;
         (window.__deAfterContent || function (fn) { setTimeout(fn, 1500); })(async function () {
             if (stale()) return;
@@ -194,7 +194,7 @@
         const parts = topic.parts || [];
         const shownPart = activePart || parts[0] || "teil1";
 
-        const shut = topic.locked && !window.__deutschEinfachIsPremium;
+        const shut = topic.locked && !window.__sehrgutIsPremium;
 
         /* soon: المحتوى ما زال ماوصلش → بطاقة بلا رابط */
         const node = document.createElement(topic.soon ? "div" : "a");
@@ -342,7 +342,7 @@
     function warmOnIntent(node, topicsOf) {
         let timer = 0;
         const go = function () {
-            if (!window.__deutschEinfachIsPremium) return;
+            if (!window.__sehrgutIsPremium) return;
             topicsOf().forEach(function (t) {
                 if (t && needsPremiumLoad(t)) premiumLoad(t.id).catch(function () {});
             });
@@ -406,7 +406,7 @@
     }
 
     function examCard(exam) {
-        const shut = exam.locked && !window.__deutschEinfachIsPremium;
+        const shut = exam.locked && !window.__sehrgutIsPremium;
         const node = document.createElement("a");
         node.className = "lesen-card exam-card" + (shut ? " locked" : "");
         node.href = examUrl(exam.n, "teil1");
@@ -514,7 +514,7 @@
             nm.className = "exam-tab-topic";
             nm.textContent = exam.parts[p.key].title || "";
             tab.append(nr, nm);
-            if (exam.parts[p.key].locked && !window.__deutschEinfachIsPremium) tab.classList.add("is-locked");
+            if (exam.parts[p.key].locked && !window.__sehrgutIsPremium) tab.classList.add("is-locked");
             const pts = document.createElement("span");
             pts.className = "exam-tab-pts";
             pts.hidden = true;
@@ -617,7 +617,7 @@
         function paint() {
             const topic = exam.parts[current];
             stack.textContent = "";
-            if (topic.locked && !window.__deutschEinfachIsPremium) {
+            if (topic.locked && !window.__sehrgutIsPremium) {
                 if (typeof window.__premiumGate === "function") {
                     window.__premiumGate(stack, { title: topic.title, lead: "كاع مواضيع Sprechen كيتفتحو مع الاشتراك: تمرين بالصوت، حوار نموذجي وكلمات بالترجمة." });
                 } else {
@@ -747,7 +747,7 @@
         function paint() {
             stack.textContent = "";
 
-            if (topic.locked && !window.__deutschEinfachIsPremium) {
+            if (topic.locked && !window.__sehrgutIsPremium) {
                 if (typeof window.__premiumGate === "function") {
                     window.__premiumGate(stack, { title: topic.title, lead: "كاع مواضيع Sprechen كيتفتحو مع الاشتراك: تمرين بالصوت، حوار نموذجي وكلمات بالترجمة." });
                 } else {

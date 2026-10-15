@@ -1,23 +1,23 @@
-/* حالة الاشتراك للواجهة: window.__deutschEinfachPremiumReady → Promise<boolean>
+/* حالة الاشتراك للواجهة: window.__sehrgutPremiumReady → Promise<boolean>
 
    ⚠️ هادي كوسمétique بس — كتقرر واش الكارت يبان مقفول ولا لا.
    الحماية الحقيقية ديال النص كاينة فالـ Worker، اللي كيتحقق من الـ ID
    token والاشتراك قبل ما يعطي أي محتوى. */
 
-window.__deutschEinfachPremiumReady = (async function () {
+window.__sehrgutPremiumReady = (async function () {
   try {
     const appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
     const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
     const fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
 
     const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
-      apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-      authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
-      projectId: "deutsch-einfach-4c81f",
-      storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
-      messagingSenderId: "152448766933",
-      appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
-      measurementId: "G-9QV234Z0KZ"
+      apiKey: "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
+      authDomain: "sehrgothe.firebaseapp.com",
+      projectId: "sehrgothe",
+      storageBucket: "sehrgothe.firebasestorage.app",
+      messagingSenderId: "1066728503518",
+      appId: "1:1066728503518:web:b350728d7b20f1064d2a4f",
+      measurementId: "G-GKNEV0ZQV5"
     });
 
     const auth = authMod.getAuth(app);

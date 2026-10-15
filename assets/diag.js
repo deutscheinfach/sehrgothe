@@ -45,9 +45,9 @@
     "use strict";
     if (window.__deDiag) return;
 
-    const LIVE = /(^|\.)deutsch-einfach\.online$/.test(location.hostname);
-    const URL = "https://firestore.googleapis.com/v1/projects/deutsch-einfach-4c81f/databases/(default)/documents/diag"
-        + "?key=AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU";
+    const LIVE = location.hostname === "deutscheinfach.github.io" && location.pathname.indexOf("/sehrgothe/") === 0;
+    const URL = "https://firestore.googleapis.com/v1/projects/sehrgothe/databases/(default)/documents/diag"
+        + "?key=AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s";
     const MAX = 6;
     const sent = new Set();
     let count = 0;
@@ -84,7 +84,7 @@
                 dpr:     { doubleValue: window.devicePixelRatio || 1 },
                 ms:      { integerValue: String(Math.round(ms)) },
                 net:     { stringValue: cut(conn.effectiveType || "", 10) },
-                premium: { booleanValue: window.__deutschEinfachIsPremium === true },
+                premium: { booleanValue: window.__sehrgutIsPremium === true },
                 at:      { timestampValue: new Date().toISOString() }
             };
             fetch(URL, {
@@ -359,9 +359,9 @@
     const NAME = "de-data-v1";
     function uid() {
         try {
-            const auth = window.__deutschEinfachAuth;
+            const auth = window.__sehrgutAuth;
             if (auth && auth.currentUser) return auth.currentUser.uid;
-            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            const a = JSON.parse(localStorage.getItem("sehrgutLastAccount") || "null");
             return a && a.uid ? a.uid : "";
         } catch (e) { return ""; }
     }
@@ -464,7 +464,7 @@
                ف التيليفون ما تجابش غير ملي كان الاشتراك صالح (الـ Worker). */
             if (!p || p.uid !== uid) {
                 let last = null;
-                try { last = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null"); } catch (e) { /* */ }
+                try { last = JSON.parse(localStorage.getItem("sehrgutLastAccount") || "null"); } catch (e) { /* */ }
                 let used = false;
                 try { used = localStorage.getItem(KEY + "-grace") === uid; } catch (e) { /* */ }
                 if (!last || last.uid !== uid || last.premium !== true || used) return false;

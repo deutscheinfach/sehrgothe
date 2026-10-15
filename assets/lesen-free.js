@@ -9,7 +9,7 @@
 (function () {
     "use strict";
 
-    const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+    const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
     const jobs = {};
 
     /* الطلب كيتعلق أحيانا (خصوصا Safari ف iPhone من بعد ما يرجع للتطبيق:
@@ -45,7 +45,7 @@
        للمرة اللي من بعد. */
     const STORE = "de-lesen-free-v1";
     const KEEP = 14 * 24 * 3600 * 1000;
-    function cacheUrl(lv) { return "https://deutsch-einfach.online/__lesen-free/" + lv; }
+    function cacheUrl(lv) { return "https://deutscheinfach.github.io/sehrgothe/__lesen-free/" + lv; }
     function cacheRead(lv) {
         try {
             if (!window.caches) return Promise.resolve(null);

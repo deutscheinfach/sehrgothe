@@ -27,7 +27,7 @@
     if (window.DEShare) return;
 
     var W = 1080, H = 1350;
-    var SITE = "deutsch-einfach.online";
+    var SITE = "deutscheinfach.github.io/sehrgothe";
 
     /* ألوان مكتوبة بصريح العبارة: <canvas> ماكيقراش
        var(--brand) ديال CSS. */
@@ -125,7 +125,7 @@
         ctx.textBaseline = "alphabetic";
         ctx.fillStyle = C.white;
         ctx.font = font(900, 40);
-        ctx.fillText("Deutsch Einfach", mx + ms + 26, my + 40);
+        ctx.fillText("sehrgut", mx + ms + 26, my + 40);
         ctx.fillStyle = C.dim;
         ctx.font = font(700, 23);
         ctx.fillText("TELC PREP B1/B2", mx + ms + 26, my + 76);
@@ -390,7 +390,7 @@
         }).then(function (blob) {
             url = URL.createObjectURL(blob);
             var ext = blob.type === "image/png" ? ".png" : ".jpg";
-            var name = (data.kind || "deutsch-einfach") + ext;
+            var name = (data.kind || "sehrgut") + ext;
             file = new File([blob], name, { type: blob.type });
 
             var img = document.createElement("img");

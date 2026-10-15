@@ -86,14 +86,14 @@
         if (config.note) console.warn("Premium:", config.note);
 
         /* المشترك، والموضوع ما زال ماكاينش ف المحتوى (KV 404): ماشي «الأنترنت» */
-        if (config.missing && window.__deutschEinfachIsPremium === true) {
+        if (config.missing && window.__sehrgutIsPremium === true) {
             soonCard(into, config);
             return;
         }
 
         /* site-header.js: "pending" · "ok" · "error" */
         const state = window.__dePremiumState || "ok";
-        if (state === "error" || (window.__deutschEinfachIsPremium === true && config.note)) {
+        if (state === "error" || (window.__sehrgutIsPremium === true && config.note)) {
             netCard(into);
             return;
         }
@@ -147,7 +147,7 @@
         buy.href = "payment.html";
         actions.appendChild(buy);
 
-        if (!window.__deutschEinfachUser) {
+        if (!window.__sehrgutUser) {
             const login = el("a", "pg-btn pg-btn-ghost", "عندك حساب؟ دخل");
             login.href = "login.html";
             actions.appendChild(login);

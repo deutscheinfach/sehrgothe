@@ -1,7 +1,7 @@
 /* ===== الدخول / التسجيل / نسيت كلمة المرور — تصميم مشترك =====
 
    كيتحمل من بعد الـ<style> ديال كل صفحة (body.au): البطاقة ديال
-   الفورم على اليمين، ولوحة Deutsch Einfach على اليسار (PC). ف
+   الفورم على اليمين، ولوحة sehrgut على اليسار (PC). ف
    التيليفون: غير البطاقة، مع اللوگو فوق. */
 
 body.au {
@@ -60,7 +60,7 @@ body.au .auth-card {
 }
 @keyframes au-in { from { opacity: 0; transform: translateY(14px); } }
 
-/* ---------- اللوحة ديال Deutsch Einfach ---------- */
+/* ---------- اللوحة ديال sehrgut ---------- */
 .au-side {
     position: relative;
     overflow: hidden;

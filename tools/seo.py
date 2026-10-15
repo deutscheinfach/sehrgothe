@@ -22,95 +22,95 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE = "https://deutsch-einfach.online/"
+SITE = "https://deutscheinfach.github.io/sehrgothe/"
 IMAGE = SITE + "assets/icon-512.png"
-BRAND = "Deutsch Einfach"
-ALT_NAMES = ["deutsch-einfach", "Deutsch-Einfach", "deutsch-einfach.online", "Deutsch Einfach telc"]
+BRAND = "sehrgut"
+ALT_NAMES = ["sehrgut", "SehrGut", "sehr gut telc", "sehrgut telc"]
 
 # ---------------------------------------------------------------- الصفحات
 # file: (title, description, priority)
 PAGES = {
     "index.html": (
         # السمية ديال الموقع هي اللولة: باش يبان ملي يكتبو «deutsch einfach»
-        "Deutsch Einfach – Telc B1 & B2 Prüfungsvorbereitung online",
-        "Deutsch Einfach (deutsch-einfach.online): حضّر امتحان telc B1 و B2 بالدارجة: Lesen، Hören، Schreiben مع تصحيح بالذكاء الاصطناعي، "
+        "sehrgut – Telc B1 & B2 Prüfungsvorbereitung online",
+        "sehrgut (deutscheinfach.github.io/sehrgothe): حضّر امتحان telc B1 و B2 بالدارجة: Lesen، Hören، Schreiben مع تصحيح بالذكاء الاصطناعي، "
         "Sprechen بالصوت، امتحانات تجريبية و Wortschatz. Telc Prüfung online üben – kostenlos starten.",
         "1.0"),
 
-    "selbsttest.html": ("اختبر نفسك – امتحان telc B1 و B2 كامل وعشوائي | Deutsch Einfach",
+    "selbsttest.html": ("اختبر نفسك – امتحان telc B1 و B2 كامل وعشوائي | sehrgut",
         "امتحان telc B1 ولا B2 كامل وجديد ف كل مرة: Lesen، Sprachbausteine و Hören من مواضيع مخلطة، بالوقت، والنتيجة من 180 مع التحليل. Telc B1 & B2 Prüfung online testen.", "0.7"),
 
-    "bewerbung.html": ("Bewerbung و ترجمة الوثائق للألمانية – المغرب | Deutsch Einfach",
+    "bewerbung.html": ("Bewerbung و ترجمة الوثائق للألمانية – المغرب | sehrgut",
         "كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك "
         "للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen & Übersetzung für Deutschland.", "0.8"),
 
-    "telc-maroc.html": ("امتحان telc B1 و B2 ف المغرب 2026: الثمن، المراكز، التسجيل | Deutsch Einfach",
+    "telc-maroc.html": ("امتحان telc B1 و B2 ف المغرب 2026: الثمن، المراكز، التسجيل | sehrgut",
         "كلشي على امتحان telc B1 و B2 ف المغرب بالدارجة: الثمن (220 €)، المراكز الستة (كازا، الرباط، مكناس، طنجة، أكادير)، "
         "كيفاش تسجل، شنو كاين ف الامتحان، شحال خاصك باش تنجح، وخطة 30 يوم.", "0.9"),
 
     # ---- B1
-    "b1-lesen.html": ("Telc B1 Lesen – Übungen mit Lösungen | Deutsch Einfach",
+    "b1-lesen.html": ("Telc B1 Lesen – Übungen mit Lösungen | sehrgut",
         "تمارين Lesen ديال telc B1 بالحلول والترجمة للعربية: Teil 1، 2، 3 و Sprachbausteine. Telc B1 Leseverstehen online üben.", "0.9"),
-    "b1-lesen-teil1.html": ("Telc B1 Lesen Teil 1 – Übungen online | Deutsch Einfach",
+    "b1-lesen-teil1.html": ("Telc B1 Lesen Teil 1 – Übungen online | sehrgut",
         "Telc B1 Leseverstehen Teil 1: ربط العناوين بالنصوص، مع التصحيح والترجمة. Überschriften zuordnen – online üben.", "0.8"),
-    "b1-lesen-teil2.html": ("Telc B1 Lesen Teil 2 – Übungen online | Deutsch Einfach",
+    "b1-lesen-teil2.html": ("Telc B1 Lesen Teil 2 – Übungen online | sehrgut",
         "Telc B1 Leseverstehen Teil 2: أسئلة الاختيار على نص طويل، مع الحلول والشرح. Multiple Choice online üben.", "0.8"),
-    "b1-lesen-teil3.html": ("Telc B1 Lesen Teil 3 – Übungen online | Deutsch Einfach",
+    "b1-lesen-teil3.html": ("Telc B1 Lesen Teil 3 – Übungen online | sehrgut",
         "Telc B1 Leseverstehen Teil 3: ربط الوضعيات بالإعلانات، مع التصحيح. Anzeigen und Situationen zuordnen – online üben.", "0.8"),
-    "b1-lesen-sprach1.html": ("Telc B1 Sprachbausteine Teil 1 – Übungen | Deutsch Einfach",
+    "b1-lesen-sprach1.html": ("Telc B1 Sprachbausteine Teil 1 – Übungen | sehrgut",
         "Telc B1 Sprachbausteine Teil 1: القواعد فالنص مع الحلول والشرح بالعربية. Grammatik im Kontext üben.", "0.8"),
-    "b1-lesen-sprach2.html": ("Telc B1 Sprachbausteine Teil 2 – Übungen | Deutsch Einfach",
+    "b1-lesen-sprach2.html": ("Telc B1 Sprachbausteine Teil 2 – Übungen | sehrgut",
         "Telc B1 Sprachbausteine Teil 2: اختار الكلمة المناسبة من اللائحة، مع التصحيح. Wortschatz im Kontext üben.", "0.8"),
-    "b1-hoeren.html": ("Telc B1 Hören – Übungen mit Audio | Deutsch Einfach",
+    "b1-hoeren.html": ("Telc B1 Hören – Übungen mit Audio | sehrgut",
         "تمارين Hören ديال telc B1 بالصوت: Teil 1، 2 و 3 مع التصحيح وقصص سهلة للحفظ. Telc B1 Hörverstehen online üben.", "0.9"),
-    "b1-hoeren-teil1.html": ("Telc B1 Hören Teil 1 – Übungen online | Deutsch Einfach",
+    "b1-hoeren-teil1.html": ("Telc B1 Hören Teil 1 – Übungen online | sehrgut",
         "Telc B1 Hörverstehen Teil 1: سمع وجاوب richtig / falsch، مع التصحيح. Hören Teil 1 online üben.", "0.8"),
-    "b1-hoeren-teil2.html": ("Telc B1 Hören Teil 2 – Übungen online | Deutsch Einfach",
+    "b1-hoeren-teil2.html": ("Telc B1 Hören Teil 2 – Übungen online | sehrgut",
         "Telc B1 Hörverstehen Teil 2: سمع مقابلة وجاوب على الأسئلة، مع التصحيح. Hören Teil 2 online üben.", "0.8"),
-    "b1-hoeren-teil3.html": ("Telc B1 Hören Teil 3 – Übungen online | Deutsch Einfach",
+    "b1-hoeren-teil3.html": ("Telc B1 Hören Teil 3 – Übungen online | sehrgut",
         "Telc B1 Hörverstehen Teil 3: رسائل قصيرة وإعلانات، richtig / falsch مع التصحيح. Hören Teil 3 online üben.", "0.8"),
-    "b1-schreiben.html": ("Telc B1 Schreiben – Briefe mit KI-Korrektur | Deutsch Einfach",
+    "b1-schreiben.html": ("Telc B1 Schreiben – Briefe mit KI-Korrektur | sehrgut",
         "34 موضوع ديال Schreiben telc B1: كتب الرسالة ديالك وخد تصحيح فوري بالذكاء الاصطناعي ونقطة من 45. "
         "Telc B1 Brief schreiben – Beispiele und Korrektur.", "0.9"),
-    "b1-sprechen.html": ("Telc B1 Sprechen – Teil 1, 2, 3 üben | Deutsch Einfach",
+    "b1-sprechen.html": ("Telc B1 Sprechen – Teil 1, 2, 3 üben | sehrgut",
         "Telc B1 Sprechen: التعارف، Über ein Thema sprechen و Gemeinsam planen، مع حوارات نموذجية بالصوت، "
         "محاكاة مع شريك وتسجيل. 45 امتحان كامل.", "0.9"),
 
     # ---- B2
-    "b2-lesen.html": ("Telc B2 Lesen – Übungen mit Lösungen | Deutsch Einfach",
+    "b2-lesen.html": ("Telc B2 Lesen – Übungen mit Lösungen | sehrgut",
         "تمارين Lesen ديال telc B2 بالحلول والترجمة للعربية: Teil 1، 2، 3 و Sprachbausteine. Telc B2 Leseverstehen online üben.", "0.9"),
-    "b2-lesen-teil1.html": ("Telc B2 Lesen Teil 1 – Übungen online | Deutsch Einfach",
+    "b2-lesen-teil1.html": ("Telc B2 Lesen Teil 1 – Übungen online | sehrgut",
         "Telc B2 Leseverstehen Teil 1: ربط العناوين بالنصوص، مع التصحيح والترجمة. Überschriften zuordnen – online üben.", "0.8"),
-    "b2-lesen-teil2.html": ("Telc B2 Lesen Teil 2 – Übungen online | Deutsch Einfach",
+    "b2-lesen-teil2.html": ("Telc B2 Lesen Teil 2 – Übungen online | sehrgut",
         "Telc B2 Leseverstehen Teil 2: أسئلة الاختيار على نص طويل، مع الحلول والشرح. Multiple Choice online üben.", "0.8"),
-    "b2-lesen-teil3.html": ("Telc B2 Lesen Teil 3 – Übungen online | Deutsch Einfach",
+    "b2-lesen-teil3.html": ("Telc B2 Lesen Teil 3 – Übungen online | sehrgut",
         "Telc B2 Leseverstehen Teil 3: ربط الوضعيات بالإعلانات، مع التصحيح. Anzeigen zuordnen – online üben.", "0.8"),
-    "b2-lesen-sprach1.html": ("Telc B2 Sprachbausteine Teil 1 – Übungen | Deutsch Einfach",
+    "b2-lesen-sprach1.html": ("Telc B2 Sprachbausteine Teil 1 – Übungen | sehrgut",
         "Telc B2 Sprachbausteine Teil 1: القواعد فالنص مع الحلول والشرح بالعربية. Grammatik im Kontext üben.", "0.8"),
-    "b2-lesen-sprach2.html": ("Telc B2 Sprachbausteine Teil 2 – Übungen | Deutsch Einfach",
+    "b2-lesen-sprach2.html": ("Telc B2 Sprachbausteine Teil 2 – Übungen | sehrgut",
         "Telc B2 Sprachbausteine Teil 2: اختار الكلمة المناسبة، مع التصحيح. Wortschatz im Kontext üben.", "0.8"),
-    "b2-hoeren.html": ("Telc B2 Hören – Übungen mit Audio | Deutsch Einfach",
+    "b2-hoeren.html": ("Telc B2 Hören – Übungen mit Audio | sehrgut",
         "تمارين Hören ديال telc B2 بالصوت: Teil 1، 2 و 3 مع التصحيح. Telc B2 Hörverstehen online üben.", "0.9"),
-    "b2-hoeren-teil1.html": ("Telc B2 Hören Teil 1 – Übungen online | Deutsch Einfach",
+    "b2-hoeren-teil1.html": ("Telc B2 Hören Teil 1 – Übungen online | sehrgut",
         "Telc B2 Hörverstehen Teil 1: سمع وجاوب، مع التصحيح. Hören Teil 1 online üben.", "0.8"),
-    "b2-hoeren-teil2.html": ("Telc B2 Hören Teil 2 – Übungen online | Deutsch Einfach",
+    "b2-hoeren-teil2.html": ("Telc B2 Hören Teil 2 – Übungen online | sehrgut",
         "Telc B2 Hörverstehen Teil 2: سمع مقابلة وجاوب على الأسئلة، مع التصحيح. Hören Teil 2 online üben.", "0.8"),
-    "b2-hoeren-teil3.html": ("Telc B2 Hören Teil 3 – Übungen online | Deutsch Einfach",
+    "b2-hoeren-teil3.html": ("Telc B2 Hören Teil 3 – Übungen online | sehrgut",
         "Telc B2 Hörverstehen Teil 3: رسائل قصيرة وإعلانات، مع التصحيح. Hören Teil 3 online üben.", "0.8"),
-    "b2-schreiben.html": ("Telc B2 Schreiben – Beschwerde mit KI-Korrektur | Deutsch Einfach",
+    "b2-schreiben.html": ("Telc B2 Schreiben – Beschwerde mit KI-Korrektur | sehrgut",
         "مواضيع Schreiben ديال telc B2 (Beschwerde): كتب وخد تصحيح فوري بالذكاء الاصطناعي ونقطة. "
         "Telc B2 Beschwerde schreiben – Beispiele und Korrektur.", "0.9"),
-    "b2-sprechen.html": ("Telc B2 Sprechen – Teil 1, 2, 3 üben | Deutsch Einfach",
+    "b2-sprechen.html": ("Telc B2 Sprechen – Teil 1, 2, 3 üben | sehrgut",
         "Telc B2 Sprechen: Über Erfahrungen sprechen، Diskussion و Problemlösung مع مؤقت، تسجيل وأسئلة الممتحن بالصوت.", "0.9"),
 
     # ---- أدوات
-    "modelltest.html": ("Telc B2 Modelltest online mit Timer | Deutsch Einfach",
+    "modelltest.html": ("Telc B2 Modelltest online mit Timer | sehrgut",
         "امتحان تجريبي ديال telc B2 بالوقت: Lesen، Sprachbausteine و Hören، والتصحيح والنتيجة ف اللخر. "
         "Telc B2 Modelltest online.", "0.8"),
-    "wortschatz.html": ("Wortschatz B1/B2 – 1000 Wörter mit Karteikarten | Deutsch Einfach",
+    "wortschatz.html": ("Wortschatz B1/B2 – 1000 Wörter mit Karteikarten | sehrgut",
         "تعلم 1000 كلمة ألمانية مهمة لـ telc B1 و B2 بالبطاقات والمراجعة الذكية، مع الترجمة للعربية. Wortschatz trainieren.", "0.8"),
-    "payment.html": ("Premium – Preise und Zahlung | Deutsch Einfach",
-        "أثمنة Premium ديال Deutsch Einfach وطرق الدفع فالمغرب: كاع المواضيع ديال telc B1 و B2 وتصحيح بالذكاء الاصطناعي.", "0.5"),
+    "payment.html": ("Premium – Preise und Zahlung | sehrgut",
+        "أثمنة Premium ديال sehrgut وطرق الدفع فالمغرب: كاع المواضيع ديال telc B1 و B2 وتصحيح بالذكاء الاصطناعي.", "0.5"),
 }
 
 # صفحات ماخاصهاش تبان ف Google (خاصة، ولا قديمة)
@@ -138,7 +138,7 @@ def add_schreiben_pages():
             title = t.get("title", "").strip()
             kind = "Brief" if lvl == "b1" else (t.get("type") or "Beschwerde")
             PAGES[f] = (
-                f"Telc {label} Schreiben: {title} | Deutsch Einfach",
+                f"Telc {label} Schreiben: {title} | sehrgut",
                 f"Telc {label} Schreiben – {kind}: «{title}». كتب الجواب ديالك وخد تصحيح فوري بالذكاء "
                 f"الاصطناعي ونقطة من 45، مع الشرح بالدارجة. {kind} schreiben mit KI-Korrektur.",
                 "0.6",

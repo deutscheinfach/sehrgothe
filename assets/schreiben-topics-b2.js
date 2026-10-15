@@ -1,4 +1,4 @@
-/* Deutsch Einfach — B2 Schreiben (Beschwerde) — Themendaten
+/* sehrgut — B2 Schreiben (Beschwerde) — Themendaten
    Jedes Objekt: title, type, level, time, locked, ad, situation, points[4] */
 /* window.X وماشي const: ملي تبدل القسم بلا تحميل صفحة، هاد
    الملف كيتعاود يتنفذ. `const` مرتين ف نفس الصفحة = SyntaxError

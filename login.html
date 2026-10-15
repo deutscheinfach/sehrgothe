@@ -6,7 +6,7 @@
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>تسجيل الدخول – Deutsch Einfach</title>
+<title>تسجيل الدخول – sehrgut</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 <script src="assets/progress.js?v=222ee4fc"></script>
 <style>
 /* ============================================
-   Deutsch Einfach — Thème Noir & Or
+   sehrgut — Thème Noir & Or
    Design responsive: mobile / tablette / PC / grand écran
    ============================================ */
 
@@ -409,10 +409,10 @@ body::before {
 <!-- seo:start (tools/seo.py) -->
 <meta name="robots" content="noindex, follow">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Deutsch Einfach">
-<meta property="og:title" content="تسجيل الدخول – Deutsch Einfach">
-<meta property="og:url" content="https://deutsch-einfach.online/login.html">
-<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:site_name" content="sehrgut">
+<meta property="og:title" content="تسجيل الدخول – sehrgut">
+<meta property="og:url" content="https://deutscheinfach.github.io/sehrgothe/login.html">
+<meta property="og:image" content="https://deutscheinfach.github.io/sehrgothe/assets/icon-512.png">
 <meta property="og:locale" content="ar_MA">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/icon-48.png" sizes="48x48">
@@ -422,6 +422,7 @@ body::before {
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e3163f">
 <!-- seo:end -->
+<script src="assets/region.js?v=1"></script>
 </head>
 
 <body class="au">
@@ -445,7 +446,7 @@ body::before {
   <div class="auth-card">
 
     <div class="auth-logo">
-      <img src="assets/icon-192.png" alt="Deutsch Einfach" class="logo">
+      <img src="assets/icon-192.png" alt="sehrgut" class="logo">
     </div>
 
     <h1>تسجيل الدخول</h1>
@@ -562,25 +563,25 @@ from
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+        "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
 
     authDomain:
-        "deutsch-einfach-4c81f.firebaseapp.com",
+        "sehrgothe.firebaseapp.com",
 
     projectId:
-        "deutsch-einfach-4c81f",
+        "sehrgothe",
 
     storageBucket:
-        "deutsch-einfach-4c81f.firebasestorage.app",
+        "sehrgothe.firebasestorage.app",
 
     messagingSenderId:
-        "152448766933",
+        "1066728503518",
 
     appId:
-        "1:152448766933:web:f7824c4db8ab3caccbe35c",
+        "1:1066728503518:web:b350728d7b20f1064d2a4f",
 
     measurementId:
-        "G-9QV234Z0KZ"
+        "G-GKNEV0ZQV5"
 
 };
 
@@ -716,7 +717,7 @@ function safeSet(key, value) {
 
 let deviceId =
     safeGet(
-        "deutschEinfachDeviceId"
+        "sehrgutDeviceId"
     );
 
 
@@ -726,7 +727,7 @@ if (!deviceId) {
         makeId();
 
     safeSet(
-        "deutschEinfachDeviceId",
+        "sehrgutDeviceId",
         deviceId
     );
 
@@ -1009,7 +1010,7 @@ function normalizeReturnTo(value) {
 
 let returnTo =
     sessionStorage.getItem(
-        "deutschEinfachReturnTo"
+        "sehrgutReturnTo"
     );
 
 
@@ -1398,7 +1399,7 @@ loginForm.addEventListener(
 
             safeSet(
 
-                "deutschEinfachSessionId",
+                "sehrgutSessionId",
 
                 sessionId
 
@@ -1421,7 +1422,7 @@ loginForm.addEventListener(
              */
 
             sessionStorage.removeItem(
-                "deutschEinfachReturnTo"
+                "sehrgutReturnTo"
             );
 
 
@@ -1553,8 +1554,8 @@ loginForm.addEventListener(
 
     try {
 
-        kicked = sessionStorage.getItem("deutschEinfachKicked");
-        sessionStorage.removeItem("deutschEinfachKicked");
+        kicked = sessionStorage.getItem("sehrgutKicked");
+        sessionStorage.removeItem("sehrgutKicked");
 
     }
 

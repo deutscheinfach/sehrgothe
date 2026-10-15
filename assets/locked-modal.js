@@ -19,7 +19,7 @@
     var modal = null;
     var lastFocus = null;
 
-    function isPremium() { return !!window.__deutschEinfachIsPremium; }
+    function isPremium() { return !!window.__sehrgutIsPremium; }
     /* site-header.js: "pending" (Firebase ما جاوبش) · "ok" · "error" (الأنترنت) */
     function premiumState() { return window.__dePremiumState || "ok"; }
 
@@ -238,7 +238,7 @@
         go.innerHTML = "شوف العروض وفتح الحساب " + CROWN;
         box.appendChild(go);
 
-        if (!window.__deutschEinfachUser) {
+        if (!window.__sehrgutUser) {
             var login = document.createElement("a");
             login.className = "dl-login";
             login.href = "login.html";

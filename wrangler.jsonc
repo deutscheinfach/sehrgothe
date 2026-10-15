@@ -3,7 +3,7 @@
 // html_handling: "none" → الروابط كيبقاو بـ .html بحال GitHub Pages
 // (بلا redirect زايد ف كل صفحة).
 {
-  "name": "deutsch-einfach-site",
+  "name": "sehrgut-site",
   "compatibility_date": "2026-10-01",
   // غير «/» (والدوسيات) كيدوزو من هنا → index.html. باقي الملفات مباشرة.
   "main": "./site-worker.js",

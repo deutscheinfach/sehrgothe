@@ -46,7 +46,7 @@
     brand.href = "./";
     brand.innerHTML =
         /* logo-80.webp (~5KB) بلاصة icon-192.png (كان 82KB) — كيبان دغيا */
-        '<img src="assets/logo-80.webp" alt="Deutsch Einfach" width="40" height="40" fetchpriority="high" decoding="async">' +
+        '<img src="assets/logo-80.webp" alt="sehrgut" width="40" height="40" fetchpriority="high" decoding="async">' +
         '<span class="site-brand-text">' +
         '<span class="site-brand-name">Deutsch <span>Einfach</span></span>' +
         '<span class="site-brand-sub">TELC PREP B1/B2</span>' +
@@ -497,7 +497,7 @@
        الحل: كنحتافظو بآخر حالة معروفة، وكنرسموها دغيا. ملي
        يجاوب Firebase كنصلحو إلا تبدل شي حاجة. هادي زينة
        برك — الاشتراك الحقيقي كيتحقق منو الـWorker، ماشي هنا. */
-    const LAST = "deutschEinfachLastAccount";
+    const LAST = "sehrgutLastAccount";
 
     function remember(data) {
         try {
@@ -558,7 +558,7 @@
            التخمين ديال دابا باش البطائق ما يبانوش مقفولين
            ومن بعد يتحلو — والـWorker على كل حال ماكيعطي حتى
            كلمة بلا ما يتحقق من token حقيقي. */
-        if (last.premium === true) window.__deutschEinfachIsPremium = true;
+        if (last.premium === true) window.__sehrgutIsPremium = true;
     }
 
     /* ---- واش الاشتراك تأكد ولا لا ----
@@ -1204,13 +1204,13 @@
             const app = appMod.getApps().length
                 ? appMod.getApp()
                 : appMod.initializeApp({
-                      apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-                      authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
-                      projectId: "deutsch-einfach-4c81f",
-                      storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
-                      messagingSenderId: "152448766933",
-                      appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
-                      measurementId: "G-9QV234Z0KZ"
+                      apiKey: "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
+                      authDomain: "sehrgothe.firebaseapp.com",
+                      projectId: "sehrgothe",
+                      storageBucket: "sehrgothe.firebasestorage.app",
+                      messagingSenderId: "1066728503518",
+                      appId: "1:1066728503518:web:b350728d7b20f1064d2a4f",
+                      measurementId: "G-GKNEV0ZQV5"
                   });
 
             const auth = authMod.getAuth(app);
@@ -1218,7 +1218,7 @@
             /* lesen-premium.js كيحتاج الـ ID token باش يجيب المواضيع
                المدفوعة من الـ Worker. كنعطيوه auth عوض ما يعاود يحمل
                Firebase من جديد. */
-            window.__deutschEinfachAuth = auth;
+            window.__sehrgutAuth = auth;
 
             /* Firestore هو أثقل ملف ف الموقع (178 KB). ماخاصوش باش يبان
                الموضوع (الحساب من Auth، والمحتوى من Cloudflare)، إذن كيتحمل
@@ -1257,7 +1257,11 @@
                     guest.hidden = false;
                     account.hidden = true;
                     openMenu(false);
-                    window.__deutschEinfachIsPremium = false;
+                    window.__sehrgutIsPremium = false;
+                    /* زائر بلا حساب: إعلانات إلا الجهاز ماشي مغربي */
+                    if (window.__sehrgutAds && window.__sehrgutRegion) {
+                        window.__sehrgutAds.render(!window.__sehrgutRegion.looksMoroccan(window.__sehrgutRegion.hint()));
+                    }
                     setPremiumState("ok");
                     document.dispatchEvent(new CustomEvent("de-premium", { detail: false }));
                     return;
@@ -1273,6 +1277,11 @@
                 let premium = false;
                 let admin = false;
                 let failed = false;
+
+                /* البلاد (assets/region.js) كتتسول ف نفس الوقت ديال Firestore */
+                const regionRun = window.__sehrgutRegion
+                    ? window.__sehrgutRegion.check(person)
+                    : Promise.resolve({ free: false });
 
                 /* القراية ديال الحساب. أنترنت ضعيفة = كتطيح مرة مرة،
                    إذن كنعاودو جوج مرات قبل ما نقولو «مشكل ف الأنترنت». */
@@ -1411,7 +1420,14 @@
                     }
                 }
 
-                window.__deutschEinfachIsPremium = premium;
+                /* برا المغرب: كلشي مجاني (مع إعلانات). المشترك ما كيشوفش إعلانات. */
+                const subscribed = premium;
+                let regionFree = false;
+                try { regionFree = (await regionRun).free === true; } catch (e) { /* */ }
+                if (regionFree) premium = true;
+                if (window.__sehrgutAds) window.__sehrgutAds.render(regionFree && !subscribed);
+
+                window.__sehrgutIsPremium = premium;
 
                 /* باش المرة الجاية البار تبان صحيحة من أول رسمة */
                 if (!failed) remember({ name: name, premium: premium, uid: person.uid });
@@ -1437,7 +1453,7 @@
                             if (data.name) name = data.name;
                             premium = isActive(data);
                             grantOffline(data, premium);
-                            window.__deutschEinfachIsPremium = premium;
+                            window.__sehrgutIsPremium = premium;
                             remember({ name: name, premium: premium, uid: person.uid });
                             paint(name, premium);
                             buildMenu(person, name, premium);
@@ -1715,7 +1731,7 @@
            يجاوب Firebase → النقطة كتبان برقم ومن بعد كتختفى. */
         let who = "guest", whoKnown = true;
         try {
-            const lastAcc = JSON.parse(read("deutschEinfachLastAccount") || "null");
+            const lastAcc = JSON.parse(read("sehrgutLastAccount") || "null");
             if (lastAcc && lastAcc.name) {
                 if (lastAcc.uid) who = lastAcc.uid;
                 else whoKnown = false;   /* كاش قديم بلا uid: نتسناو Firebase */

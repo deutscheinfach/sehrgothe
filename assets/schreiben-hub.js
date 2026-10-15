@@ -93,7 +93,7 @@
         /* موضوع ما زال ماوصلش المحتوى ديالو: بطاقة بلا رابط */
         const node = document.createElement(topic.soon ? "div" : "a");
         /* المشترك عندو گاع المواضيع — ماعندوش علاش يشوف القفل */
-        const shut = topic.locked && !window.__deutschEinfachIsPremium;
+        const shut = topic.locked && !window.__sehrgutIsPremium;
         node.className = "lesen-card" + (shut ? " locked" : "") + (topic.soon ? " is-soon" : "");
         if (!topic.soon) node.href = LEVEL + "-schreiben-" + topic.id + ".html";
         if (topic.locked && !topic.soon) node.dataset.topic = topic.id;
@@ -132,7 +132,7 @@
            باش ملي تتحل الصفحة يلقاه واجد (DNS + TLS = رحلتين أقل). */
         if (topic.locked && !topic.soon) {
             const warm = function () {
-                if (!window.__deutschEinfachIsPremium) return;
+                if (!window.__sehrgutIsPremium) return;
                 preconnectWorker();
                 prefetch.now(topic.id);
             };
@@ -151,7 +151,7 @@
        اللي قرب ليها (hover / لمسة) كتدوز الأولى. هكا ملي كيدخل، الموضوع
        كيبان دغيا بلا ما يتسنى Firebase والـ Worker. */
     const prefetch = (function () {
-        const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+        const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
         const TTL = 3 * 24 * 3600 * 1000;
         const MAX = 12;
         const queue = [];
@@ -159,7 +159,7 @@
         let running = 0, started = 0;
         function account() {
             try {
-                const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+                const a = JSON.parse(localStorage.getItem("sehrgutLastAccount") || "null");
                 return a && a.premium === true && a.uid ? a : null;
             } catch (e) { return null; }
         }
@@ -176,7 +176,7 @@
             } catch (e) { return false; }
         }
         async function fetchOne(id) {
-            const auth = window.__deutschEinfachAuth;
+            const auth = window.__sehrgutAuth;
             const user = auth && auth.currentUser;
             if (!user) return;
             const token = await user.getIdToken();
@@ -211,13 +211,13 @@
         }
         return {
             add: function (id) {
-                if (seen[id] || !wanted(id) || !window.__deutschEinfachIsPremium) return;
+                if (seen[id] || !wanted(id) || !window.__sehrgutIsPremium) return;
                 seen[id] = true;
                 queue.push(id);
                 pump();
             },
             now: function (id) {
-                if (!wanted(id) || !window.__deutschEinfachIsPremium || cached(id)) return;
+                if (!wanted(id) || !window.__sehrgutIsPremium || cached(id)) return;
                 const i = queue.indexOf(id);
                 if (i !== -1) queue.splice(i, 1);
                 if (seen[id] && i === -1) return;   /* كيتجاب دابا */
@@ -232,7 +232,7 @@
        ومن بعد الباقي بالترتيب ديال اللائحة — حتى 12 ف الزيارة. */
     let watching = false;
     function watchCards() {
-        if (watching || !window.__deutschEinfachIsPremium) return;
+        if (watching || !window.__sehrgutIsPremium) return;
         watching = true;
         (window.__deAfterContent || function (fn) { setTimeout(fn, 1500); })(function () {
             if (stale()) return;
@@ -274,7 +274,7 @@
         if (connected) return;
         connected = true;
         try {
-            const href = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+            const href = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
             if (document.head.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
             const link = document.createElement("link");
             link.rel = "preconnect";

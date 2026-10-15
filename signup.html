@@ -6,7 +6,7 @@
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>إنشاء حساب – Deutsch Einfach</title>
+<title>إنشاء حساب – sehrgut</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 <script src="assets/progress.js?v=222ee4fc"></script>
 <style>
 /* ============================================
-   Deutsch Einfach — Thème Noir & Or
+   sehrgut — Thème Noir & Or
    Design responsive: mobile / tablette / PC / grand écran
    ============================================ */
 
@@ -168,6 +168,32 @@ input {
   transition: 0.2s;
   direction: ltr;
   text-align: left;
+}
+
+.phone-row {
+  display: flex;
+  gap: 8px;
+  direction: ltr;
+}
+
+.phone-row select {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 46%;
+  padding: 13px 10px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.phone-row select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(214,178,94,0.15);
 }
 
 input::placeholder {
@@ -369,10 +395,10 @@ body::before {
 <!-- seo:start (tools/seo.py) -->
 <meta name="robots" content="noindex, follow">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Deutsch Einfach">
-<meta property="og:title" content="إنشاء حساب – Deutsch Einfach">
-<meta property="og:url" content="https://deutsch-einfach.online/signup.html">
-<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:site_name" content="sehrgut">
+<meta property="og:title" content="إنشاء حساب – sehrgut">
+<meta property="og:url" content="https://deutscheinfach.github.io/sehrgothe/signup.html">
+<meta property="og:image" content="https://deutscheinfach.github.io/sehrgothe/assets/icon-512.png">
 <meta property="og:locale" content="ar_MA">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/icon-48.png" sizes="48x48">
@@ -382,6 +408,7 @@ body::before {
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e3163f">
 <!-- seo:end -->
+<script src="assets/region.js?v=1"></script>
 </head>
 
 <body class="au">
@@ -406,10 +433,10 @@ body::before {
   </div>
   <div class="auth-card">
 
-    <div class="auth-logo"><img src="assets/icon-192.png" alt="Deutsch Einfach" class="logo"></div>
+    <div class="auth-logo"><img src="assets/icon-192.png" alt="sehrgut" class="logo"></div>
 
     <h1>إنشاء حساب</h1>
-    <p class="subtitle">أنشئ حسابك في Deutsch Einfach وابدأ التحضير لـ TELC B1 &amp; B2</p>
+    <p class="subtitle">أنشئ حسابك في sehrgut وابدأ التحضير لـ TELC B1 &amp; B2</p>
 
     <form id="signup-form">
 
@@ -418,6 +445,45 @@ body::before {
 
       <label for="email">البريد الإلكتروني</label>
       <input type="email" id="email" placeholder="example@gmail.com" required>
+
+      <label for="phone">رقم الهاتف (WhatsApp)</label>
+      <div class="phone-row">
+        <select id="phone-cc" aria-label="رمز البلاد" required>
+          <option value="" selected disabled>البلاد</option>
+          <option value="+212">🇲🇦 +212</option>
+          <option value="+213">🇩🇿 +213</option>
+          <option value="+216">🇹🇳 +216</option>
+          <option value="+20">🇪🇬 +20</option>
+          <option value="+218">🇱🇾 +218</option>
+          <option value="+222">🇲🇷 +222</option>
+          <option value="+966">🇸🇦 +966</option>
+          <option value="+971">🇦🇪 +971</option>
+          <option value="+974">🇶🇦 +974</option>
+          <option value="+965">🇰🇼 +965</option>
+          <option value="+973">🇧🇭 +973</option>
+          <option value="+968">🇴🇲 +968</option>
+          <option value="+962">🇯🇴 +962</option>
+          <option value="+961">🇱🇧 +961</option>
+          <option value="+963">🇸🇾 +963</option>
+          <option value="+964">🇮🇶 +964</option>
+          <option value="+970">🇵🇸 +970</option>
+          <option value="+967">🇾🇪 +967</option>
+          <option value="+249">🇸🇩 +249</option>
+          <option value="+49">🇩🇪 +49</option>
+          <option value="+43">🇦🇹 +43</option>
+          <option value="+41">🇨🇭 +41</option>
+          <option value="+33">🇫🇷 +33</option>
+          <option value="+34">🇪🇸 +34</option>
+          <option value="+39">🇮🇹 +39</option>
+          <option value="+32">🇧🇪 +32</option>
+          <option value="+31">🇳🇱 +31</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+90">🇹🇷 +90</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="other">أخرى…</option>
+        </select>
+        <input type="tel" id="phone" inputmode="tel" autocomplete="tel-national" placeholder="6 12 34 56 78" required>
+      </div>
 
       <label for="password">كلمة المرور</label>
       <div class="password-wrap">
@@ -494,19 +560,19 @@ body::before {
 
     const firebaseConfig = {
 
-        apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+        apiKey: "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
 
-        authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+        authDomain: "sehrgothe.firebaseapp.com",
 
-        projectId: "deutsch-einfach-4c81f",
+        projectId: "sehrgothe",
 
-        storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+        storageBucket: "sehrgothe.firebasestorage.app",
 
-        messagingSenderId: "152448766933",
+        messagingSenderId: "1066728503518",
 
-        appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+        appId: "1:1066728503518:web:b350728d7b20f1064d2a4f",
 
-        measurementId: "G-9QV234Z0KZ"
+        measurementId: "G-GKNEV0ZQV5"
 
     };
 
@@ -650,6 +716,38 @@ body::before {
             }
 
 
+            /* الرقم: كيتسجل كامل بالرمز ديال البلاد (+213…).
+               «أخرى» = الرقم خاصو يتكتب بـ + والرمز. */
+            const phoneCc =
+                document.getElementById("phone-cc").value;
+
+            let phoneLocal =
+                document
+                    .getElementById("phone")
+                    .value
+                    .replace(/[^\d+]/g, "");
+
+            let phone = "";
+
+            if (phoneCc === "other" || /^(\+|00)/.test(phoneLocal)) {
+                /* مكتوب كامل (+212… / 00212…): هو اللي كيتحسب */
+                phone = phoneLocal.replace(/^00/, "+");
+            } else if (phoneCc) {
+                phone = phoneCc + phoneLocal.replace(/^0+/, "");
+            }
+
+            if (!/^\+\d{8,15}$/.test(phone)) {
+
+                alert(
+                    "دخل رقم الهاتف صحيح مع البلاد ديالك ❌"
+                );
+
+                return;
+            }
+
+            try { localStorage.setItem("sehrgutPhone", phone); } catch (e) {}
+
+
             button.disabled = true;
 
             button.textContent =
@@ -735,7 +833,7 @@ body::before {
 
                 try {
                     localStorage.setItem(
-                        "deutschEinfachSessionId",
+                        "sehrgutSessionId",
                         newSessionId
                     );
                 }
@@ -755,13 +853,13 @@ body::before {
                 try {
                     newDeviceId =
                         localStorage.getItem(
-                            "deutschEinfachDeviceId"
+                            "sehrgutDeviceId"
                         );
 
                     if (!newDeviceId) {
                         newDeviceId = newSessionId + "-dev";
                         localStorage.setItem(
-                            "deutschEinfachDeviceId",
+                            "sehrgutDeviceId",
                             newDeviceId
                         );
                     }
@@ -783,6 +881,8 @@ body::before {
                             name: name,
 
                             email: email,
+
+                            phone: phone,
 
                             plan: "free",
 
@@ -850,6 +950,17 @@ body::before {
                 ما غاديش نخلي alert يوقف
                 الانتقال للصفحة.
                 */
+
+                /* البلاد ديال الحساب كتتسجل ف الـWorker مع الرقم
+                   (assets/region.js). إلا طاحت، الصفحة الجاية كتعاود. */
+                try {
+                    if (window.__sehrgutRegion) {
+                        await Promise.race([
+                            window.__sehrgutRegion.check(user, phone),
+                            new Promise(function (go) { setTimeout(go, 4000); })
+                        ]);
+                    }
+                } catch (e) {}
 
                 /* الصفحة الرئيسية كتسول على التذكير اليومي دغيا (assets/app-install.js) */
                 try { sessionStorage.setItem("de-just-signed-up", "1"); } catch (e) {}
