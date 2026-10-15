@@ -129,7 +129,7 @@ function pageFromNetwork(event) {
    والمواضيع المجانية ديال Lesen. مرة وحدة لكل build (العلامة PRECACHE_MARK).
    هكا الطالب يقدر يدخل للموقع ويتنقل بين الأقسام حتى بلا wifi. */
 const PRECACHE_MARK = self.location.origin + "/__precache-build";
-const WORKER = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+const WORKER = "https://sehrgut-api.sehrgut.workers.dev";
 const FIREBASE_MODULES = ["app", "auth", "firestore"].map(function (m) {
     return "https://www.gstatic.com/firebasejs/12.18.0/firebase-" + m + ".js";
 });

@@ -17,7 +17,7 @@
     "use strict";
     if (window.__sehrgutRegion) return;
 
-    const API = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+    const API = "https://sehrgut-api.sehrgut.workers.dev";
 
     /* Google AdSense: حط هنا ca-pub-… ملي يتقبل الحساب، وفعّل
        «Auto ads» ف AdSense. خاوي = حتى إعلان ما كيبان. */

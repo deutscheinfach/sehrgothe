@@ -9,7 +9,7 @@
 (function () {
     "use strict";
 
-    const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+    const ENDPOINT = "https://sehrgut-api.sehrgut.workers.dev";
     const jobs = {};
 
     /* الطلب كيتعلق أحيانا (خصوصا Safari ف iPhone من بعد ما يرجع للتطبيق:

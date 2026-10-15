@@ -442,7 +442,7 @@ async function liveCount() {
 
 /* الحسابات اللي ف Authentication وما عندهمش وثيقة كاملة ف users
    (تسجلو والتسجيل طاح، ولا دخلو للشات قبل) — الـWorker كيكمّلهم. */
-const WORKER = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+const WORKER = "https://sehrgut-api.sehrgut.workers.dev";
 async function syncUsers(me) {
     const note = $("adm-sync-note");
     note.hidden = false; note.className = "adm-note"; note.textContent = "كنقارنو الحسابات مع Authentication…";

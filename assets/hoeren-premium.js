@@ -16,7 +16,7 @@
 (function () {
     "use strict";
 
-    const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+    const ENDPOINT = "https://sehrgut-api.sehrgut.workers.dev";
     const cache = {};
 
     try {

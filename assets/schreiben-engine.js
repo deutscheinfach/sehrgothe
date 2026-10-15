@@ -9,7 +9,7 @@
    Example: "https://deutscheinfach-correction.YOURNAME.workers.dev"
    See /worker/cloudflare-worker.js + SETUP-GUIDE.md
    ========================================================== */
-const CORRECTION_ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+const CORRECTION_ENDPOINT = "https://sehrgut-api.sehrgut.workers.dev";
 
 /* فتح الاتصال مع الـ Worker من دابا.
    الـ handshake (DNS + TCP + TLS) كياخذ نص ثانية تقريبا ف 4G،

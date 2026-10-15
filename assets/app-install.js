@@ -86,7 +86,7 @@
         var mark = "de-offline-at:" + user.uid;
         if (Date.now() - Number(read(mark) || 0) < 12 * 3600 * 1000) return;
         premiumRunning = true;
-        var WORKER = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+        var WORKER = "https://sehrgut-api.sehrgut.workers.dev";
         var WEEK = 7 * 24 * 3600 * 1000;
         fetch("offline.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (off) {
             if (!off) return;

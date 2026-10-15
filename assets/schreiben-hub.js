@@ -151,7 +151,7 @@
        اللي قرب ليها (hover / لمسة) كتدوز الأولى. هكا ملي كيدخل، الموضوع
        كيبان دغيا بلا ما يتسنى Firebase والـ Worker. */
     const prefetch = (function () {
-        const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+        const ENDPOINT = "https://sehrgut-api.sehrgut.workers.dev";
         const TTL = 3 * 24 * 3600 * 1000;
         const MAX = 12;
         const queue = [];
@@ -274,7 +274,7 @@
         if (connected) return;
         connected = true;
         try {
-            const href = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+            const href = "https://sehrgut-api.sehrgut.workers.dev";
             if (document.head.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
             const link = document.createElement("link");
             link.rel = "preconnect";
