@@ -1,0 +1,973 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+
+    /* =====================================================
+       HELPERS (الشات)
+
+       isAdmin: كيتفعل غير من Firebase Console
+       (users/{uid}.isAdmin = true). الواجهة ما تقدرش
+       تكتبو — قاعدة users تحت كتمنعو.
+
+       onlyMyReaction: التفاعلات كتسكن فـ r = {uid: "👍"}.
+       كل واحد كيقدر يبدل غير الخانة ديالو، وماكيقيس
+       حتى حقل آخر فالرسالة.
+       ===================================================== */
+
+    function isAdmin() {
+      return request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid))
+             .data.get("isAdmin", false) == true;
+    }
+
+    function onlyMyReaction() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(["r"])
+        && request.resource.data.r is map
+        && request.resource.data.r.size() <= 200
+        && request.resource.data.r
+             .diff(resource.data.get("r", {}))
+             .affectedKeys()
+             .hasOnly([request.auth.uid])
+        && (
+          !(request.auth.uid in request.resource.data.r)
+          || (
+            request.resource.data.r[request.auth.uid] is string
+            && request.resource.data.r[request.auth.uid].size() <= 8
+          )
+        );
+    }
+
+    /* =====================================================
+       USERS
+
+       ⚠️ subscriptionActive و subscriptionEnd ما كيتكتبوش
+       من الواجهة. قبل، المستخدم كان يقدر يعطي لراسو
+       Premium بجملة وحدة فالـ Console.
+
+       باش تفعّل اشتراك: Firebase Console بيدك، ولا
+       Cloud Function بـ Admin SDK (القواعد ما كتطبقش عليه).
+
+       القراءة مفتوحة للمسجّلين حيت chat.html كيقرا
+       users/{uid} ديال الأصدقاء (الأسماء والصور).
+       ===================================================== */
+
+    match /users/{userId} {
+
+      allow read: if request.auth != null;
+
+      /* التسجيل (signup.html) كيكتب subscriptionActive: false و
+         subscriptionEnd: null — مسموح، ولكن ماشي true ولا تاريخ.
+         قبل كانت هاد الخانات ممنوعة كاملين، والتسجيل كان كيطيح
+         بلا ما يبان: الحساب كيتخلق ف Auth بلا وثيقة ف users. */
+      allow create: if request.auth != null
+        && request.auth.uid == userId
+        && !request.resource.data.keys().hasAny(["role", "isAdmin"])
+        && request.resource.data.get("subscriptionActive", false) == false
+        && request.resource.data.get("subscriptionEnd", null) == null
+        && request.resource.data.get("plan", "free") == "free";
+
+      allow update: if request.auth != null
+        && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+             "subscriptionActive", "subscriptionEnd", "role", "isAdmin"
+           ]);
+
+      /* الأدمين (admin.html) كيفعّل ولا يوقف الاشتراك ديال أي واحد —
+         غير هاد الخانات، وماشي isAdmin. */
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+             "subscriptionActive", "subscriptionEnd", "subscriptionStart",
+             "plan", "subscriptionOffer", "subscriptionUpdatedAt"
+           ])
+        && request.resource.data.subscriptionActive is bool;
+
+      allow delete: if false;
+
+      /* =================================================
+         tokens ديال الإشعارات
+
+         صاحب الحساب غير كيكتب. حتى شي كليان ماكيقرا —
+         حتى هو نفسو ماعندو حاجة بيهم. الـ Worker كيقراهم
+         بحساب الخدمة، وهو كيعدا فوق هاد القواعد.
+         ================================================= */
+      match /private/{docId} {
+        allow read: if false;
+        allow write: if request.auth != null
+          && request.auth.uid == userId;
+      }
+
+      /* =================================================
+         Mein Fortschritt: النتائج، الـStreak، تاريخ الامتحان
+         وبطاقات Wortschatz. وثيقة وحدة "main" لكل مستخدم،
+         غير هو اللي كيقراها وكيكتبها.
+         ================================================= */
+      match /progress/{docId} {
+        allow read: if request.auth != null
+          && request.auth.uid == userId;
+        allow write: if request.auth != null
+          && request.auth.uid == userId
+          && docId == "main";
+      }
+    }
+
+
+    /* =====================================================
+       CALLS (WebRTC signaling)
+
+       كل مكالمة هي وثيقة فيها offer/answer، وجوج
+       subcollections للـ ICE candidates.
+
+       غير المتصل والمتلقي كيقراو ويكتبو. الوثيقة ما
+       فيهاش محتوى حساس — الصوت والصورة كيمشيو
+       مباشرة بين الجهازين، ماشي عبر Firestore.
+       ===================================================== */
+
+    match /calls/{callId} {
+
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        );
+
+      allow list: if request.auth != null
+        && (
+          resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        );
+
+      allow create: if request.auth != null
+        && request.resource.data.callerId == request.auth.uid
+        && request.resource.data.calleeId is string
+        && request.resource.data.calleeId != request.auth.uid
+        && request.resource.data.status == "ringing"
+        && request.resource.data.type in ["audio", "video"];
+
+      /* الطرفين كيقدرو يبدلو الحالة، ولكن ما يقدروش
+         يبدلو شكون فالمكالمة. */
+      allow update: if request.auth != null
+        && (
+          resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        )
+        && request.resource.data.callerId == resource.data.callerId
+        && request.resource.data.calleeId == resource.data.calleeId;
+
+      allow delete: if request.auth != null
+        && (
+          resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        );
+
+
+      match /{candidateType}/{candidateId} {
+
+        allow read, create: if request.auth != null
+          && candidateType in ["callerCandidates", "calleeCandidates"]
+          && (
+            get(/databases/$(database)/documents/calls/$(callId)).data.callerId
+              == request.auth.uid
+            || get(/databases/$(database)/documents/calls/$(callId)).data.calleeId
+              == request.auth.uid
+          );
+
+        allow update, delete: if false;
+      }
+    }
+
+
+    /* =====================================================
+       COMMUNITY CHAT
+       ===================================================== */
+
+    match /chatMessages/{messageId} {
+
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 500
+        && (
+             request.resource.data.text.size() > 0
+             || (
+                  request.resource.data.get("imageId", "") is string
+                  && request.resource.data.get("imageId", "").size() > 0
+                  && request.resource.data.get("imageId", "").size() <= 120
+                )
+           );
+
+      /* التفاعلات فقط */
+      allow update: if request.auth != null && onlyMyReaction();
+
+      /* صاحب الرسالة ولا الأدمين */
+      allow delete: if request.auth != null
+        && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+
+    /* =====================================================
+       REPORTS (التبليغ)
+
+       المستخدم كيبلّغ على رسالة. حتى واحد ما كيقرا من
+       الواجهة — كتشوفهم فـ Firebase Console.
+       ===================================================== */
+
+    /* =====================================================
+       NEWS — الإشعارات ديال الجرس فالهيدر
+
+       الكل كيقرا (حتى اللي ماداخلش). غير الأدمين
+       (users/{uid}.isAdmin = true) اللي كينشر ولا كيمسح.
+       ===================================================== */
+
+    /* شحال من واحد ف الموقع دابا (assets/presence.js): كل متصفح كيكتب
+       غير الوقت ديال السيرفر ف الوثيقة ديالو. القراية (العدد) غير للأدمين. */
+    match /presence/{browserId} {
+      allow read: if isAdmin();
+      allow create, update: if browserId.size() >= 16 && browserId.size() <= 40
+        && request.resource.data.keys().hasOnly(["at"])
+        && request.resource.data.at == request.time;
+      allow delete: if false;
+    }
+
+    /* التذكير اليومي (assets/push-register.js): كل واحد كيكتب غير
+       الوثيقة ديالو. الـ Worker كيقرا بحساب الخدمة. */
+    match /reminders/{userId} {
+      allow read: if false;
+      allow write: if request.auth != null && request.auth.uid == userId
+        && request.resource.data.keys().hasOnly(["tokens", "on", "updatedAt"]);
+    }
+
+    /* «إرسال ملاحظة» (assets/report.js): المستخدم كيكتب بلاغ باسمو،
+       الأدمين كيقرا وكيبدل غير status (admin.html). */
+    match /reports/{reportId} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(["uid","email","name","type","item","note","section","level","thema","teil","variant","url","status","createdAt"])
+        && request.resource.data.status == "new"
+        && request.resource.data.note is string && request.resource.data.note.size() <= 1000
+        && request.resource.data.type is string && request.resource.data.type.size() <= 80
+        && request.resource.data.url is string && request.resource.data.url.size() <= 300;
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["status"]);
+      allow delete: if isAdmin();
+    }
+
+    /* =====================================================
+       الكلمات المفتاحية اللي كيزيدهم الأدمين من الموقع
+       (assets/kw-custom.js): وثيقة لكل موضوع Lesen ولا صفحة
+       Hören = { items: { <hash ديال النص>: ["كلمة", …] } }.
+       الكل كيقرا (حتى الضيف)، الأدمين برك كيكتب.
+       ===================================================== */
+    match /keywords/{docId} {
+      allow read: if true;
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly(["items", "updatedAt"])
+        && request.resource.data.items is map;
+      allow delete: if isAdmin();
+    }
+
+    /* =====================================================
+       مشاكل الطلبة (assets/diag.js): كل متصفح كيقدر يزيد سطر
+       (حتى بلا حساب — كيتكتب بـ REST)، بشكل محدد وطول محدود.
+       غير الأدمين كيقرا ويمسح (admin.html). ماكاينش update.
+       ===================================================== */
+    match /diag/{id} {
+      allow create: if request.resource.data.keys().hasOnly(["type", "msg", "page", "ua", "vw", "vh", "dpr", "ms", "net", "premium", "at"])
+        && request.resource.data.type is string && request.resource.data.type.size() <= 20
+        && request.resource.data.msg is string && request.resource.data.msg.size() <= 400
+        && request.resource.data.page is string && request.resource.data.page.size() <= 200
+        && request.resource.data.ua is string && request.resource.data.ua.size() <= 250
+        && request.resource.data.at is timestamp;
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
+    match /news/{newsId} {
+
+      allow read: if true;
+
+      allow create: if isAdmin()
+        && request.resource.data.keys().hasOnly(["title", "body", "link", "createdAt"])
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && (!("body" in request.resource.data)
+            || (request.resource.data.body is string && request.resource.data.body.size() <= 1000))
+        && (!("link" in request.resource.data)
+            || (request.resource.data.link is string && request.resource.data.link.size() <= 300))
+        && request.resource.data.createdAt == request.time;
+
+      allow delete: if isAdmin();
+    }
+
+
+    match /reports/{reportId} {
+
+      allow create: if request.auth != null
+        && request.resource.data.reporterUid == request.auth.uid
+        && request.resource.data.reportedUid is string
+        && request.resource.data.messageId is string
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 500
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() <= 300;
+
+      allow read, update, delete: if isAdmin();
+    }
+
+
+    /* =====================================================
+       CHAT IMAGES
+
+       الصورة كتسكن فوثيقة بوحدها (base64)، والرسالة
+       كتحمل غير الـ ID. هكا لائحة الرسائل كتبقى خفيفة
+       والصورة ما كتتقرا إلا ملي توصل للشاشة.
+
+       Firebase Storage كيتطلب خطة Blaze — هادي كتخدم
+       على الخطة المجانية.
+
+       الحد: 900k حرف (وثيقة Firestore ماكسيموم 1MB).
+       ===================================================== */
+
+    match /chatImages/{imageId} {
+
+      allow read: if request.auth != null;
+
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.data is string
+        && request.resource.data.data.size() > 0
+        && request.resource.data.data.size() <= 900000;
+
+      allow update: if false;
+
+      allow delete: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+    }
+
+
+    /* =====================================================
+       FRIEND REQUESTS
+
+       ⚠️ القراءة ولات غير للمعنيين. قبل كان أي مسجّل
+       يقرا جميع الطلبات ديال الناس كاملين.
+       ===================================================== */
+
+    match /friendRequests/{requestId} {
+
+      /* get و list منفصلين عمداً.
+
+         وثيقة ماكايناش = resource هو null، و
+         resource.data كيطيح. الواجهة كتسول "واش
+         صيفطت ليه طلب؟" بـ getDoc على ID يمكن ما
+         يكونش موجود — ف بلا هاد الشرط، الزر ديال
+         "زيد صديق" ما كيبانش أصلاً.
+
+         الـ ID ثابت (uid_uid)، ف وجودها ماشي سر. */
+
+      /* .get() ماشي زيادة: ف قواعد Firestore، وثيقة ناقصة
+         فيها الحقل كترمي خطأ ماشي "false". وف الـ list،
+         وثيقة وحدة اللي كترمي كتطيح الاستعلام كامل — ف
+         "Anfragen" كان كيعطي "Fehler beim Laden" حتى ملي
+         الطلبات ديالك هوما هوما. */
+
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
+        );
+
+      allow list: if request.auth != null
+        && (
+          resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
+        );
+
+      allow create: if request.auth != null
+        && request.resource.data.fromUid == request.auth.uid
+        && request.resource.data.toUid is string
+        && request.resource.data.toUid != request.auth.uid
+        && request.resource.data.status == "pending";
+
+      allow update: if request.auth != null
+        && (
+
+          (
+            resource.data.toUid == request.auth.uid
+            && resource.data.fromUid
+                == request.resource.data.fromUid
+            && resource.data.toUid
+                == request.resource.data.toUid
+            && resource.data.status == "pending"
+            && request.resource.data.status
+                in ["accepted", "rejected"]
+          )
+
+          ||
+
+          (
+            resource.data.fromUid == request.auth.uid
+            && resource.data.fromUid
+                == request.resource.data.fromUid
+            && resource.data.toUid
+                == request.resource.data.toUid
+            && resource.data.status == "rejected"
+            && request.resource.data.status == "pending"
+          )
+        );
+
+      allow delete: if request.auth != null
+        && (
+          resource.data.fromUid == request.auth.uid
+          || resource.data.toUid == request.auth.uid
+        );
+    }
+
+
+    /* =====================================================
+       FRIENDSHIPS
+       ===================================================== */
+
+    match /friendships/{friendshipId} {
+
+      /* وثيقة ماكايناش = resource هو null. الكود كيسول
+         "واش راهم أصدقاء؟" قبل ما يصيفط الطلب، و
+         بلا هاد الشرط داك السؤال بوحدو كيترفض. */
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || request.auth.uid in resource.data.users
+        );
+
+      allow list: if request.auth != null
+        && request.auth.uid in resource.data.users;
+
+      allow create: if request.auth != null
+        && request.resource.data.users is list
+        && request.resource.data.users.size() == 2
+        && request.resource.data.users[0]
+            != request.resource.data.users[1]
+        && request.auth.uid
+            in request.resource.data.users;
+
+      allow update: if false;
+
+      allow delete: if request.auth != null
+        && request.auth.uid in resource.data.users;
+    }
+
+
+    /* =====================================================
+       PRIVATE CHATS
+       ===================================================== */
+
+    match /privateChats/{chatId} {
+
+      /* -----------------------------------------------
+         READ PRIVATE CHAT
+
+         FIX: a list query (where participants
+         array-contains uid, used to build the
+         "Chats" sidebar) gets rejected by Firestore
+         if the read rule checks anything on
+         resource.data other than membership itself
+         (like .size() == 2). Keep this rule to a
+         single membership check so both the list
+         query AND single-doc reads are allowed.
+         ----------------------------------------------- */
+
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || request.auth.uid in resource.data.participants
+        );
+
+      allow list: if request.auth != null
+        && request.auth.uid in resource.data.participants;
+
+
+      allow create: if request.auth != null
+        && request.resource.data.participants is list
+        && request.resource.data.participants.size() == 2
+        && request.resource.data.participants[0]
+            != request.resource.data.participants[1]
+        && request.auth.uid
+            in request.resource.data.participants;
+
+
+      allow update: if request.auth != null
+
+        && resource.data.participants is list
+        && resource.data.participants.size() == 2
+
+        && request.auth.uid
+            in resource.data.participants
+
+        && request.resource.data.participants is list
+        && request.resource.data.participants.size() == 2
+
+        && request.auth.uid
+            in request.resource.data.participants
+
+        && request.resource.data.participants
+            == resource.data.participants;
+
+
+      allow delete: if false;
+
+
+      /* =================================================
+         PRIVATE CHAT MESSAGES
+         ================================================= */
+
+      match /messages/{messageId} {
+
+        /* شات خاوي = الوثيقة الأم ماكايناش بعد.
+           بلا هاد الشرط، فتح شات جديد كيعطي خطأ
+           بدل ما يبان خاوي.
+
+           ما كاين حتى تسريب: رسالة ما يمكن تكون بلا
+           وثيقة أم (قاعدة الإنشاء تحت كتفرضها)، ف
+           "ماكايناش" معناها "ما كاينة حتى رسالة". */
+        allow read: if request.auth != null
+
+          && (
+            !exists(
+              /databases/$(database)/documents/privateChats/$(chatId)
+            )
+            || request.auth.uid in get(
+              /databases/$(database)/documents/privateChats/$(chatId)
+            ).data.participants
+          );
+
+
+        allow create: if request.auth != null
+
+          && exists(
+            /databases/$(database)/documents/privateChats/$(chatId)
+          )
+
+          && request.resource.data.userId
+              == request.auth.uid
+
+          && request.resource.data.text is string
+
+          && request.resource.data.text.size() <= 500
+
+          && (
+               request.resource.data.text.size() > 0
+               || (
+                    request.resource.data.get("imageId", "") is string
+                    && request.resource.data.get("imageId", "").size() > 0
+                    && request.resource.data.get("imageId", "").size() <= 120
+                  )
+             )
+
+          && request.auth.uid in get(
+            /databases/$(database)/documents/privateChats/$(chatId)
+          ).data.participants;
+
+
+        allow update: if request.auth != null
+          && request.auth.uid in get(
+            /databases/$(database)/documents/privateChats/$(chatId)
+          ).data.participants
+          && onlyMyReaction();
+
+        allow delete: if request.auth != null
+          && resource.data.userId == request.auth.uid;
+      }
+    }
+
+
+    /* =====================================================
+       GROUPS
+       MAXIMUM 8 MEMBERS
+
+       ⚠️ باقي: فرع "ACCEPT GROUP INVITE" ما كيتحققش
+       أن الدعوة موجودة. اللي عندو الـ groupId كيقدر
+       يزيد راسو. التصليح كيتطلب IDs ثابتة للدعوات
+       (groupId_uid) — تعديل فـ chat.html.
+       ===================================================== */
+
+    match /groups/{groupId} {
+
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || request.auth.uid in resource.data.members
+        );
+
+      allow list: if request.auth != null
+        && request.auth.uid in resource.data.members;
+
+
+      allow create: if request.auth != null
+
+        && request.resource.data.ownerId
+            == request.auth.uid
+
+        && request.resource.data.members is list
+
+        && request.resource.data.members.size() >= 1
+
+        && request.resource.data.members.size() <= 8
+
+        && request.auth.uid
+            in request.resource.data.members
+
+        && request.resource.data.memberCount
+            == request.resource.data.members.size()
+
+        && request.resource.data.closed == false;
+
+
+      /* memberCount كيتفرض غير فالفروع اللي كتبدل
+         الأعضاء. كان مفروض على كل تعديل، ف مجموعة
+         قديمة بلا هاد الحقل (ولا برقم غير متطابق)
+         كانت كترفض حتى تبديل الصورة. */
+      allow update: if request.auth != null
+
+        && request.resource.data.members is list
+
+        && request.resource.data.members.size() >= 1
+
+        && request.resource.data.members.size() <= 8
+
+        && (
+
+          /* OWNER CLOSE GROUP */
+
+          (
+            resource.data.ownerId == request.auth.uid
+
+            && resource.data.get("closed", false) == false
+
+            && request.resource.data.closed == true
+
+            && request.resource.data.ownerId
+                == resource.data.ownerId
+
+            && request.resource.data.members
+                == resource.data.members
+
+            && request.resource.data.memberCount
+                == resource.data.memberCount
+          )
+
+
+          ||
+
+
+          /* OWNER REMOVE MEMBER */
+
+          (
+            resource.data.ownerId == request.auth.uid
+
+            && resource.data.get("closed", false) == false
+
+            && request.resource.data.closed
+                == resource.data.closed
+
+            && request.resource.data.ownerId
+                == resource.data.ownerId
+
+            && request.auth.uid
+                in resource.data.members
+
+            && request.auth.uid
+                in request.resource.data.members
+
+            && request.resource.data.members.size()
+                == resource.data.members.size() - 1
+            && request.resource.data.get("name", "")
+                == resource.data.get("name", "")
+
+            && request.resource.data.get("photoURL", "")
+                == resource.data.get("photoURL", "")
+            && request.resource.data.memberCount
+                == request.resource.data.members.size()
+          )
+
+
+          ||
+
+
+          /* MEMBER LEAVES GROUP */
+
+          (
+            resource.data.get("closed", false) == false
+
+            && request.auth.uid
+                in resource.data.members
+
+            && !(request.auth.uid
+                in request.resource.data.members)
+
+            && request.resource.data.members.size()
+                == resource.data.members.size() - 1
+
+            && request.resource.data.ownerId
+                == resource.data.ownerId
+
+            && request.resource.data.closed
+                == resource.data.closed
+            && request.resource.data.get("name", "")
+                == resource.data.get("name", "")
+
+            && request.resource.data.get("photoURL", "")
+                == resource.data.get("photoURL", "")
+            && request.resource.data.memberCount
+                == request.resource.data.members.size()
+          )
+
+
+          ||
+
+
+          /* ACCEPT GROUP INVITE */
+
+          (
+            resource.data.get("closed", false) == false
+
+            && !(request.auth.uid
+                in resource.data.members)
+
+            && request.auth.uid
+                in request.resource.data.members
+
+            && request.resource.data.members.size()
+                == resource.data.members.size() + 1
+
+            && request.resource.data.members.size() <= 8
+
+            && request.resource.data.ownerId
+                == resource.data.ownerId
+
+            && request.resource.data.closed
+                == resource.data.closed
+            && request.resource.data.get("name", "")
+                == resource.data.get("name", "")
+
+            && request.resource.data.get("photoURL", "")
+                == resource.data.get("photoURL", "")
+            && request.resource.data.memberCount
+                == request.resource.data.members.size()
+          )
+
+
+          ||
+
+
+          /* OWNER EDITS GROUP INFO (name, photoURL, ...)
+             membership/ownership/closed status unchanged */
+
+          (
+            resource.data.ownerId == request.auth.uid
+
+            && request.resource.data.members
+                == resource.data.members
+
+            && request.resource.data.ownerId
+                == resource.data.ownerId
+
+            && request.resource.data.closed
+                == resource.data.closed
+          )
+        );
+
+
+      allow delete: if request.auth != null
+        && resource.data.ownerId == request.auth.uid;
+
+
+      /* =================================================
+         GROUP MESSAGES
+         ================================================= */
+
+      match /messages/{messageId} {
+
+        allow read: if request.auth != null
+          && exists(
+            /databases/$(database)/documents/groups/$(groupId)
+          )
+          && request.auth.uid in get(
+            /databases/$(database)/documents/groups/$(groupId)
+          ).data.members;
+
+
+        allow create: if request.auth != null
+
+          && request.resource.data.userId
+              == request.auth.uid
+
+          && request.resource.data.text is string
+
+          && request.resource.data.text.size() <= 500
+
+          && (
+               request.resource.data.text.size() > 0
+               || (
+                    request.resource.data.get("imageId", "") is string
+                    && request.resource.data.get("imageId", "").size() > 0
+                    && request.resource.data.get("imageId", "").size() <= 120
+                  )
+             )
+
+          && exists(
+            /databases/$(database)/documents/groups/$(groupId)
+          )
+
+          && request.auth.uid in get(
+            /databases/$(database)/documents/groups/$(groupId)
+          ).data.members
+
+          && get(
+            /databases/$(database)/documents/groups/$(groupId)
+          ).data.get("closed", false) == false;
+
+
+        allow update: if request.auth != null
+          && request.auth.uid in get(
+            /databases/$(database)/documents/groups/$(groupId)
+          ).data.members
+          && onlyMyReaction();
+
+        allow delete: if request.auth != null
+          && (
+            resource.data.userId == request.auth.uid
+            || get(
+              /databases/$(database)/documents/groups/$(groupId)
+            ).data.ownerId == request.auth.uid
+          );
+      }
+    }
+
+
+    /* =====================================================
+       GROUP INVITES
+
+       ⚠️ القراءة ولات غير للمعنيين. قبل كان أي مسجّل
+       يقرا جميع الدعوات، ف كياخد منها الـ groupId
+       ديال أي مجموعة.
+       ===================================================== */
+
+    match /groupInvites/{inviteId} {
+
+      /* .get() ماشي زيادة: ف قواعد Firestore، وثيقة ناقصة
+         فيها الحقل كترمي خطأ ماشي "false". وف الـ list،
+         وثيقة وحدة اللي كترمي كتطيح الاستعلام كامل — ف
+         "Anfragen" كان كيعطي "Fehler beim Laden" حتى ملي
+         الطلبات ديالك هوما هوما. */
+
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
+        );
+
+      allow list: if request.auth != null
+        && (
+          resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
+        );
+
+
+      allow create: if request.auth != null
+
+        && request.resource.data.fromUid
+            == request.auth.uid
+
+        && request.resource.data.toUid is string
+
+        && request.resource.data.toUid
+            != request.auth.uid
+
+        && request.resource.data.groupId is string
+
+        && request.resource.data.status
+            == "pending"
+
+        && exists(
+          /databases/$(database)/documents/groups/$(request.resource.data.groupId)
+        )
+
+        && request.auth.uid in get(
+          /databases/$(database)/documents/groups/$(request.resource.data.groupId)
+        ).data.members
+
+        && get(
+          /databases/$(database)/documents/groups/$(request.resource.data.groupId)
+        ).data.get("closed", false) == false
+
+        && get(
+          /databases/$(database)/documents/groups/$(request.resource.data.groupId)
+        ).data.members.size() < 8;
+
+
+      /* المستقبل كيقبل ولا كيرفض */
+      allow update: if request.auth != null
+
+        && resource.data.toUid
+            == request.auth.uid
+
+        && resource.data.fromUid
+            == request.resource.data.fromUid
+
+        && resource.data.toUid
+            == request.resource.data.toUid
+
+        && resource.data.groupId
+            == request.resource.data.groupId
+
+        && resource.data.status
+            == "pending"
+
+        && request.resource.data.status
+            in ["accepted", "rejected"];
+
+
+      /* المرسل كيعاود الدعوة
+
+         الـ ID ثابت (groupId_uid)، ف دعوة مرفوضة
+         كانت كتسدّ الباب للأبد: setDoc عليها كيولي
+         تحديث، والتحديث مسموح غير للمستقبل. */
+      allow update: if request.auth != null
+
+        && resource.data.fromUid
+            == request.auth.uid
+
+        && resource.data.status
+            != "pending"
+
+        && request.resource.data.fromUid
+            == request.auth.uid
+
+        && request.resource.data.toUid
+            == resource.data.toUid
+
+        && request.resource.data.groupId
+            == resource.data.groupId
+
+        && request.resource.data.status
+            == "pending"
+
+        && exists(
+          /databases/$(database)/documents/groups/$(resource.data.groupId)
+        )
+
+        && request.auth.uid in get(
+          /databases/$(database)/documents/groups/$(resource.data.groupId)
+        ).data.members;
+
+      allow delete: if false;
+    }
+  }
+}

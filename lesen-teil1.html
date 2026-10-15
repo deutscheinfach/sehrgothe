@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=582e5683"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>sehrgut – Lesen Teil 1</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
+<script src="assets/stars.js?v=93c940c6" defer></script>
+<script src="assets/progress.js?v=222ee4fc"></script>
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+
+            background: radial-gradient(circle at 12% 6%, rgba(214,178,94,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(214,178,94,.07), transparent 44%),#08090c;
+
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+
+        /* ========================================= */
+        /* NAVIGATION */
+        /* ========================================= */
+
+        .top-navigation {
+
+            width: 95%;
+            max-width: 1200px;
+
+            margin: 20px auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+
+        .nav-left {
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .nav-btn {
+
+            border: none;
+
+            padding: 11px 17px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+
+
+        .nav-btn:hover {
+
+            transform: translateY(-2px);
+        }
+
+
+        .nav-back {
+
+            background: #333;
+            color: white;
+        }
+
+
+        .page-progress {
+
+            background: var(--surface);
+
+            border: 2px solid var(--gold-soft);
+
+            border-radius: 15px;
+
+            padding: 10px 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            color: var(--muted);
+
+            line-height: 1.5;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        }
+
+
+        /* ========================================= */
+        /* HEADER */
+        /* ========================================= */
+
+        header {
+
+            background: var(--surface);
+
+            text-align: center;
+
+            padding: 25px 15px;
+
+            border-top: 4px solid var(--gold-soft);
+            border-bottom: 4px solid var(--gold-soft);
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+
+        .logo {
+
+            width: 70px;
+            height: 70px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid var(--gold-soft);
+
+            vertical-align: middle;
+
+            margin-right: 10px;
+        }
+
+
+        header h1 {
+
+            display: inline-block;
+
+            vertical-align: middle;
+
+            color: var(--accent-text);
+
+            font-size: 30px;
+        }
+
+
+        header p {
+
+            margin-top: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: var(--muted);
+        }
+
+
+        .badge {
+
+            display: inline-block;
+
+            margin-top: 12px;
+
+            padding: 8px 15px;
+
+            border-radius: 20px;
+
+            background: rgba(214,178,94,.14);
+
+            border: 2px solid var(--gold-soft);
+
+            color: #8a5a00;
+
+            font-weight: bold;
+        }
+
+
+        /* ========================================= */
+        /* MAIN */
+        /* ========================================= */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1200px;
+
+            margin: 30px auto;
+        }
+
+
+        .intro {
+
+            background: var(--surface);
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            border-left: 6px solid var(--gold);
+
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+
+        .intro h2 {
+
+            color: var(--accent-text);
+
+            margin-bottom: 10px;
+        }
+
+
+        .intro p {
+
+            color: var(--muted);
+
+            line-height: 1.7;
+        }
+
+
+        /* ========================================= */
+        /* THEMES GRID */
+        /* ========================================= */
+
+        .themes {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .theme-card {
+
+            background: var(--surface);
+
+            border: 3px solid var(--gold-soft);
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            min-height: 190px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+
+            transition: 0.25s ease;
+        }
+
+
+        .theme-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+
+        /* ========================================= */
+        /* OPEN THEME */
+        /* ========================================= */
+
+        .theme-card.open {
+
+            border-color: #2a9d8f;
+
+            background: linear-gradient(
+                    135deg,
+                    var(--surface),
+                    rgba(74,222,128,.12)
+                );
+        }
+
+
+        .theme-card.open:hover {
+
+            border-color: #2a9d8f;
+        }
+
+
+        /* ========================================= */
+        /* LOCKED THEMES */
+        /* ========================================= */
+
+        .theme-card.locked {
+
+            opacity: 0.72;
+
+            background: var(--surface-2);
+
+            border-color: #cccccc;
+
+            cursor: not-allowed;
+        }
+
+
+        .theme-card.locked:hover {
+
+            transform: none;
+
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        }
+
+
+        /* ========================================= */
+        /* THEME NUMBER */
+        /* ========================================= */
+
+        .theme-number {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            background: var(--gold);
+
+            color: var(--on-brand);
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+
+        .theme-card.open .theme-number {
+
+            background: #2a9d8f;
+        }
+
+
+        .theme-card.locked .theme-number {
+
+            background: #999;
+        }
+
+
+        /* ========================================= */
+        /* TITLE */
+        /* ========================================= */
+
+        .theme-title {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: var(--text);
+
+            line-height: 1.5;
+
+            margin-bottom: 10px;
+        }
+
+
+        .theme-description {
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* ========================================= */
+        /* BUTTON */
+        /* ========================================= */
+
+        .theme-button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: #2a9d8f;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .theme-button:hover {
+
+            background: #238579;
+
+            transform: translateY(-2px);
+        }
+
+
+        .locked-button {
+
+            background: #999;
+
+            cursor: not-allowed;
+        }
+
+
+        .locked-button:hover {
+
+            background: #999;
+
+            transform: none;
+        }
+
+
+        /* ========================================= */
+        /* FOOTER */
+        /* ========================================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 30px 15px;
+
+            color: var(--muted);
+        }
+
+
+        /* ========================================= */
+        /* RESPONSIVE */
+        /* ========================================= */
+
+        @media (max-width: 950px) {
+
+            .themes {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .themes {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .top-navigation {
+
+                justify-content: center;
+            }
+
+
+            .page-progress {
+
+                order: -1;
+
+                width: 100%;
+            }
+
+
+            .nav-left {
+
+                width: 100%;
+
+                justify-content: flex-start;
+            }
+
+
+            .nav-btn {
+
+                padding: 10px 12px;
+
+                font-size: 13px;
+            }
+
+
+            header h1 {
+
+                font-size: 23px;
+            }
+
+
+            header p {
+
+                font-size: 17px;
+            }
+
+        }
+
+    </style>
+
+<!-- seo:start (tools/seo.py) -->
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="sehrgut">
+<meta property="og:title" content="sehrgut – Lesen Teil 1">
+<meta property="og:url" content="https://deutscheinfach.github.io/sehrgothe/lesen-teil1.html">
+<meta property="og:image" content="https://deutscheinfach.github.io/sehrgothe/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-48.png" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+<script src="assets/region.js?v=1"></script>
+</head>
+
+
+<body>
+
+
+<!-- ========================================= -->
+<!-- NAVIGATION -->
+<!-- ========================================= -->
+
+<div class="top-navigation">
+
+
+    <div class="nav-left">
+
+        <button
+            class="nav-btn nav-back"
+            onclick="goBack()"
+        >
+            ← Zurück
+        </button>
+
+    </div>
+
+
+    <div class="page-progress">
+
+        📖 Lesen Teil 1
+
+        <br>
+
+        45 Themen
+
+    </div>
+
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- HEADER -->
+<!-- ========================================= -->
+
+<header>
+
+
+    <img
+        src="assets/icon-192.png"
+        class="logo"
+        alt="sehrgut Logo"
+    >
+
+
+    <h1>
+        sehrgut 🇩🇪
+    </h1>
+
+
+    <p>
+        Leseverstehen – Teil 1
+    </p>
+
+
+    <div class="badge">
+
+        🟢 45 Themen verfügbar
+
+    </div>
+
+
+</header>
+
+
+<!-- ========================================= -->
+<!-- MAIN -->
+<!-- ========================================= -->
+
+<div class="container">
+
+
+    <div class="intro">
+
+        <h2>
+            📖 Lesen Teil 1
+        </h2>
+
+
+        <p>
+
+            Willkommen bei
+
+            <strong>
+                sehrgut
+            </strong>.
+
+            Hier findest du 45 Themen für
+            <strong>
+                Leseverstehen Teil 1
+            </strong>.
+
+            Beginne mit Thema 1 und trainiere
+            Schritt für Schritt für die TELC B1 & B2 Prüfung.
+
+        </p>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- THEMES -->
+    <!-- ========================================= -->
+
+    <div class="themes">
+
+
+        <!-- THEMA 1 -->
+
+        <div class="theme-card open">
+
+            <div>
+
+                <div class="theme-number">
+                    1
+                </div>
+
+
+                <div class="theme-title">
+
+                    Sport ist gesund
+
+                </div>
+
+
+                <div class="theme-description">
+
+                    Leseverstehen Teil 1 –
+                    Grundversion
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button"
+                onclick="openThema1()"
+            >
+
+                ▶ Thema starten
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 2 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    2
+                </div>
+
+                <div class="theme-title">
+                    Thema 2
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 3 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    3
+                </div>
+
+                <div class="theme-title">
+                    Thema 3
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 4 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    4
+                </div>
+
+                <div class="theme-title">
+                    Thema 4
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 5 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    5
+                </div>
+
+                <div class="theme-title">
+                    Thema 5
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 6 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    6
+                </div>
+
+                <div class="theme-title">
+                    Thema 6
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 7 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    7
+                </div>
+
+                <div class="theme-title">
+                    Thema 7
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 8 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    8
+                </div>
+
+                <div class="theme-title">
+                    Thema 8
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 9 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    9
+                </div>
+
+                <div class="theme-title">
+                    Thema 9
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 10 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    10
+                </div>
+
+                <div class="theme-title">
+                    Thema 10
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 11 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    11
+                </div>
+
+                <div class="theme-title">
+                    Thema 11
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 12 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    12
+                </div>
+
+                <div class="theme-title">
+                    Thema 12
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 13 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    13
+                </div>
+
+                <div class="theme-title">
+                    Thema 13
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 14 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    14
+                </div>
+
+                <div class="theme-title">
+                    Thema 14
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 15 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    15
+                </div>
+
+                <div class="theme-title">
+                    Thema 15
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 16 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    16
+                </div>
+
+                <div class="theme-title">
+                    Thema 16
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 17 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    17
+                </div>
+
+                <div class="theme-title">
+                    Thema 17
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 18 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    18
+                </div>
+
+                <div class="theme-title">
+                    Thema 18
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 19 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    19
+                </div>
+
+                <div class="theme-title">
+                    Thema 19
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 20 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    20
+                </div>
+
+                <div class="theme-title">
+                    Thema 20
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 21 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    21
+                </div>
+
+                <div class="theme-title">
+                    Thema 21
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 22 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    22
+                </div>
+
+                <div class="theme-title">
+                    Thema 22
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 23 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    23
+                </div>
+
+                <div class="theme-title">
+                    Thema 23
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 24 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    24
+                </div>
+
+                <div class="theme-title">
+                    Thema 24
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 25 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    25
+                </div>
+
+                <div class="theme-title">
+                    Thema 25
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 26 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    26
+                </div>
+
+                <div class="theme-title">
+                    Thema 26
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 27 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    27
+                </div>
+
+                <div class="theme-title">
+                    Thema 27
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 28 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    28
+                </div>
+
+                <div class="theme-title">
+                    Thema 28
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 29 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    29
+                </div>
+
+                <div class="theme-title">
+                    Thema 29
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 30 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    30
+                </div>
+
+                <div class="theme-title">
+                    Thema 30
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 31 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    31
+                </div>
+
+                <div class="theme-title">
+                    Thema 31
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 32 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    32
+                </div>
+
+                <div class="theme-title">
+                    Thema 32
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 33 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    33
+                </div>
+
+                <div class="theme-title">
+                    Thema 33
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 34 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    34
+                </div>
+
+                <div class="theme-title">
+                    Thema 34
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 35 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    35
+                </div>
+
+                <div class="theme-title">
+                    Thema 35
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 36 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    36
+                </div>
+
+                <div class="theme-title">
+                    Thema 36
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 37 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    37
+                </div>
+
+                <div class="theme-title">
+                    Thema 37
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 38 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    38
+                </div>
+
+                <div class="theme-title">
+                    Thema 38
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 39 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    39
+                </div>
+
+                <div class="theme-title">
+                    Thema 39
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 40 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    40
+                </div>
+
+                <div class="theme-title">
+                    Thema 40
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 41 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    41
+                </div>
+
+                <div class="theme-title">
+                    Thema 41
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 42 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    42
+                </div>
+
+                <div class="theme-title">
+                    Thema 42
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 43 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    43
+                </div>
+
+                <div class="theme-title">
+                    Thema 43
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 44 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    44
+                </div>
+
+                <div class="theme-title">
+                    Thema 44
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+        <!-- THEMA 45 -->
+
+        <div class="theme-card locked">
+
+            <div>
+
+                <div class="theme-number">
+                    45
+                </div>
+
+                <div class="theme-title">
+                    Thema 45
+                </div>
+
+                <div class="theme-description">
+                    Dieses Thema wird bald verfügbar sein.
+                </div>
+
+            </div>
+
+
+            <button
+                class="theme-button locked-button"
+                onclick="lockedTheme()"
+            >
+
+                🔒 Demnächst verfügbar
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- FOOTER -->
+<!-- ========================================= -->
+
+<footer>
+
+    sehrgut 🇩🇪 –
+    TELC B1 & B2 Prüfungsvorbereitung
+
+</footer>
+
+
+<script>
+
+
+    /* ========================================= */
+    /* THEMA 1 */
+    /* ========================================= */
+
+    function openThema1() {
+
+        window.location.href =
+            "thema1.html";
+
+    }
+
+
+    /* ========================================= */
+    /* LOCKED THEME */
+    /* ========================================= */
+
+    function lockedTheme() {
+
+        alert(
+            "🔒 Dieses Thema ist noch nicht verfügbar.\n\n" +
+            "Demnächst bei sehrgut! 🇩🇪"
+        );
+
+    }
+
+
+    /* ========================================= */
+    /* BACK */
+    /* ========================================= */
+
+    function goBack() {
+
+        window.location.href="./";
+
+    }
+
+
+</script>
+
+
+<script src="assets/session-guard.js?v=f21ad6fd"></script>
+<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/app-install.js?v=90458a45" defer></script>
+</body>
+
+</html>
+

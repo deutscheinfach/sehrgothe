@@ -1,0 +1,1117 @@
+/* ===== sehrgut — الهوية البصرية المشتركة =====
+   ذهبي على أسود. كل صفحة كتورث من هنا بدل ما تعيد
+   تعريف الألوان بوحدها.
+
+   الأحجام كتستعمل clamp() باش تكبر بوحدها من الهاتف
+   حتى الشاشة الكبيرة (TV) بلا ما نكتبو media query
+   لكل مقاس. */
+
+:root {
+    /* ===== اللوحة =====
+       أبيض + أحمر. الخلفية بيضا بشبكة مربعات خفيفة،
+       والأحمر هو لون العلامة — بحال telc والعلم
+       الألماني، إذن كيمشي مع الموقع.
+
+       الأسماء --gold* بقاو كيف ما هوما حيت مستعملين
+       ف عشرات الصفحات. دابا كيحملو لون العلامة (أحمر).
+       الأسماء الجديدة --brand* هي اللي خاص يتستعملو
+       ف أي كود جديد. */
+
+    --brand: #e3163f;
+    --brand-dark: #b30e30;
+    --brand-deep: #8a0b25;
+
+    /* v3: الأزرق الليلي — لون البنية (البار، الرؤوس، الأزرار الثانوية) */
+    --navy: #0f1b3d;
+    --navy-2: #1c2c5e;
+    --navy-3: #2b3f7c;
+    --grad-navy: linear-gradient(135deg, #1c2c5e 0%, #0f1b3d 55%, #0a1330 100%);
+    --sun: #ffb703;
+    /* الطرف الفاتح ديال التدرجات — أحمر حي، ماشي وردي باهت.
+       قبل، التدرجات كانو كيبداو من --brand-soft (شبه أبيض)
+       والعناوين والأزرار كانو كيختفيو فالنص ديالهم. */
+    --brand-light: #ff4a6b;
+    --brand-soft: #ffe1e5;
+    --brand-tint: rgba(214,178,94,.08);
+
+    /* لمسة ذهبية صغيرة (العلم الألماني) — كتستعمل بقلة */
+    --flag-gold: #f2b705;
+    --flag-black: #14161f;
+
+    --grad-brand: linear-gradient(135deg, var(--brand-light) 0%, var(--brand) 45%, var(--brand-dark) 100%);
+    --grad-ink: linear-gradient(135deg, #1b1f2e 0%, #0f121b 100%);
+
+    --gold: var(--brand);
+    --gold-dark: var(--brand-dark);
+    --gold-soft: var(--brand-soft);
+
+    --ink: #ffffff;
+    --paper: #f2f4f9;
+    --surface: #ffffff;
+    --surface-2: #f4f6fb;
+
+    --text: #101a36;
+    --muted: #56607a;
+
+    --line: rgba(16,26,54,.11);
+    --line-gold: rgba(214,178,94,.30);
+    --line-brand: var(--line-gold);
+
+    --ok: #0f9d58;
+    --danger: #e11d33;
+
+    /* الأسماء القديمة — باش الصفحات القديمة تبقى خدامة */
+    --red: var(--gold);
+    --red-dark: var(--gold-dark);
+    --yellow: var(--gold-soft);
+    --gold-light: var(--brand-light);
+    --bg: var(--ink);
+    --card: var(--surface);
+    --light: var(--surface-2);
+    --white: var(--surface);
+    --dark: var(--text);
+    --gray: var(--muted);
+    --border: var(--line);
+    --border-strong: var(--line-gold);
+    --shadow: 0 1px 2px rgba(16,26,54,.05), 0 10px 28px -10px rgba(16,26,54,.16);
+    --shadow-lg: 0 2px 4px rgba(16,26,54,.05), 0 28px 56px -18px rgba(16,26,54,.28);
+    --shadow-brand: 0 12px 28px -10px rgba(214,178,94,.6);
+    --shadow-navy: 0 12px 28px -12px rgba(15,27,61,.55);
+    --ring: 0 0 0 4px rgba(214,178,94,.18);
+    --ease: cubic-bezier(.22, 1, .36, 1);
+
+    /* الأحجام — كتكبر مع الشاشة */
+    --step-0: clamp(14px, .5vw + 12.5px, 19px);
+    --step-1: clamp(16px, .7vw + 14px, 22px);
+    --step-2: clamp(20px, 1vw + 17px, 28px);
+    --step-3: clamp(24px, 1.6vw + 19px, 38px);
+    --step-4: clamp(28px, 2.6vw + 21px, 56px);
+
+    --gutter: clamp(14px, 2.5vw, 34px);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --shell: 1200px;
+}
+
+/* الشاشات الكبيرة والتلفزة: كنوسعو الحاوية،
+   وclamp() فوق كتكفل بالخطوط. */
+@media (min-width: 1600px) { :root { --shell: 1440px; } }
+@media (min-width: 2000px) { :root { --shell: 1680px; } }
+@media (min-width: 2600px) { :root { --shell: 2000px; } }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: "Cairo", "IBM Plex Sans Arabic", "Segoe UI", Arial, Helvetica, sans-serif;
+    font-size: var(--step-0);
+    line-height: 1.7;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* ورق دافي + نقط رقاق + ضو أحمر خفيف فوق.
+       هادي هي الهوية ديالنا: ماشي شبكة مربعات، نقط بحال
+       دفتر ديال الألمانية. */
+    background-color: var(--paper);
+    background-image:
+        radial-gradient(1100px 520px at 50% -260px, rgba(28,44,94,.16), transparent 70%),
+        radial-gradient(rgba(16,26,54,.07) 1px, transparent 1.2px);
+    background-size: auto, 24px 24px;
+    background-attachment: fixed, fixed;
+    min-height: 100vh;
+}
+
+/* الإمضاء: خيط رقيق بألوان العلم فوق الصفحة */
+html::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 2147483000;
+    pointer-events: none;
+    background: linear-gradient(90deg,
+        var(--flag-black) 0 33.33%, var(--brand) 33.33% 66.66%, var(--flag-gold) 66.66% 100%);
+}
+
+/* الخلفية الحية: أضواء بألوان العلم كيتحركو بشوية ورا الصفحة
+   (أورورا). طبقة وحدة فيها transform فقط → خفيفة على الهاتف.
+   z-index:-1 → ديما تحت المحتوى وفوق لون الورق. */
+html::after {
+    content: "";
+    position: fixed;
+    inset: -25vmax;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(38vmax 30vmax at 18% 22%, rgba(214,178,94,.17), transparent 62%),
+        radial-gradient(32vmax 26vmax at 82% 18%, rgba(242,183,5,.14), transparent 62%),
+        radial-gradient(44vmax 34vmax at 72% 82%, rgba(255,79,100,.13), transparent 64%),
+        radial-gradient(36vmax 28vmax at 22% 86%, rgba(20,22,31,.07), transparent 62%),
+        conic-gradient(from 210deg at 50% 50%, rgba(214,178,94,.05), rgba(242,183,5,.05), rgba(20,22,31,.03), rgba(214,178,94,.05));
+    filter: saturate(1.1);
+    opacity: .55;
+    will-change: transform;
+    animation: de-aurora 34s ease-in-out infinite alternate;
+}
+
+@keyframes de-aurora {
+    0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    33%  { transform: translate3d(5vmax, -4vmax, 0) rotate(10deg) scale(1.08); }
+    66%  { transform: translate3d(-4vmax, 3vmax, 0) rotate(-8deg) scale(1.04); }
+    100% { transform: translate3d(3vmax, 5vmax, 0) rotate(6deg) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html::after { animation: none; }
+}
+
+@media print {
+    html::before, html::after { display: none; }
+}
+
+h1, h2, h3 { letter-spacing: -.015em; }
+
+::selection { background: rgba(214,178,94,.18); color: inherit; }
+
+/* شريط التمرير رقيق ومتناسق */
+* { scrollbar-width: thin; scrollbar-color: rgba(20,22,31,.22) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+    background: rgba(20,22,31,.18);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: rgba(214,178,94,.45); }
+
+/* ما نخليو حتى صفحة تخرج على العرض فالهاتف */
+img, video, canvas, svg { max-width: 100%; height: auto; }
+
+/* النص الذهبي المتدرج */
+.gold-text {
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.shell {
+    width: min(100% - (var(--gutter) * 2), var(--shell));
+    margin-inline: auto;
+}
+
+/* الوصول: ما نقتلوش مؤشر لوحة المفاتيح */
+:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* ===== الشاشات الكبيرة جداً / التلفزة =====
+   الصفحات القديمة كتستعمل px ثابتة. بدل ما نعاودو نكتبو
+   كل حجم فيهم، كنكبرو الصفحة كاملة — الويب على TV كيتشاف
+   من بعيد، ف كلشي كيولي صغير بزاف بلا هادشي. */
+
+/* التلفزة والشاشة ديال 4K عندهم نفس العرض — ماتقدرش
+   تفرق بيناتهم بالعرض بوحدو. الفرق هو نوع المؤشر:
+   التلفزة كتتحكم بريموت (pointer: coarse، بلا hover)،
+   والشاشة ديال PC عندها فأر (pointer: fine).
+
+   قبل، الـ zoom كان كيتطبق على الجوج — والنتيجة أن
+   الأزرار كيوليو ضخام بزاف على شاشة 4K ديال PC. */
+
+/* تلفزة / ريموت: كنكبرو، حيت كتتشاف من بعيد */
+@media (min-width: 2200px) and (pointer: coarse) { html { zoom: 1.3; } }
+@media (min-width: 3000px) and (pointer: coarse) { html { zoom: 1.55; } }
+@media (min-width: 3800px) and (pointer: coarse) { html { zoom: 1.8; } }
+
+/* شاشة كبيرة بفأر: تكبير خفيف بزاف — clamp() ديجا كيكبر
+   الخطوط، ومانبغيوش أزرار ضخام. */
+@media (min-width: 2600px) and (pointer: fine) { html { zoom: 1.15; } }
+@media (min-width: 3400px) and (pointer: fine) { html { zoom: 1.3; } }
+
+/* إلا ما عرفناش نوع المؤشر (شي متصفحات قدام)، كنطبقو
+   التكبير الخفيف باش ما يطلعش شي حاجة ضخمة. */
+@media (min-width: 2600px) and (pointer: none) { html { zoom: 1.15; } }
+
+/* ===== شبكة أمان للهاتف =====
+   المشكل الأكثر شيوعاً فالهاتف هو تمرير أفقي: رابط طويل،
+   إيميل، ولا كلمة ألمانية مركبة كتوسّع الحاوية وكتخلي
+   الصفحة كاملة تزلق. */
+
+body {
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+/* الروابط والإيميلات: كنخليوهم يتقطعو فأي بلاصة */
+a[href^="mailto:"],
+a[href^="http"],
+code, pre, kbd {
+    overflow-wrap: anywhere;
+}
+
+/* الجداول ما كتنكمشش — كنخليوها تزلق هي بوحدها */
+table { display: block; max-width: 100%; overflow-x: auto; }
+
+/* أهداف اللمس: أصغر حاجة مقبولة هي 44px حسب
+   إرشادات Apple و Google. */
+@media (hover: none) and (pointer: coarse) {
+    button, [role="button"], .btn, .top-btn, .start-btn, .offer-btn {
+        min-height: 44px;
+    }
+}
+
+/* الهاتف: كنقلصو الهوامش الكبيرة اللي كتاكل العرض */
+@media (max-width: 480px) {
+    h1 { font-size: clamp(22px, 6vw, 30px); }
+    h2 { font-size: clamp(19px, 5vw, 26px); }
+    h3 { font-size: clamp(17px, 4.5vw, 22px); }
+}
+
+/* ===== حجم اللمس فالتيليفون =====
+   الروابط الواقفة بوحدها (رجوع، بطاقة…) خاصهم يكونو
+   كبار بزاف باش يتنقرو بالصبع. النص العادي داخل فقرة
+   ماكيدخلش هنا. */
+@media (pointer: coarse) {
+    a.back-home,
+    a.back-button,
+    a.card-link,
+    .nav-action,
+    .hero-button,
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+    }
+    a.back-home, a.back-button, a.card-link { padding: 10px 14px; }
+}
+
+/* روابط الفوتر وnav ديال Hören: حتى هوما خاصهم يتنقرو بالصبع */
+@media (pointer: coarse) {
+    .footer-links a,
+    .hoeren-nav-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+    }
+    .footer-links a { padding: 6px 10px; }
+}
+
+/* ---- الترجمة العربية (Lesen / Hören): مخبية حتى يبرك المستخدم على الزر ---- */
+.ar-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    min-height: 42px;
+    padding: 6px 16px 6px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line-gold);
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    direction: rtl;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+.ar-toggle:hover { transform: translateY(-1px); border-color: var(--gold); }
+.ar-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ar-toggle-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1;
+    background: color-mix(in srgb, var(--gold) 14%, transparent);
+    color: var(--accent-text);
+}
+.ar-toggle.is-on {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-color: transparent;
+    color: var(--ink);
+}
+.ar-toggle.is-on .ar-toggle-icon { background: rgba(255, 255, 255, .28); color: var(--ink); }
+
+.ar-block,
+.t1-option-ar,
+.t2-q-ar,
+.t3-sit-ar,
+.nq-question-ar { display: none !important; }
+
+.show-ar .ar-block { display: block !important; animation: ar-in .22s ease; }
+.show-ar .t1-option-ar,
+.show-ar .t2-q-ar,
+.show-ar .t3-sit-ar,
+.show-ar .nq-question-ar { display: block !important; animation: ar-in .22s ease; }
+
+@keyframes ar-in {
+    from { opacity: 0; transform: translateY(-3px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.ar-block {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    border-inline-start: 3px solid var(--gold);
+    background: var(--surface-2);
+    text-align: right;
+}
+.ar-block-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--accent-text);
+}
+.ar-block p {
+    margin: 0;
+    font-family: "Cairo", system-ui, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.95;
+    color: var(--text);
+    opacity: .9;
+    overflow-wrap: anywhere;
+}
+.t1-option-ar,
+.t2-q-ar,
+.t3-sit-ar,
+.nq-question-ar {
+    direction: rtl;
+    text-align: right;
+    font-family: "Cairo", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+.show-ar .t2-q-ar,
+.show-ar .t3-sit-ar { margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--line); }
+.nq-question-ar { margin-top: 6px; font-weight: 600; font-size: 13.5px; }
+
+@media (max-width: 700px) {
+    .ar-toggle { width: 100%; justify-content: center; }
+    .ar-block { padding: 10px 12px; }
+    .ar-block p { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .show-ar .ar-block, .show-ar .t1-option-ar, .show-ar .t2-q-ar,
+    .show-ar .t3-sit-ar, .show-ar .nq-question-ar { animation: none; }
+    .ar-toggle:hover { transform: none; }
+}
+
+/* =====================================================
+   v3 — نظام الأزرار: كيبانو فأي صفحة
+   =====================================================
+   تلاتة ديال الأنواع بس، بتباين قوي على أي خلفية:
+     1) الأساسي  — أحمر عامر، كتابة بيضا   (تحقق، بدا، إرسال…)
+     2) الثانوي  — أزرق ليلي، كتابة بيضا    (شوف الحلول…)
+     3) الخفيف   — أبيض بإطار أزرق واضح     (عاود، رجوع…)
+   الصفحات القديمة ديال Hören فيهم قواعد بـ#id و!important،
+   داكشي علاش كاين :is(#…) هنا. */
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn, .quiz-btn, .btn-check, .check-btn, .hoeren-nav-btn, .auto-nav-btn) {
+    min-height: 46px !important;
+    padding: 0 22px !important;
+    border-radius: 12px !important;
+    font-family: inherit !important;
+    font-weight: 800 !important;
+    font-size: 14.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s ease !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-check, .quiz-btn.btn-check, .btn-check, .check-btn, .auto-nav-btn.auto-nav-secondary, .hoeren-nav-btn.active) {
+    background: var(--grad-brand) !important;
+    color: var(--on-brand) !important;
+    border: 1.5px solid transparent !important;
+    box-shadow: var(--shadow-brand) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    background: var(--grad-navy) !important;
+    color: #fff !important;
+    border: 1.5px solid transparent !important;
+    box-shadow: var(--shadow-navy) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
+    background: var(--surface) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
+    border: 1.5px solid var(--navy) !important;
+    box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn, .quiz-btn, .btn-check, .check-btn, .hoeren-nav-btn, .auto-nav-btn):hover {
+    transform: translateY(-2px) !important;
+}
+html body :is(.nq-btn, .quiz-btn, .hoeren-nav-btn, .auto-nav-btn) i { color: inherit !important; }
+
+
+/* =====================================================================
+   v4 — ذهبي وأسود (Gold & Black)
+   =====================================================================
+   الهوية النهائية: أسود دافي (ماشي أسود قاسح) + ذهبي معدني هادي.
+   مصممة باش ما تعيّيش العين:
+     · الخلفية #0e0e11 (ماشي #000) والنص #ece7dc (ماشي أبيض قاسح)
+     · الذهبي #d6b25e مطفي شوية — كيلمع بلا ما يحرق
+     · التباين ديال النص ≥ 12:1، والنص الثانوي ≥ 6:1
+   الأسماء القديمة (--brand، --navy…) كتبقى، غير القيم اللي كتبدل —
+   إذن كل صفحة كتورث الهوية الجديدة بوحدها. */
+:root {
+    color-scheme: dark;
+
+    --brand: #d6b25e;
+    --brand-dark: #a8863a;
+    --brand-deep: #7d6326;
+    --brand-light: #f0d58c;
+    --brand-soft: rgba(214,178,94,.14);
+    --brand-tint: rgba(214,178,94,.10);
+    --on-brand: #17130a;
+
+    --navy: #1d1d23;
+    --navy-2: #26262e;
+    --navy-3: #32323c;
+    --grad-navy: linear-gradient(145deg, #202027 0%, #141418 55%, #0d0d10 100%);
+    --sun: #d6b25e;
+
+    --flag-gold: #d6b25e;
+    --flag-black: #0e0e11;
+
+    --grad-brand: linear-gradient(135deg, #f3dc9a 0%, #d6b25e 45%, #a8863a 100%);
+    --grad-ink: linear-gradient(145deg, #202027 0%, #0d0d10 100%);
+
+    --ink: #17130a;
+    --paper: #0e0e11;
+    --surface: #16161b;
+    --surface-2: #1e1e24;
+
+    --text: #ece7dc;
+    --muted: #a39d90;
+
+    --line: rgba(255,255,255,.08);
+    --line-gold: rgba(214,178,94,.34);
+
+    --ok: #3ecf8e;
+    --danger: #ef5b5b;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 30px -12px rgba(0,0,0,.6);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,.45), 0 30px 60px -22px rgba(0,0,0,.75);
+    --shadow-brand: 0 12px 28px -12px rgba(214,178,94,.45);
+    --shadow-navy: 0 12px 28px -14px rgba(0,0,0,.8);
+    --ring: 0 0 0 4px rgba(214,178,94,.22);
+}
+
+body {
+    background-color: var(--paper);
+    background-image:
+        radial-gradient(1100px 520px at 50% -280px, rgba(214,178,94,.13), transparent 70%),
+        radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.2px);
+    background-size: auto, 24px 24px;
+    color: var(--text);
+}
+/* خيط ذهبي رقيق فوق الصفحة */
+html::before {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #a8863a 15%, #f0d58c 50%, #a8863a 85%, transparent);
+}
+/* الأضواء ديال الخلفية: ذهبي هادي بزاف */
+html::after {
+    opacity: .35;
+    background:
+        radial-gradient(38vmax 30vmax at 16% 20%, rgba(214,178,94,.16), transparent 62%),
+        radial-gradient(32vmax 26vmax at 84% 16%, rgba(168,134,58,.12), transparent 62%),
+        radial-gradient(44vmax 34vmax at 70% 84%, rgba(214,178,94,.08), transparent 64%);
+}
+::selection { background: rgba(214,178,94,.35); color: #fff; }
+* { scrollbar-color: rgba(214,178,94,.35) transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.14); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(214,178,94,.55); }
+:focus-visible { outline-color: var(--brand); }
+
+/* الروابط العادية */
+a { color: inherit; }
+
+/* الحقول: خلفية داكنة ونص فاتح فكل بلاصة */
+input, textarea, select { color-scheme: dark; }
+
+/* ---- الأزرار ديال Hören (فيهم #id و!important) ---- */
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-check, .quiz-btn.btn-check, .btn-check, .check-btn, .auto-nav-btn.auto-nav-secondary, .hoeren-nav-btn.active) {
+    color: var(--on-brand) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    background: #26262e !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
+    border: 1.5px solid var(--line-gold) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
+    background: transparent !important;
+    color: var(--text) !important;
+    border: 1.5px solid rgba(255,255,255,.28) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
+    border-color: var(--brand) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
+}
+
+/* زر الترجمة */
+.ar-toggle { background: var(--surface) !important; color: var(--text) !important; border: 1.5px solid var(--line-gold) !important; }
+.ar-toggle-icon { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
+.ar-toggle.is-on { background: var(--grad-brand) !important; color: var(--on-brand) !important; border-color: transparent !important; }
+.ar-toggle.is-on .ar-toggle-icon { background: rgba(0,0,0,.18) !important; color: var(--on-brand) !important; }
+.ar-block { background: var(--surface-2); border-color: var(--line); }
+.ar-block p { color: var(--text); }
+
+/* =====================================================
+   v4.1 — سما ديال النجوم (assets/stars.js) ورا المحتوى
+   ===================================================== */
+body {
+    background-image: radial-gradient(1100px 520px at 50% -280px, rgba(214,178,94,.13), transparent 70%);
+    background-size: auto;
+}
+@media print { .de-stars { display: none !important; } }
+
+/* =====================================================
+   ?embed=1 — الصفحة داخل Modelltest (progress.js كيزيد
+   html.is-embed): بلا البار، بلا التنقل وبلا النجوم.
+   ===================================================== */
+html.is-embed #site-header,
+html.is-embed .site-header,
+html.is-embed .site-level,
+html.is-embed .hoeren-sticky-nav,
+html.is-embed .telc-exercise-topbar,
+html.is-embed .auto-nav-wrap,
+html.is-embed .de-stars,
+html.is-embed footer,
+html.is-embed .lesen-tabs:not(.exam-tabs),
+html.is-embed .lesen-head-row,
+html.is-embed .lesen-toolbar,
+html.is-embed .lesen-count,
+html.is-embed .lesen-back { display: none !important; }
+html.is-embed body { padding-top: 0 !important; }
+/* ?nav=0 (اختبر نفسك): البار ديال الامتحان والأزرار ديال لتحت عند الصفحة الأم */
+html.is-embed-nonav .exam-top,
+html.is-embed-nonav .lesen-bar { display: none !important; }
+html.is-embed.is-embed-nonav.is-exam-focus body,
+html.is-embed.is-embed-nonav body { padding-top: 6px !important; padding-bottom: 20px !important; }
+/* ماكايناش بار فوق ولا لتحت داخل الـiframe: اللوحة اللاصقة (Überschriften…)
+   كتلصق ف الفوق وكتاخد الطول كامل، باش يبانو گاع العناوين. */
+@media (min-width: 1001px) {
+    html.is-embed-nonav body.has-lesen-bar .t1-panel { top: 12px; max-height: calc(100vh - 24px); }
+}
+html.is-embed::before, html.is-embed::after { display: none !important; }
+
+
+/* روابط صفحة الدخول (إنشاء حساب · نسيت كلمة المرور) وفتات
+   الخبز: كانو غير 16px ديال الطول — صعيب تنقرهم بالصبع. */
+@media (pointer: coarse) {
+    .links a,
+    .login-text a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 8px;
+    }
+    .breadcrumb a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        padding: 0 4px;
+    }
+}
+
+
+/* =====================================================================
+   v5 — أبيض White Dove (Benjamin Moore OC-17) + بوردو + أصفر العلم
+   =====================================================================
+   · الخلفية: #EFEDE6 (OC-17 White Dove)، البطائق بيضا صافية.
+   · جوج بندات رقاق بالبوردو على الجناب ديال الشاشة.
+   · تظليل (vignette) 45٪ فالزوايا — فالخلفية فقط، المحتوى صافي.
+   · كل حاجة كتكليكا (أزرار، تبويبات، اختيارات) بالأصفر ديال العلم
+     الألماني #FFCE00 وكتابة كحلة عليها.
+   · الكتابة الملونة (عناوين صغار، تسميات) بالبوردو — الأصفر على
+     الأبيض ماكيتقراش.
+   كيجي فالأخير، إذن كيغلب v3/v4 بلا ما نمسحوهم. */
+:root {
+    color-scheme: light;
+
+    --bordeaux: #7a1426;
+    --bordeaux-2: #8e1b30;
+    --accent-text: #7a1426;
+    --grad-text: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%);
+    --band-w: 10px;
+
+    --brand: #ffce00;
+    --brand-dark: #e6b800;
+    --brand-deep: #b38f00;
+    --brand-light: #ffdc4d;
+    --brand-soft: rgba(255,206,0,.20);
+    --brand-tint: rgba(255,206,0,.12);
+    --on-brand: #1e1b18;
+
+    --navy: #7a1426;
+    --navy-2: #8e1b30;
+    --navy-3: #a3243b;
+    --grad-navy: linear-gradient(145deg, #8e1b30 0%, #7a1426 55%, #5e0f1d 100%);
+    --sun: #ffce00;
+
+    --flag-gold: #ffce00;
+    --flag-black: #000000;
+
+    --grad-brand: linear-gradient(135deg, #ffe04d 0%, #ffce00 50%, #f2bc00 100%);
+    --grad-ink: linear-gradient(145deg, #8e1b30 0%, #5e0f1d 100%);
+
+    --ink: #1e1b18;
+    --paper: #efede6;
+    --surface: #ffffff;
+    --surface-2: #f6f4ee;
+    --bg: var(--paper);
+    --card: var(--surface);
+
+    --text: #1e1b18;
+    --muted: #5e574f;
+
+    --line: rgba(30,27,24,.12);
+    --line-gold: rgba(122,20,38,.22);
+
+    --ok: #15803d;
+    --danger: #c81e1e;
+
+    --shadow: 0 1px 2px rgba(30,27,24,.06), 0 10px 28px -12px rgba(30,27,24,.20);
+    --shadow-lg: 0 2px 4px rgba(30,27,24,.06), 0 28px 56px -20px rgba(30,27,24,.30);
+    --shadow-brand: 0 12px 26px -12px rgba(230,184,0,.60);
+    --shadow-navy: 0 12px 28px -14px rgba(94,15,29,.45);
+    --ring: 0 0 0 4px rgba(255,206,0,.35);
+}
+@media (max-width: 700px) { :root { --band-w: 6px; } }
+
+html body {
+    background: var(--paper) !important;
+    color: var(--text);
+}
+/* البندات + التظليل: طبقة ثابتة ورا المحتوى (كتخدم حتى فالتيليفون) */
+html::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    background:
+        linear-gradient(90deg,
+            var(--bordeaux) 0 var(--band-w),
+            transparent var(--band-w) calc(100% - var(--band-w)),
+            var(--bordeaux) calc(100% - var(--band-w)) 100%),
+        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.45) 100%) !important;
+}
+html::before {
+    height: 3px;
+    background: var(--bordeaux) !important;
+}
+.de-stars { display: none !important; }
+::selection { background: rgba(255,206,0,.45); color: var(--text); }
+* { scrollbar-color: rgba(122,20,38,.35) transparent; }
+::-webkit-scrollbar-thumb { background: rgba(30,27,24,.22); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(122,20,38,.55); }
+:focus-visible { outline-color: var(--bordeaux); }
+input, textarea, select { color-scheme: light; }
+.gold-text {
+    background: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* أزرار Hören (القديمة فيهم #id و!important) */
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    border: 1.5px solid var(--line) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
+    border-color: var(--line) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
+}
+/* الهيدر: البار شفاف ورا الكبسولة — الـblur كان كيضبب البندات والتظليل */
+html body .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; }
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    border-color: var(--brand) !important;
+}
+
+/* =====================================================================
+   v5 · الوضع المظلم — <html data-theme="dark"> (assets/theme-toggle.js)
+   =====================================================================
+   نفس الهوية: البندات بوردو، الكليكات صفرا. غير الخلفية والبطائق
+   كيوليو داكنين والكتابة فاتحة. الكتابة الملونة بوردو فاتح (وردي)
+   باش تتقرا على الأسود. */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #121015;
+    --surface: #1c181e;
+    --surface-2: #262128;
+    --bg: var(--paper);
+    --card: var(--surface);
+    --text: #f1ebe4;
+    --muted: #b8ada3;
+    --line: rgba(255,255,255,.11);
+    --line-gold: rgba(232,137,154,.28);
+    /* الكتابة الملونة (عناوين، تسميات) فالمظلم: بيضا وغليظة */
+    --accent-text: #ffffff;
+    --accent-weight: 800;
+    --grad-text: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    --brand-soft: rgba(255,206,0,.16);
+    --brand-tint: rgba(255,206,0,.10);
+    --shadow: 0 1px 2px rgba(0,0,0,.45), 0 12px 30px -12px rgba(0,0,0,.7);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,.5), 0 30px 60px -22px rgba(0,0,0,.8);
+    --ok: #4ade80;
+    --danger: #f87171;
+}
+:root[data-theme="dark"]::after {
+    background:
+        linear-gradient(90deg,
+            var(--bordeaux) 0 var(--band-w),
+            transparent var(--band-w) calc(100% - var(--band-w)),
+            var(--bordeaux) calc(100% - var(--band-w)) 100%),
+        radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,.45) 100%) !important;
+}
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select { color-scheme: dark; }
+:root[data-theme="dark"] ::selection { color: #fff; }
+
+/* ---- زر الوضع ---- */
+.de-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.de-theme-btn.is-floating {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    left: calc(var(--band-w, 10px) + 10px);
+    z-index: 2147482000;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brand);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+.de-theme-btn.is-floating:hover { background: var(--brand); color: var(--on-brand); }
+html.is-embed .de-theme-btn { display: none !important; }
+
+/* ---- الوضع المظلم: الصفحات اللي عندها لوحة ديالها (الدخول، العروض…) ----
+   :root[data-theme] (0,2,0) كيغلب :root ديال الصفحة (0,1,0). */
+:root[data-theme="dark"] {
+    --dark: var(--text);
+    --gray: var(--muted);
+    --light: var(--surface-2);
+    --white: var(--surface);
+    --black: var(--text);
+    --bg-soft: var(--surface-2);
+    --text-dim: var(--muted);
+    --text-faint: #8f857c;
+    --border: var(--line);
+    --border-strong: var(--line-gold);
+    --sidebar-hover: rgba(255,255,255,.08);
+}
+:root[data-theme="dark"] body::before { background: none !important; }
+:root[data-theme="dark"] .hoeren-sticky-nav { background: color-mix(in srgb, var(--surface) 92%, transparent) !important; border-color: var(--line) !important; }
+:root[data-theme="dark"] :is(.back-button, .offer) { background: var(--surface); color: var(--text); }
+:root[data-theme="dark"] :is(input, textarea, select):not([type="radio"]):not([type="checkbox"]) { background-color: var(--surface-2); color: var(--text); border-color: var(--line); }
+/* مناطق «الورقة البيضا» (النصوص، الأسئلة، خانة الكتابة) كيبقاو فاتحين
+   بكتابة كحلة فحتى الوضع المظلم — كتقرا بحال فالكتاب. */
+:root[data-theme="dark"] :is(.editor, #editor, .writing-area) :is(textarea, [contenteditable]) { background-color: #fffdf8; color: #1c1a16; }
+:root[data-theme="dark"] .lesen-search input { background-color: transparent !important; border-color: transparent !important; }
+
+/* المظلم: كل كتابة ملونة (--accent-text) كتولي بيضا وغليظة — مولّد من الأوراق كاملين */
+:root[data-theme="dark"] .header-btn:hover,
+:root[data-theme="dark"] .breadcrumb a,
+:root[data-theme="dark"] .info-card i,
+:root[data-theme="dark"] .result-info,
+:root[data-theme="dark"] .page-footer strong,
+:root[data-theme="dark"] .btn-show,
+:root[data-theme="dark"] .task-title-block .sub,
+:root[data-theme="dark"] .translate-btn:hover,
+:root[data-theme="dark"] .umlaut-btns button:hover,
+:root[data-theme="dark"] .result-score .num,
+:root[data-theme="dark"] .result-close:hover,
+:root[data-theme="dark"] .premium-btn.ghost:hover,
+:root[data-theme="dark"] .offer-box h3,
+:root[data-theme="dark"] .timer-pill.low,
+:root[data-theme="dark"] .task-header .task-title-block .sub,
+:root[data-theme="dark"] .lesen-back:hover,
+:root[data-theme="dark"] .lesen-teil-btn:hover,
+:root[data-theme="dark"] .lesen-badge,
+:root[data-theme="dark"] .lesen-text h3,
+:root[data-theme="dark"] .lesen-text-label { font-weight: 800; }
+:root[data-theme="dark"] .lesen-sort:hover,
+:root[data-theme="dark"] .lesen-chip-level,
+:root[data-theme="dark"] .lesen-card:hover .lesen-card-go,
+:root[data-theme="dark"] .lesen-card.locked .lesen-card-go,
+:root[data-theme="dark"] .part-icon,
+:root[data-theme="dark"] .part-card.locked .part-cta,
+:root[data-theme="dark"] .chip-pro,
+:root[data-theme="dark"] .sp-btn-ghost:hover,
+:root[data-theme="dark"] .sp-btn-rec.on,
+:root[data-theme="dark"] .sp-point-num,
+:root[data-theme="dark"] .sp-phrase-head,
+:root[data-theme="dark"] .t1-text-num,
+:root[data-theme="dark"] .t1-summary > summary,
+:root[data-theme="dark"] .t1-progress,
+:root[data-theme="dark"] .pg-chip,
+:root[data-theme="dark"] .pg-btn-ghost:hover,
+:root[data-theme="dark"] .pg-peek-num,
+:root[data-theme="dark"] .lesen-card.locked .lesen-card-go::after,
+:root[data-theme="dark"] .t3-ad-key,
+:root[data-theme="dark"] .t3-ad-slot { font-weight: 800; }
+:root[data-theme="dark"] .t2-q-changed,
+:root[data-theme="dark"] .t2-sub,
+:root[data-theme="dark"] .lesen-stat b,
+:root[data-theme="dark"] .sp2-hint.is-on,
+:root[data-theme="dark"] .sp2-key,
+:root[data-theme="dark"] .sp2-pop-title,
+:root[data-theme="dark"] .e1-task-label,
+:root[data-theme="dark"] .e1-btn-soft,
+:root[data-theme="dark"] .e1-peek-label,
+:root[data-theme="dark"] .e1-examiner-who,
+:root[data-theme="dark"] .e1-answer-n,
+:root[data-theme="dark"] .e2-phase-hint,
+:root[data-theme="dark"] .e3-line-b .e3-who,
+:root[data-theme="dark"] .exam-card-parts b,
+:root[data-theme="dark"] .lesen-tab:hover,
+:root[data-theme="dark"] .lesen-card-title,
+:root[data-theme="dark"] .lesen-btn-retry,
+:root[data-theme="dark"] .e1-btn:not(.e1-btn-main):not(.e1-btn-soft),
+:root[data-theme="dark"] .sp-btn-ghost,
+:root[data-theme="dark"] .lesen-back { font-weight: 800; }
+:root[data-theme="dark"] .e1-btn-main.is-early,
+:root[data-theme="dark"] .ar-toggle,
+:root[data-theme="dark"] .t1-title,
+:root[data-theme="dark"] .e1-stage-title,
+:root[data-theme="dark"] .lesen-detail-title,
+:root[data-theme="dark"] .t1-kicker,
+:root[data-theme="dark"] .lesen-head-row .lesen-badge,
+:root[data-theme="dark"] .lesen-head-row .lesen-stat b,
+:root[data-theme="dark"] .lesen-card .lesen-card-go,
+:root[data-theme="dark"] .lesen-btn-show,
+:root[data-theme="dark"] .lesen-btn-retry:hover,
+:root[data-theme="dark"] .e1-btn:not(.e1-btn-main):not(.e1-btn-soft):hover,
+:root[data-theme="dark"] .t1-option-key,
+:root[data-theme="dark"] .t3-sit-num,
+:root[data-theme="dark"] .sp-gap-num,
+:root[data-theme="dark"] .e3-text.is-mine .e3-badge,
+:root[data-theme="dark"] .e3-add,
+:root[data-theme="dark"] .e3-who,
+:root[data-theme="dark"] .exam-top-back:hover,
+:root[data-theme="dark"] .exam-top-level { font-weight: 800; }
+:root[data-theme="dark"] .exam-tab-kind,
+:root[data-theme="dark"] .exam-top-clock svg,
+:root[data-theme="dark"] .site-brand-name span,
+:root[data-theme="dark"] .site-btn:hover,
+:root[data-theme="dark"] .site-premium,
+:root[data-theme="dark"] .site-menu-up,
+:root[data-theme="dark"] .site-bell.has-news,
+:root[data-theme="dark"] .site-news-wrap.is-open .site-bell,
+:root[data-theme="dark"] .site-news-link,
+:root[data-theme="dark"] .site-news-form-label,
+:root[data-theme="dark"] .tr-card h2 .ico,
+:root[data-theme="dark"] .tr-kpi-ico,
+:root[data-theme="dark"] .tr-btn:hover,
+:root[data-theme="dark"] .tr-ring-in b,
+:root[data-theme="dark"] .tr-plan-go,
+:root[data-theme="dark"] .tr-tag,
+:root[data-theme="dark"] .tr-score.is-mid,
+:root[data-theme="dark"] .mt-chip.prem,
+:root[data-theme="dark"] .mt-timer,
+:root[data-theme="dark"] .mt-sub button.is-on { font-weight: 800; }
+:root[data-theme="dark"] .mt-live b,
+:root[data-theme="dark"] .ws-ar,
+:root[data-theme="dark"] .ws-back .ws-speak,
+:root[data-theme="dark"] .tr-inline-ico,
+:root[data-theme="dark"] .training-page svg.ico,
+:root[data-theme="dark"] .ws-day-kicker,
+:root[data-theme="dark"] .ws-day-theme,
+:root[data-theme="dark"] .ws-bday,
+:root[data-theme="dark"] .teil-nav-btn,
+:root[data-theme="dark"] .theme-item-chevron,
+:root[data-theme="dark"] .theme-iframe-loading,
+:root[data-theme="dark"] .nq-result-info,
+:root[data-theme="dark"] .teil-nav-btn:hover,
+:root[data-theme="dark"] #hoeren-teil1-stack .theme-item-chevron,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-back:hover,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-start:hover,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-part:hover,
+:root[data-theme="dark"] .premium-theme-icon,
+:root[data-theme="dark"] .premium-theme-open,
+:root[data-theme="dark"] .hoeren-offer-price { font-weight: 800; }
+:root[data-theme="dark"] #hoeren-teil2-stack .theme-item-chevron,
+html[data-theme="dark"].dark .premium-theme-open,
+:root[data-theme="dark"] .h2-offer-price,
+:root[data-theme="dark"] .h2-offer-btn,
+:root[data-theme="dark"] #hoeren-teil3-stack .theme-item-chevron,
+:root[data-theme="dark"] .de-premium-offer span,
+:root[data-theme="dark"] .message-name,
+:root[data-theme="dark"] .friend-limit-box strong,
+:root[data-theme="dark"] .message-text a,
+:root[data-theme="dark"] .message-text a:hover,
+:root[data-theme="dark"] .scroll-down,
+:root[data-theme="dark"] .upload-bar,
+:root[data-theme="dark"] .composer-btn:hover,
+:root[data-theme="dark"] .char-count.warn,
+:root[data-theme="dark"] .call-kind,
+:root[data-theme="dark"] .online-pill,
+:root[data-theme="dark"] .settings-row .ico,
+:root[data-theme="dark"] .tabbar button.active,
+:root[data-theme="dark"] #callAudioBtn,
+:root[data-theme="dark"] #callVideoBtn { font-weight: 800; }
+:root[data-theme="dark"] .mobile-back:hover,
+:root[data-theme="dark"] .reject,
+:root[data-theme="dark"] .modal-btn.secondary,
+:root[data-theme="dark"] .close-btn,
+:root[data-theme="dark"] .header-name,
+:root[data-theme="dark"] .header-btn,
+:root[data-theme="dark"] .composer-btn,
+:root[data-theme="dark"] .dx-word-use,
+:root[data-theme="dark"] .dx-key,
+:root[data-theme="dark"] .dx-starter,
+:root[data-theme="dark"] .dx-starter:hover,
+:root[data-theme="dark"] .dx-word-label,
+:root[data-theme="dark"] .back-button:hover,
+:root[data-theme="dark"] .resend-button,
+:root[data-theme="dark"] .login-text a,
+:root[data-theme="dark"] .links a,
+:root[data-theme="dark"] .back-home:hover,
+:root[data-theme="dark"] .brand span,
+:root[data-theme="dark"] .nav-links a:hover,
+:root[data-theme="dark"] .signup { font-weight: 800; }
+:root[data-theme="dark"] .user-name,
+:root[data-theme="dark"] .small-badge,
+:root[data-theme="dark"] .hero-secondary:hover,
+:root[data-theme="dark"] .stat strong,
+:root[data-theme="dark"] .showcase-eyebrow,
+:root[data-theme="dark"] .preview-tag,
+:root[data-theme="dark"] .preview-num,
+:root[data-theme="dark"] mark.hl2,
+:root[data-theme="dark"] .preview-score b,
+:root[data-theme="dark"] .section-title .mini,
+:root[data-theme="dark"] .card-link,
+:root[data-theme="dark"] .community-card h3,
+:root[data-theme="dark"] .promise h2 span,
+:root[data-theme="dark"] .footer-brand span,
+:root[data-theme="dark"] .footer-links a:hover,
+:root[data-theme="dark"] .hero .stat strong,
+:root[data-theme="dark"] .cta h2,
+:root[data-theme="dark"] header h1,
+:root[data-theme="dark"] .intro h2,
+:root[data-theme="dark"] .offer-title { font-weight: 800; }
+:root[data-theme="dark"] .check,
+:root[data-theme="dark"] .nav-home,
+:root[data-theme="dark"] .headings h2,
+:root[data-theme="dark"] .offer-box h2 { font-weight: 800; }
+/* ===== الترجمة العربية: غليظة وأصغر من النص الألماني =====
+   الترجمة خاصها تبان بوضوح (bold) ولكن تبقى ثانوية — إذن
+   حجم أصغر من السطر الألماني اللي فوقها، ماشي نفس الحجم. */
+
+/* تحت الخيارات والأسئلة — الألماني 13.5–14px */
+.t1-option-ar,
+.t2-q-ar,
+.t3-sit-ar {
+    font-weight: 700;
+    font-size: 12.5px;
+}
+
+/* تحت الفقرات — الألماني 15px */
+.ar-block p {
+    font-weight: 700;
+    font-size: 13.5px;
+    opacity: 1;
+}
+
+/* داخل الشرح (Lösung) — العنوان ديالو 13.5px */
+.t1-summary p { font-weight: 700; font-size: 12.5px; }
+
+@media (max-width: 700px) {
+    .ar-block p { font-size: 13px; }
+}
+
+/* ===== خبي عنوان الموضوع (assets/title-toggle.js) =====
+   العنوان كيفضح الجواب ف شي تمارين — مثلا Lesen Teil 1
+   فين سميّة الموضوع هي بحالها وحدة من الـÜberschriften. */
+html.de-hide-title .t1-title,
+html.de-hide-title .t1-kicker,
+html.de-hide-title .lesen-detail-title { display: none !important; }
+
+/* الرأس كيبقى فيه غير الأزرار — ما نخليوش فراغ كبير */
+html.de-hide-title .t1-head { gap: 0; }
+
+/* سطر مشترك: العنوان الكبير + العين حداه */
+.t1-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* الزر: غير عين، حدا العنوان. بلا نص — السميّة كتمشي
+   ف aria-label و title باش القارئ الصوتي يفهمها. */
+.title-toggle {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(16,26,54,.06);
+    transition: color .16s ease, border-color .16s ease, background .16s ease;
+}
+.title-toggle:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, var(--line)); }
+.title-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.title-toggle.is-on { color: var(--accent-text); border-color: var(--line-gold); background: var(--surface-2); }
+.title-toggle-icon { display: block; width: 17px; height: 17px; }
+
+/* ===== التيليفون: خفة =====
+
+   الخلفية الحية (أورورا) طبقة كبيرة كتتحرك بلا ما توقف، والـblur
+   كيعاود يحسب كل ما تحرك شي حاجة. ف iPhone قديم هادشي كيتقل
+   التبديل بين الصفحات والسكرول. ف التيليفون: نفس الألوان، واقفين. */
+@media (pointer: coarse) {
+    html::after {
+        animation: none;
+        will-change: auto;
+        filter: none;
+    }
+    *, *::before, *::after {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+}

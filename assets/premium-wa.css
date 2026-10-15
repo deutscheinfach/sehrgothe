@@ -1,0 +1,59 @@
+/* ===== Premium: مساعدة شخصية ف WhatsApp =====
+   البلوك .pwa كيبان ف الصفحة الرئيسية (تحت البطل) وف payment.html.
+   لون غامق بوحدو (ماشي متغيرات الثيم) باش يبان نفس الشي ف light و dark. */
+.pwa { max-width: 1120px; margin: 8px auto 44px; padding: 0 16px; }
+.pwa-in {
+    position: relative; overflow: hidden;
+    padding: 34px 30px 30px; border-radius: 28px;
+    color: #fff; direction: rtl; text-align: right;
+    background:
+        radial-gradient(60% 90% at 0% 0%, rgba(37,211,102,.22), transparent 60%),
+        radial-gradient(50% 80% at 100% 100%, rgba(242,183,5,.18), transparent 65%),
+        linear-gradient(150deg, #3d0614 0%, #7a0d26 55%, #a3122f 100%);
+    box-shadow: 0 30px 70px -36px rgba(80,6,24,.9), inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.pwa-head { max-width: 760px; }
+.pwa-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 900; color: #06381b;
+    background: linear-gradient(135deg, #7cf0a8, #25d366);
+    box-shadow: 0 10px 22px -12px #25d366;
+}
+.pwa-badge svg { width: 16px; height: 16px; }
+.pwa h2 { margin: 14px 0 8px; font-size: clamp(1.5rem, 3.6vw, 2.3rem); font-weight: 900; line-height: 1.35; color: #fff; }
+.pwa h2 em { font-style: normal; color: #ffd75a; }
+.pwa-head p { margin: 0; font-size: 16px; line-height: 1.9; color: rgba(255,255,255,.86); }
+.pwa-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pwa-list li {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 16px; border-radius: 18px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.13);
+}
+.pwa-list i {
+    width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px;
+    color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705);
+}
+.pwa-list i svg { width: 20px; height: 20px; }
+.pwa-list li div { display: flex; flex-direction: column; gap: 4px; }
+.pwa-list b { font-size: 15.5px; font-weight: 900; color: #fff; }
+.pwa-list span { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,.8); }
+.pwa-cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
+.pwa-go {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 52px; padding: 0 24px; border-radius: 16px;
+    font-weight: 900; font-size: 16px; text-decoration: none;
+    color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705);
+    box-shadow: 0 16px 30px -14px #f2b705; transition: transform .2s, filter .2s;
+}
+.pwa-go:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.pwa-go svg { width: 20px; height: 20px; }
+.pwa-cta small { font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,.72); }
+@media (max-width: 900px) { .pwa-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+    .pwa-in { padding: 26px 18px 22px; border-radius: 22px; }
+    .pwa-list { grid-template-columns: 1fr; }
+    .pwa-list li { flex-direction: row; align-items: flex-start; }
+    .pwa-list li i { flex: none; }
+    .pwa-go { width: 100%; justify-content: center; }
+}

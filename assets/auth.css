@@ -1,0 +1,333 @@
+/* ===== الدخول / التسجيل / نسيت كلمة المرور — تصميم مشترك =====
+
+   كيتحمل من بعد الـ<style> ديال كل صفحة (body.au): البطاقة ديال
+   الفورم على اليمين، ولوحة sehrgut على اليسار (PC). ف
+   التيليفون: غير البطاقة، مع اللوگو فوق. */
+
+body.au {
+    --au-bg: #f6f2ea;
+    --au-card: #ffffff;
+    --au-ink: #1a1220;
+    --au-muted: #6b6274;
+    --au-line: rgba(26,18,32,.11);
+    --au-field: #faf8f4;
+    --au-wine: #7a0d26;
+    --au-red: #c2183f;
+    --au-gold: #f2b705;
+    display: block;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 !important;
+    background: var(--au-bg) !important;
+    color: var(--au-ink);
+    text-align: right;
+}
+html[data-theme="dark"] body.au {
+    --au-bg: #0e0b10;
+    --au-card: #17131b;
+    --au-ink: #f3eff6;
+    --au-muted: #a79fb0;
+    --au-line: rgba(255,255,255,.1);
+    --au-field: #1f1a24;
+}
+html:has(body.au) { background: var(--au-bg, #f6f2ea) !important; }
+html:has(body.au)::after { display: none; }
+body.au::before, body.au .bg-grid { display: none !important; }
+
+/* ---------- الهيكل ---------- */
+body.au .auth-wrap {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    align-content: center;
+}
+body.au .auth-card {
+    position: relative;
+    max-width: none;
+    width: 100%;
+    padding: 44px 46px 36px;
+    border-radius: 0 28px 28px 0;
+    border: 1px solid var(--au-line);
+    border-left: 0;
+    background: var(--au-card);
+    box-shadow: 0 40px 80px -50px rgba(40,10,20,.5);
+    animation: au-in .5s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes au-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* ---------- اللوحة ديال sehrgut ---------- */
+.au-side {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 40px 34px;
+    border-radius: 28px 0 0 28px;
+    color: #fff;
+    background:
+        radial-gradient(60% 50% at 0% 0%, rgba(242,183,5,.32), transparent 60%),
+        radial-gradient(70% 60% at 100% 100%, rgba(255,74,107,.45), transparent 60%),
+        linear-gradient(150deg, #22060f 0%, #5e0a1f 50%, #9c0f2e 100%);
+    box-shadow: 0 40px 80px -40px rgba(122,13,38,.8);
+    animation: au-in .5s .08s cubic-bezier(.2,.8,.2,1) both;
+}
+.au-side::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,.08) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    -webkit-mask-image: linear-gradient(160deg, #000, transparent 70%);
+            mask-image: linear-gradient(160deg, #000, transparent 70%);
+    pointer-events: none;
+}
+.au-side::after {
+    content: "";
+    position: absolute; width: 340px; height: 340px; border-radius: 50%;
+    left: -120px; bottom: -150px;
+    background: radial-gradient(circle, rgba(242,183,5,.35), transparent 65%);
+    filter: blur(10px);
+    animation: au-glow 9s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+@keyframes au-glow { to { transform: translate(60px, -40px) scale(1.15); } }
+.au-side > * { position: relative; z-index: 1; }
+.au-brand { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; direction: ltr; align-self: flex-end; }
+.au-brand img { width: 46px; height: 46px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.25); }
+.au-brand b { font-size: 18px; font-weight: 900; }
+.au-brand b span { color: #ffd75a; }
+.au-brand small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .12em; opacity: .7; }
+.au-side h2 { margin: 42px 0 10px; font-size: clamp(1.7rem, 2.6vw, 2.3rem); font-weight: 900; line-height: 1.3; color: #fff; }
+.au-side h2 em { font-style: normal; color: #ffd75a; }
+.au-side > p { margin: 0 0 26px; color: rgba(255,255,255,.82); line-height: 1.85; font-size: 15px; }
+.au-feats { list-style: none; margin: 0 0 auto; padding: 0; display: grid; gap: 12px; }
+.au-feats li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); font-weight: 700; font-size: 14.5px; }
+.au-feats i { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705); }
+.au-feats svg { width: 18px; height: 18px; }
+.au-feats b { direction: ltr; unicode-bidi: isolate; }
+.au-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.au-chips span { padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 800; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.14); direction: ltr; }
+
+/* ---------- البطاقة ---------- */
+body.au .auth-logo { display: flex; justify-content: flex-start; margin-bottom: 22px; }
+body.au .logo { width: 56px; height: 56px; object-fit: cover; border-radius: 50%; border: 0; box-shadow: 0 10px 24px -12px rgba(0,0,0,.5); }
+body.au h1 {
+    text-align: right;
+    margin: 0 0 6px;
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-weight: 900;
+    background: none;
+    -webkit-background-clip: border-box;
+            background-clip: border-box;
+    color: var(--au-ink);
+}
+body.au .subtitle { text-align: right; margin: 0 0 28px; color: var(--au-muted); font-size: 14.5px; line-height: 1.8; }
+body.au label { color: var(--au-ink); font-size: 13.5px; font-weight: 800; margin-bottom: 8px; display: block; }
+body.au .form-group { margin-bottom: 18px; }
+body.au input[type="email"],
+body.au input[type="password"],
+body.au input[type="text"] {
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 14px;
+    border: 1.5px solid var(--au-line);
+    background: var(--au-field);
+    color: var(--au-ink);
+    font-size: 15px;
+    transition: border-color .15s, box-shadow .15s, background .15s;
+}
+body.au input:focus {
+    border-color: var(--au-red);
+    background: var(--au-card);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--au-red) 14%, transparent);
+}
+body.au .password-wrap { position: relative; }
+body.au .password-toggle { color: var(--au-muted); }
+
+body.au .login-button,
+body.au .signup-submit,
+body.au .reset-button {
+    width: 100%;
+    height: 54px;
+    margin-top: 8px;
+    border: 0;
+    border-radius: 14px;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--au-red), var(--au-wine));
+    box-shadow: 0 16px 30px -16px var(--au-wine);
+    transition: transform .2s, filter .2s, box-shadow .2s;
+}
+body.au .login-button:hover,
+body.au .signup-submit:hover,
+body.au .reset-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+body.au .login-button:disabled,
+body.au .signup-submit:disabled,
+body.au .reset-button:disabled { opacity: .6; transform: none; }
+body.au .resend-button { border-radius: 14px; }
+
+body.au .error, body.au .message.error { background: #fdecef; border: 1px solid #f5b5c2; color: #a3112f; }
+body.au .success, body.au .message.success { background: #e9f8ef; border: 1px solid #a7e3bf; color: #0f7a3d; }
+html[data-theme="dark"] body.au .error, html[data-theme="dark"] body.au .message.error { background: rgba(220,38,38,.12); border-color: rgba(220,38,38,.35); color: #fca5a5; }
+html[data-theme="dark"] body.au .success, html[data-theme="dark"] body.au .message.success { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.3); color: #86efac; }
+
+body.au .links, body.au .login-text { text-align: center; margin-top: 22px; color: var(--au-muted); font-size: 14px; line-height: 2.1; }
+body.au .links a, body.au .login-text a { color: var(--au-red); font-weight: 900; }
+html[data-theme="dark"] body.au .links a, html[data-theme="dark"] body.au .login-text a { color: #ffd75a; }
+body.au .back-home { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--au-line); color: var(--au-muted); font-weight: 700; }
+
+/* زر الرجوع (signup / forgot) */
+body.au .back-button {
+    position: fixed; top: 18px; right: 18px; z-index: 5;
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 16px; border-radius: 999px;
+    background: var(--au-card); color: var(--au-ink);
+    border: 1px solid var(--au-line); font-weight: 800; font-size: 13.5px;
+    box-shadow: 0 6px 18px -10px rgba(0,0,0,.3);
+}
+
+/* ---------- التيليفون والتابليت ---------- */
+@media (max-width: 900px) {
+    body.au .auth-wrap { grid-template-columns: 1fr; max-width: 480px; padding: 74px 14px 28px; }
+    body.au .auth-card { border-radius: 26px; border-left: 1px solid var(--au-line); padding: 34px 24px 28px; }
+    .au-side { display: none; }
+    body.au .auth-logo { justify-content: center; }
+    body.au h1, body.au .subtitle { text-align: center; }
+}
+@media (max-width: 900px) {
+    body.au .auth-card::before {
+        content: "";
+        position: absolute; inset: 0 0 auto 0; height: 6px; border-radius: 26px 26px 0 0;
+        background: linear-gradient(90deg, #22060f, #9c0f2e, #f2b705);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    body.au .auth-card, .au-side, .au-side::after { animation: none; }
+}
+
+/* signup: الحقول مباشرة ف الفورم */
+body.au form > input { margin-bottom: 18px; }
+body.au form > .password-wrap { margin-bottom: 18px; }
+body.au form > .password-wrap input { margin-bottom: 0 !important; }
+body.au .password-wrap .password-toggle { top: 50%; transform: translateY(-50%); }
+body.au .back-button { position: absolute; top: 16px; right: 16px; padding: 0 16px; }
+
+body.au:has(> .back-button) .auth-wrap { padding-top: 76px; }
+
+/* ===== الخلفية (نسخة 3): مشهد الامتحان — بطاقات زجاج عايمين ===== */
+body.au {
+    --au-bg: #f7f1e6;
+    background:
+        radial-gradient(900px 600px at 100% 0%, rgba(242,183,5,.30), transparent 60%),
+        radial-gradient(800px 700px at 0% 100%, rgba(227,22,63,.20), transparent 60%),
+        radial-gradient(700px 500px at 50% 50%, rgba(255,255,255,.7), transparent 70%),
+        #f7f1e6 !important;
+}
+html[data-theme="dark"] body.au {
+    background:
+        radial-gradient(900px 600px at 100% 0%, rgba(242,183,5,.16), transparent 60%),
+        radial-gradient(800px 700px at 0% 100%, rgba(227,22,63,.22), transparent 60%),
+        #0d0a10 !important;
+}
+html:has(body.au) { background: #f7f1e6 !important; }
+html[data-theme="dark"]:has(body.au) { background: #0d0a10 !important; }
+.au-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.au-bg::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(122,13,38,.16) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, #000 85%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, #000 85%);
+}
+html[data-theme="dark"] .au-bg::before { background-image: radial-gradient(rgba(255,255,255,.08) 1.2px, transparent 1.2px); }
+.au-mesh { position: absolute; border-radius: 50%; filter: blur(80px); animation: au-mesh 18s ease-in-out infinite alternate; }
+.au-mesh.m1 { width: 520px; height: 520px; top: -180px; right: 8%; background: rgba(242,183,5,.35); }
+.au-mesh.m2 { width: 600px; height: 600px; bottom: -260px; left: -120px; background: rgba(227,22,63,.25); animation-delay: -7s; }
+.au-mesh.m3 { width: 420px; height: 420px; top: 30%; left: 30%; background: rgba(122,13,38,.12); animation-delay: -12s; }
+@keyframes au-mesh { to { transform: translate(70px, 50px) scale(1.15); } }
+/* حلقة رقيقة بألوان العلم */
+.au-ring { position: absolute; width: 900px; height: 900px; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%;
+    background: conic-gradient(from 0deg, #111 0 12%, transparent 12% 33%, #dd0000 33% 45%, transparent 45% 66%, #ffce00 66% 78%, transparent 78%);
+    -webkit-mask: radial-gradient(circle, transparent 448px, #000 449px, #000 450px, transparent 451px);
+            mask: radial-gradient(circle, transparent 448px, #000 449px, #000 450px, transparent 451px);
+    opacity: .35; animation: au-rot 60s linear infinite; }
+@keyframes au-rot { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* البطاقات العايمين */
+.au-fl {
+    position: absolute; display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px; border-radius: 18px; direction: ltr;
+    background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px -22px rgba(60,15,25,.45);
+    color: #1a1220; font-family: inherit;
+    animation: au-bob 7s ease-in-out infinite alternate;
+}
+html[data-theme="dark"] .au-fl { background: rgba(30,24,36,.7); border-color: rgba(255,255,255,.08); color: #f3eff6; }
+@keyframes au-bob { to { translate: 0 -16px; } }
+.au-fl small { display: block; font-size: 11px; font-weight: 800; color: #8a7f8f; letter-spacing: .02em; }
+.au-fl strong { display: block; font-size: 15px; font-weight: 900; }
+.au-float { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.au-fl.f1 { left: -112px; top: 34%; rotate: -6deg; }
+.au-fl.f2 { left: -104px; top: 62%; rotate: 4deg; animation-delay: -2s; }
+.au-fl.f3 { left: 96px; bottom: -6px; rotate: -3deg; animation-delay: -4s; }
+.au-fl.f4 { right: -112px; top: 58%; rotate: 5deg; animation-delay: -1s; }
+.au-fl.f5 { right: -104px; top: 28%; rotate: -5deg; animation-delay: -3s; }
+.au-fl.f6 { right: 90px; bottom: -2px; rotate: 4deg; animation-delay: -5s; }
+.au-fl.f7 { display: none; top: 4px; left: 42%; rotate: -2deg; animation-delay: -6s; padding: 8px 14px; }
+.au-score { position: relative; width: 44px; height: 44px; display: grid; place-items: center; }
+.au-score svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.au-score circle { fill: none; stroke-width: 5; }
+.au-score .bg { stroke: rgba(15,157,88,.15); }
+.au-score .fg { stroke: #0f9d58; stroke-linecap: round; stroke-dasharray: 113; stroke-dashoffset: 9; }
+.au-score b { font-size: 11px; font-weight: 900; color: #0f9d58; }
+.au-rf { padding: 7px 14px; border-radius: 10px; font-weight: 900; font-size: 13px; background: rgba(26,18,32,.06); color: #8a7f8f; }
+.au-rf.ok { background: #0f9d58; color: #fff; box-shadow: 0 8px 16px -8px #0f9d58; }
+.au-fl kbd { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; font: 900 16px/1 inherit; color: #7a0d26; background: #fff; border: 1px solid rgba(26,18,32,.1); box-shadow: 0 3px 0 rgba(26,18,32,.12); }
+html[data-theme="dark"] .au-fl kbd { background: #2a2330; color: #ffd75a; border-color: rgba(255,255,255,.1); box-shadow: 0 3px 0 rgba(0,0,0,.4); }
+.au-play { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #c2183f, #7a0d26); box-shadow: 0 8px 18px -8px #7a0d26; }
+.au-play svg { width: 16px; height: 16px; margin-left: 2px; }
+.au-wave { display: flex; align-items: center; gap: 3px; height: 30px; }
+.au-wave i { width: 4px; border-radius: 4px; background: linear-gradient(#f2b705, #c2183f); animation: au-wave 1.1s ease-in-out infinite alternate; }
+.au-wave i:nth-child(odd) { animation-delay: -.4s; } .au-wave i:nth-child(3n) { animation-delay: -.8s; }
+.au-wave i:nth-child(1) { height: 30%; } .au-wave i:nth-child(2) { height: 70%; } .au-wave i:nth-child(3) { height: 45%; } .au-wave i:nth-child(4) { height: 95%; }
+.au-wave i:nth-child(5) { height: 60%; } .au-wave i:nth-child(6) { height: 80%; } .au-wave i:nth-child(7) { height: 35%; } .au-wave i:nth-child(8) { height: 75%; }
+.au-wave i:nth-child(9) { height: 50%; } .au-wave i:nth-child(10) { height: 90%; } .au-wave i:nth-child(11) { height: 40%; } .au-wave i:nth-child(12) { height: 65%; }
+@keyframes au-wave { to { transform: scaleY(.45); } }
+.au-check { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705); }
+.au-check svg { width: 20px; height: 20px; }
+.au-bub { font-weight: 900; font-size: 15px; }
+.au-fl.f6 { border-radius: 18px 18px 18px 4px; }
+.au-flag { display: flex; flex-direction: column; width: 26px; height: 18px; border-radius: 4px; overflow: hidden; }
+.au-flag i { flex: 1; } .au-flag i:nth-child(1) { background: #111; } .au-flag i:nth-child(2) { background: #dd0000; } .au-flag i:nth-child(3) { background: #ffce00; }
+.au-bar { display: block; width: 100%; height: 6px; border-radius: 6px; background: rgba(26,18,32,.08); overflow: hidden; }
+.au-bar i { display: block; width: 84%; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #f2b705, #0f9d58); }
+
+body.au .auth-wrap { position: relative; z-index: 1; }
+body.au .auth-card { border: 1px solid rgba(26,18,32,.08); box-shadow: 0 50px 100px -45px rgba(60,15,25,.55); }
+.au-side { box-shadow: 0 50px 100px -45px rgba(60,15,25,.7); }
+body.au .back-button { background: rgba(255,255,255,.8); color: #1a1220; border-color: rgba(26,18,32,.1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+html[data-theme="dark"] body.au .back-button { background: rgba(30,24,36,.8); color: #f3eff6; border-color: rgba(255,255,255,.1); }
+
+/* البطاقات العايمين: الشاشات الكبار فقط؛ ف التيليفون غير «Deutsch lernen» فوق */
+@media (max-width: 1380px) { .au-fl.f1, .au-fl.f2, .au-fl.f4, .au-fl.f5 { display: none; } }
+@media (max-width: 900px) {
+    .au-fl { display: none; }
+    .au-fl.f7 { display: flex; top: 22px; left: 50%; translate: -50% 0; animation: none; }
+    .au-ring { width: 600px; height: 600px; -webkit-mask: radial-gradient(circle, transparent 298px, #000 299px, #000 300px, transparent 301px); mask: radial-gradient(circle, transparent 298px, #000 299px, #000 300px, transparent 301px); }
+}
+body.au:has(> .back-button) .au-fl.f7 { top: 52px; }
+@media (max-width: 900px) { body.au:has(> .back-button) .au-fl.f7 { display: none; } }
+@media (pointer: coarse) { .au-mesh, .au-fl, .au-ring, .au-wave i { animation: none; } .au-fl { -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (prefers-reduced-motion: reduce) { .au-mesh, .au-fl, .au-ring, .au-wave i { animation: none; } }
+
+body.au .au-legal { margin: 12px 0 0; text-align: center; font-size: 12.5px; color: var(--au-muted); line-height: 1.8; }
+body.au .au-legal a { color: var(--au-red); font-weight: 800; text-decoration: underline; }
+html[data-theme="dark"] body.au .au-legal a { color: #ffd75a; }

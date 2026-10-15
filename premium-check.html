@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=582e5683"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sehrgut – فحص الاشتراك</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
+<script src="assets/stars.js?v=93c940c6" defer></script>
+<script src="assets/progress.js?v=222ee4fc"></script>
+<link rel="stylesheet" href="assets/site-header.css?v=35abe044">
+<link rel="stylesheet" href="assets/section.css?v=18839cb2">
+<style>
+.chk { width: min(100% - 32px, 760px); margin: 40px auto; }
+.chk h1 { font-size: var(--step-2); font-weight: 900; margin-bottom: 6px; }
+.chk .lead { color: var(--muted); margin-bottom: 22px; line-height: 1.7; }
+.step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 16px; border: 1px solid var(--line);
+    border-radius: 12px; background: var(--surface); margin-bottom: 10px;
+}
+.step .mark { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px;
+    display: grid; place-items: center; font-weight: 900; font-size: 14px;
+    background: var(--surface-2); color: var(--muted); }
+.step.ok   .mark { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
+.step.no   .mark { background: color-mix(in srgb, var(--danger) 15%, transparent); color: var(--danger); }
+.step.ok { border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
+.step.no { border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
+.step b { display: block; margin-bottom: 3px; }
+.step span { color: var(--muted); font-size: 13.5px; line-height: 1.7; overflow-wrap: anywhere; }
+.fix { margin-top: 8px; padding: 10px 12px; border-radius: 10px;
+    background: color-mix(in srgb, var(--gold) 8%, transparent);
+    border: 1px dashed var(--line-gold); font-size: 13.5px; line-height: 1.8; }
+code { direction: ltr; display: inline-block; background: var(--surface-2);
+    padding: 1px 6px; border-radius: 6px; font-size: 12.5px; }
+</style>
+<!-- seo:start (tools/seo.py) -->
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="sehrgut">
+<meta property="og:title" content="sehrgut – فحص الاشتراك">
+<meta property="og:url" content="https://deutscheinfach.github.io/sehrgothe/premium-check.html">
+<meta property="og:image" content="https://deutscheinfach.github.io/sehrgothe/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-48.png" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+<script src="assets/region.js?v=1"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<script src="assets/site-header.js?v=f512f48d"></script>
+
+<main class="chk">
+    <h1>فحص الاشتراك</h1>
+    <p class="lead">
+        هاد الصفحة كتجرب كل خطوة وحدة بوحدها وكتقول ليك فين واقف المشكل.
+        دخل بالحساب اللي بغيتي تجرب بيه، ومن بعد سنا شوية.
+    </p>
+    <div id="steps"></div>
+</main>
+
+<script type="module">
+const ENDPOINT = "https://sehrgut-api.YOUR-SUBDOMAIN.workers.dev";
+const box = document.getElementById("steps");
+
+function step(state, title, detail, fix) {
+    const node = document.createElement("div");
+    node.className = "step " + state;
+    const mark = document.createElement("span");
+    mark.className = "mark";
+    mark.textContent = state === "ok" ? "✓" : (state === "no" ? "✗" : "…");
+    node.appendChild(mark);
+    const body = document.createElement("div");
+    const b = document.createElement("b"); b.textContent = title; body.appendChild(b);
+    const s = document.createElement("span"); s.textContent = detail; body.appendChild(s);
+    if (fix) { const f = document.createElement("div"); f.className = "fix"; f.innerHTML = fix; body.appendChild(f); }
+    node.appendChild(body);
+    box.appendChild(node);
+}
+
+try {
+    const appMod  = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
+    const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
+    const fsMod   = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+
+    const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
+        apiKey: "AIzaSyBNxr0ZQrqa2F-RVyfoAC9r7_S49Cb2S4s",
+        authDomain: "sehrgothe.firebaseapp.com",
+        projectId: "sehrgothe",
+        storageBucket: "sehrgothe.firebasestorage.app",
+        messagingSenderId: "1066728503518",
+        appId: "1:1066728503518:web:b350728d7b20f1064d2a4f"
+    });
+    const auth = authMod.getAuth(app);
+    const db = fsMod.getFirestore(app);
+
+    const account = await new Promise(function (resolve) {
+        authMod.onAuthStateChanged(auth, resolve);
+    });
+
+    /* 1 — الدخول */
+    if (!account) {
+        step("no", "1. تسجيل الدخول", "ماشي داخل بأي حساب.",
+            'دخل من <a href="login.html">هنا</a> وعاود حل هاد الصفحة.');
+        throw new Error("stop");
+    }
+    step("ok", "1. تسجيل الدخول", (account.email || account.uid) + " · uid: " + account.uid);
+
+    /* 2 — الاشتراك ف Firestore */
+    let premium = false, detail = "ماكاينش users/" + account.uid;
+    let adminLine = "ماكاينش users/" + account.uid, isAdmin = false;
+    try {
+        const snap = await fsMod.getDoc(fsMod.doc(db, "users", account.uid));
+        if (snap.exists()) {
+            const data = snap.data();
+            isAdmin = data.isAdmin === true;
+            adminLine = "isAdmin: " + JSON.stringify(data.isAdmin) + " (" + typeof data.isAdmin + ")";
+            const end = data.subscriptionEnd && data.subscriptionEnd.toDate
+                ? data.subscriptionEnd.toDate() : null;
+            const notExpired = !end || end.getTime() > Date.now();
+            premium = data.subscriptionActive === true && notExpired;
+            detail = "subscriptionActive: " + JSON.stringify(data.subscriptionActive)
+                   + (end ? " · subscriptionEnd: " + end.toLocaleDateString()
+                          + (notExpired ? "" : " (سالا)") : " · بلا تاريخ انتهاء");
+        }
+    } catch (error) { detail = "ما قدرناش نقراو Firestore: " + error.message; }
+
+    /* الأدمين: الجرس ديال الإشعارات كيبين الفورم غير لهاد الحساب */
+    step(isAdmin ? "ok" : "no", "الأدمين (الإشعارات)", adminLine, isAdmin ? "" :
+        'ف Firebase → Firestore → <code>users/' + account.uid + '</code> حط ' +
+        '<code>isAdmin: true</code> (نوع boolean). رد البال: خاص نفس الـ uid اللي فوق.');
+
+    step(premium ? "ok" : "no", "2. الاشتراك ف Firestore", detail, premium ? "" :
+        'ف Firebase → Firestore → <code>users/' + account.uid + '</code> حط ' +
+        '<code>subscriptionActive: true</code> (نوع boolean، ماشي نص).');
+    if (!premium) throw new Error("stop");
+
+    /* 3 — الـ Worker */
+    const token = await account.getIdToken();
+    let response, payload = null, raw = "";
+    try {
+        response = await fetch(ENDPOINT, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ lesenId: "insel", idToken: token })
+        });
+        raw = await response.text();
+        try { payload = JSON.parse(raw); } catch (e) { payload = null; }
+    } catch (error) {
+        step("no", "3. الاتصال بالـ Worker", error.message,
+            "الـ Worker ماكيجاوبش. شوف واش الرابط صحيح وواش CORS كيقبل الدومين ديالك.");
+        throw new Error("stop");
+    }
+
+    if (response.status === 200 && payload && payload.teil1) {
+        step("ok", "3. الـ Worker — Lesen", "رجع الموضوع insel كامل.");
+        step("ok", "4. المحتوى ديال Lesen", "عدد النصوص: " +
+            (payload.teil1.variants?.[0]?.texts?.length ?? "?") +
+            " · النسخ: " + (payload.teil1.variants?.length ?? "?"));
+
+        /* 5 — Sprechen. مخزون ف مفتاح آخر (premium-sprechen) وكيحتاج
+           نسخة جديدة ديال الـWorker. كنفحصوه على حدة باش نعرفو
+           واش المشكل ف Lesen ولا غير ف Sprechen. */
+        const SP_ID = "sprechen-b2-e-musik";
+        let spRes, spPayload = null, spRaw = "";
+        try {
+            spRes = await fetch(ENDPOINT, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ lesenId: SP_ID, idToken: token })
+            });
+            spRaw = await spRes.text();
+            try { spPayload = JSON.parse(spRaw); } catch (e) { spPayload = null; }
+        } catch (error) {
+            step("no", "5. Sprechen", error.message, "الـ Worker ماكيجاوبش.");
+            spRes = null;
+        }
+
+        if (spRes && spRes.status === 200 && spPayload && (spPayload.teil1 || spPayload.teil2)) {
+            step("ok", "5. الـ Worker — Sprechen", "رجع الموضوع " + SP_ID + " كامل.");
+            step("ok", "كلشي مزيان", "Lesen و Sprechen بجوج خدامين. إلا ما تحلاوش ف الصفحة، صفي الكاش.");
+        } else if (spRes) {
+            const spCode = spPayload && spPayload.error ? spPayload.error : spRaw.slice(0, 160);
+            /* الـWorker الجديد كيرجع sprechen_key_missing. إلا شفنا
+               "Topic not found." يعني النسخة القديمة مازالة خدامة. */
+            const oldWorker = spRes.status === 404 && !/sprechen_key_missing/.test(spRaw);
+            step("no", "5. الـ Worker — Sprechen — HTTP " + spRes.status, spCode, oldWorker
+                ? '<b>الـWorker القديم مازال خدام — الـDeploy ما دازش.</b><br>' +
+                  'ف Cloudflare ماكافيش تلصق الكود وتسجل: خاصك تبرك على <b>Deploy</b> بصح.<br><br>' +
+                  'Workers &amp; Pages → الـWorker ديالك → <b>Deployments</b>: شوف واش آخر ' +
+                  'نسخة هي ديال اليوم. إلا كانت قديمة، الكود الجديد ما دازش.<br>' +
+                  'لصق <code>cloudflare-worker.js</code> كامل، من بعد <b>Save and Deploy</b>، ' +
+                  'وعاود هاد الفحص.'
+                : 'الـWorker الجديد خدام — إذن المشكل ف المفتاح:<br>' +
+                  '<b>1)</b> المفتاح خاصو يكون <code>premium-sprechen</code> بالضبط ' +
+                  '(بلا فراغ، بلا <code>.json</code>).<br>' +
+                  '<b>2)</b> خاصو يكون ف <b>نفس</b> الـNamespace اللي فيه <code>premium-lesen</code>.<br>' +
+                  '<b>3)</b> شوف واش القيمة JSON صحيح — خاصها تبدا بـ<code>{</code> ' +
+                  'وتسالي بـ<code>}</code> بلا والو زايد.');
+        } else if (false) {
+            step("no", "", "", 'Lesen خدام، إذن الحساب والـ KV binding مزيانين — المشكل ف Sprechen برك. ' +
+                'شوف هاد التلاتة بالترتيب:<br>' +
+                '<b>1)</b> واش دفعتي <code>cloudflare-worker.js</code> الجديد للـ Worker؟ ' +
+                'النسخة القديمة ماكتعرفش <code>premium-sprechen</code> بالمرة.<br>' +
+                '<b>2)</b> المفتاح ف KV خاصو يكون <code>premium-sprechen</code> بالضبط ' +
+                '(بلا فراغ، بلا <code>.json</code>).<br>' +
+                '<b>3)</b> خاصو يكون ف <b>نفس</b> الـ Namespace اللي فيه <code>premium-lesen</code> ' +
+                '— هو اللي مربوط بالـ Worker تحت السميّة <code>TOPICS</code>.');
+        }
+    } else {
+        const code = payload && payload.error ? payload.error : raw.slice(0, 160);
+        let fix = "";
+        if (response.status === 404) {
+            fix = 'الـ Worker خدام، ولكن ماكاينش المفتاح <code>premium-lesen</code> ف KV ' +
+                  '— ولا كاين وماكاينش فيه <code>insel</code>.<br>' +
+                  'Cloudflare → Workers &amp; Pages → KV → الـ Namespace ديالك → Add entry:<br>' +
+                  'Key: <code>premium-lesen</code> · Value: محتوى <code>premium-lesen.json</code>';
+        } else if (response.status === 400) {
+            fix = "الـ Worker اللي خدام ما زال قديم — ماكيعرفش <code>lesenId</code>. " +
+                  "دفع <code>cloudflare-worker.js</code> الجديد للـ Worker.";
+        } else if (response.status === 403) {
+            fix = "الـ Worker شاف الحساب ولكن قال ماشي مشترك. " +
+                  "شوف واش <code>subscriptionActive</code> نوعو boolean ماشي نص.";
+        } else if (response.status === 401) {
+            fix = "الـ Worker ما قبلش الـ token. شوف إعدادات Firebase فالـ Worker.";
+        } else if (response.status === 500) {
+            fix = "الـ KV binding سميتو <code>TOPICS</code> ماشي مربوط بالـ Worker.";
+        }
+        step("no", "3. الـ Worker — HTTP " + response.status, code, fix);
+    }
+} catch (error) {
+    if (error.message === "stop") { /* وقفنا بوحدنا، الخطوة مكتوبة فوق */ }
+    else if (/dynamically imported module|Failed to fetch/i.test(error.message)) {
+        step("no", "Firebase ماتحملش",
+            "المتصفح ما قدرش يجيب Firebase من gstatic.com.",
+            "غالبا مانع الإعلانات (AdBlock / Brave Shields) ولا الأنترنت. " +
+            "حيّدو وعاود، ولا جرب ف متصفح آخر.");
+    } else {
+        step("no", "خطأ", error.message);
+    }
+}
+</script>
+<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/app-install.js?v=90458a45" defer></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=582e5683"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telc B1 Schreiben: Naco | sehrgut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap"></noscript>
+<link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
+<script src="assets/stars.js?v=93c940c6" defer></script>
+<script src="assets/progress.js?v=222ee4fc"></script>
+<link rel="stylesheet" href="assets/schreiben-style.css?v=ec004d48">
+<!-- seo:start (tools/seo.py) -->
+<meta name="description" content="Telc B1 Schreiben – Brief: «Naco». كتب الجواب ديالك وخد تصحيح فوري بالذكاء الاصطناعي ونقطة من 45، مع الشرح بالدارجة. Brief schreiben mit KI-Korrektur.">
+<link rel="canonical" href="https://deutscheinfach.github.io/sehrgothe/b1-schreiben-30.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="sehrgut">
+<meta property="og:title" content="Telc B1 Schreiben: Naco | sehrgut">
+<meta property="og:description" content="Telc B1 Schreiben – Brief: «Naco». كتب الجواب ديالك وخد تصحيح فوري بالذكاء الاصطناعي ونقطة من 45، مع الشرح بالدارجة. Brief schreiben mit KI-Korrektur.">
+<meta property="og:url" content="https://deutscheinfach.github.io/sehrgothe/b1-schreiben-30.html">
+<meta property="og:image" content="https://deutscheinfach.github.io/sehrgothe/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-48.png" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+<script src="assets/region.js?v=1"></script>
+</head>
+<body>
+
+<header class="task-header">
+    <div class="left">
+        <button class="back-btn" id="back-btn" aria-label="Zurück"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="task-title-block">
+            <h1 id="task-title">—</h1>
+            <div class="sub" id="task-sub">—</div>
+        </div>
+    </div>
+    <div class="right">
+        <span class="timer-pill" id="timer-pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="timer-t">30:00</span></span>
+        <button class="icon-btn" id="fullscreen-toggle" aria-label="Vollbild"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        <button class="correct-btn" id="correct-btn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>تصحيح</button>
+    </div>
+</header>
+
+<div class="task-body">
+    <section class="panel-left">
+
+        <div class="block">
+            <div class="block-head">
+                <h2>Situation</h2>
+                <button class="translate-btn" data-translate="situation">🌐 ترجمة النص</button>
+            </div>
+            <div class="ad-text" id="situation-ad"></div>
+            <p class="ad-text" id="situation-text" style="margin-top:14px"></p>
+            <div class="translation" id="translation-situation" hidden></div>
+        </div>
+
+        <div class="block">
+            <div class="block-head">
+                <h2>Aufgabe</h2>
+                <button class="translate-btn" data-translate="aufgabe">🌐 ترجمة المهام</button>
+            </div>
+            <p class="aufgabe-intro">Schreiben Sie eine Antwort. Behandeln Sie folgende Punkte:</p>
+            <div id="aufgabe-points"></div>
+            <div class="translation" id="translation-aufgabe" hidden></div>
+        </div>
+
+    </section>
+
+    <section class="panel-right">
+        <div class="editor-toolbar">
+            <div class="umlaut-btns">
+                <button data-umlaut="ä">ä</button>
+                <button data-umlaut="ö">ö</button>
+                <button data-umlaut="ü">ü</button>
+                <button data-umlaut="ß">ß</button>
+                <button data-umlaut="Ä">Ä</button>
+                <button data-umlaut="Ö">Ö</button>
+                <button data-umlaut="Ü">Ü</button>
+            </div>
+            <span class="word-count" id="word-count">0 كلمة</span>
+        </div>
+        <div class="editor-wrap">
+            <textarea id="answer-text" spellcheck="false"></textarea>
+            <div class="editor-placeholder" id="editor-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                <span>ابدأ في كتابة إجابتك هنا...</span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="result-overlay hidden" id="result-overlay">
+    <div class="result-card">
+        <button class="result-close" id="result-close" type="button">✕ إغلاق</button>
+        <div id="result-body"></div>
+    </div>
+</div>
+
+<script src="assets/schreiben-auth.js?v=9fae8527"></script>
+<script src="assets/schreiben-topics-b1.js?v=5c35fe86"></script>
+<script>const TOPIC_ID = "30"; const TOPIC_LEVEL = "b1";</script>
+<script src="assets/whatsapp.js?v=56de1cb7"></script>
+<script src="assets/schreiben-engine.js?v=960d8ad9"></script>
+<script src="assets/session-guard.js?v=f21ad6fd"></script>
+<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/app-install.js?v=90458a45" defer></script>
+<script src="assets/report.js?v=7ceb087b" defer></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* ===== Hören: البار ديال فوق (Zurück + السمية) =====
+   كيتحمل ف اللخر ديال الصفحة باش يغلب الـ<style> القدام. */
+html body nav.hoeren-sticky-nav.hoeren-sticky-nav {
+    justify-content: space-between !important;
+    gap: 12px !important;
+    min-height: 60px !important;
+    padding: 8px 10px 8px 8px !important;
+    border-radius: 18px !important;
+    border: 1px solid var(--line, rgba(26,18,32,.1)) !important;
+    background: var(--surface, #fff) !important;
+    box-shadow: 0 14px 34px -22px rgba(40,10,20,.45) !important;
+    direction: ltr !important;
+}
+html body nav.hoeren-sticky-nav.hoeren-sticky-nav::before {
+    content: ""; position: absolute; inset: 0 18px auto; height: 3px; border-radius: 0 0 3px 3px;
+    background: linear-gradient(90deg, #111 0 33%, #dd0000 33% 66%, #ffce00 66%);
+    opacity: .85;
+}
+html body nav.hoeren-sticky-nav .hoeren-nav-back.hoeren-nav-back {
+    order: 0;
+    gap: 10px !important;
+    min-height: 44px !important;
+    padding: 0 18px 0 6px !important;
+    border-radius: 13px !important;
+    border: 1px solid var(--line, rgba(26,18,32,.1)) !important;
+    background: var(--surface-2, #f6f4ef) !important;
+    color: var(--text, #1a1220) !important;
+    font: 800 14px/1 inherit !important;
+    font-family: "Cairo", system-ui, sans-serif !important;
+    transform: none !important;
+}
+html body nav.hoeren-sticky-nav .hoeren-nav-back.hoeren-nav-back i {
+    width: 32px; height: 32px; flex: none;
+    border-radius: 10px;
+    -webkit-mask: none; mask: none;
+    background: linear-gradient(135deg, #c2183f, #7a0d26);
+    box-shadow: 0 8px 16px -8px #7a0d26;
+    position: relative;
+}
+html body nav.hoeren-sticky-nav .hoeren-nav-back.hoeren-nav-back i::after {
+    content: ""; position: absolute; inset: 8px;
+    background: #fff;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 12H5M11 6l-6 6 6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 12H5M11 6l-6 6 6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform .2s;
+}
+html body nav.hoeren-sticky-nav .hoeren-nav-back.hoeren-nav-back:hover {
+    border-color: color-mix(in srgb, #c2183f 40%, transparent) !important;
+    background: var(--surface, #fff) !important;
+}
+html body nav.hoeren-sticky-nav .hoeren-nav-back.hoeren-nav-back:hover i::after { transform: translateX(-2px); }
+
+.hoeren-nav-title { display: inline-flex; align-items: center; gap: 10px; min-width: 0; padding-right: 6px; font-family: "Cairo", system-ui, sans-serif; color: var(--text, #1a1220); }
+.hoeren-nav-ico { width: 36px; height: 36px; flex: none; display: grid; place-items: center; border-radius: 11px; color: #b30e30; background: color-mix(in srgb, #b30e30 10%, transparent); }
+html[data-theme="dark"] .hoeren-nav-ico { color: #ff7a95; }
+.hoeren-nav-title b { font-size: 15.5px; font-weight: 900; white-space: nowrap; }
+.hoeren-nav-title em { font-style: normal; padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 900; color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705); white-space: nowrap; }
+.hoeren-nav-title small { padding: 4px 9px; border-radius: 8px; font-size: 11.5px; font-weight: 900; color: var(--muted, #6b6274); border: 1px solid var(--line, rgba(26,18,32,.12)); }
+@media (max-width: 560px) {
+    html body nav.hoeren-sticky-nav .hoeren-nav-back.hoeren-nav-back { padding: 0 12px 0 6px !important; font-size: 13px !important; }
+    .hoeren-nav-title b, .hoeren-nav-ico { display: none; }
+}
