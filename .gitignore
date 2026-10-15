@@ -1,0 +1,36 @@
+.DS_Store
+
+# ===== المحتوى المدفوع ماكيدخلش للريبو =====
+# هاد الملف فيه نصوص المواضيع المقفولة. الريبو عام، إذن أي
+# واحد كيقدر يقراه من هنا. بلاصتو هي Cloudflare KV برك.
+#   node tools/lesen-premium.mjs --strip   ← كيبنيه
+#   ومن بعد كتلصقو ف KV تحت premium-lesen
+premium-lesen.json
+premium-topics.json
+premium-lesen-split/
+
+# ===== محتوى Sprechen B2 المدفوع =====
+# نفس السبب ديال premium-lesen: الريبو عام.
+#   node tools/split-sprechen.mjs   ← كيبنيهم
+# ومن بعد كتلصقهم ف KV تحت lesen-sprechen-b2-<id>
+premium-sprechen.json
+premium-sprechen-split/
+
+# شبكة أمان: أي ملف premium-*.json مهما كانت السميّة.
+# السبب: premium-lesen-MERGED.json (كان فيه 922 كيلو ديال
+# المحتوى المدفوع) ماكانش داخل فالقواعد اللي فوق حيت السميّة
+# مختلفة — والـhook طلب مني ندفعو. قاعدة واحدة عامة أأمن من
+# لائحة أسماء كنزيدو ليها وحدة وحدة.
+premium-*.json
+premium-*-split/
+
+# ===== نسخ KV المؤقتة =====
+# ملي كنعطي للمستخدم ملف باش يلصقو ف Cloudflare KV، كنحطو
+# نسخة فالريبو باش يقدر يحلّها. وهاديك النسخة فيها نفس
+# المحتوى المدفوع. الـstop hook طلب مني ندفعها — قاعدة هنا
+# أأمن من ما نتفكر نمسحها ف كل مرة.
+KV-*.json
+
+# ===== البناء ديال Cloudflare (tools/build-site.sh) =====
+dist/
+.wrangler/

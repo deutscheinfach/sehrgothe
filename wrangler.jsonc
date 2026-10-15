@@ -1,0 +1,15 @@
+// ===== الموقع على Cloudflare (Workers — static assets) =====
+// الريبو ولا private، والموقع كيتنشر من dist/ (tools/build-site.sh).
+// html_handling: "none" → الروابط كيبقاو بـ .html بحال GitHub Pages
+// (بلا redirect زايد ف كل صفحة).
+{
+  "name": "deutsch-einfach-site",
+  "compatibility_date": "2026-10-01",
+  // غير «/» (والدوسيات) كيدوزو من هنا → index.html. باقي الملفات مباشرة.
+  "main": "./site-worker.js",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+    "html_handling": "none"
+  }
+}

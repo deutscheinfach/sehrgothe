@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=582e5683"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deutsch Einfach – Leseverstehen Teil 1</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
+<script src="assets/stars.js?v=93c940c6" defer></script>
+<script src="assets/progress.js?v=222ee4fc"></script>
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at 12% 6%, rgba(214,178,94,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(214,178,94,.07), transparent 44%),#08090c;
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ========================================= */
+        /* TOP NAVIGATION */
+        /* ========================================= */
+
+        .top-navigation {
+            width: 95%;
+            max-width: 1400px;
+            margin: 18px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            border: none;
+            padding: 11px 17px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-back {
+            background: #333;
+            color: white;
+        }
+
+        .nav-home {
+            background: var(--surface);
+            color: var(--accent-text);
+            border: 2px solid var(--gold-soft);
+        }
+
+        .nav-offer {
+            background: var(--gold);
+            color: var(--on-brand);
+        }
+
+        .page-progress {
+            background: var(--surface);
+            border: 2px solid var(--gold-soft);
+            border-radius: 15px;
+            padding: 9px 18px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--muted);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+            line-height: 1.5;
+        }
+
+        /* ========================================= */
+        /* HEADER */
+        /* ========================================= */
+
+        header {
+            background: var(--surface);
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold-soft);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+            vertical-align: middle;
+            margin-right: 10px;
+            border: 3px solid var(--gold-soft);
+        }
+
+        header h1 {
+            display: inline-block;
+            vertical-align: middle;
+            color: var(--accent-text);
+            font-size: 30px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--muted);
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(214,178,94,.14);
+            border: 2px solid var(--gold-soft);
+            color: #8a5a00;
+            font-weight: bold;
+        }
+
+        /* ========================================= */
+        /* CONTAINER */
+        /* ========================================= */
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        .intro {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            border-left: 6px solid var(--gold);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .intro h2 {
+            color: var(--accent-text);
+            margin-bottom: 8px;
+        }
+
+        .intro p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ========================================= */
+        /* EXERCISE */
+        /* ========================================= */
+
+        .exercise {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(320px, .85fr);
+            gap: 25px;
+            align-items: start;
+        }
+
+        .texts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .text-card {
+            background: var(--surface);
+            border: 3px solid var(--gold-soft);
+            border-radius: 18px;
+            padding: 22px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        }
+
+        .text-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        .text-card.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(214,40,40,0.12),
+                0 12px 25px rgba(214,40,40,0.15);
+        }
+
+        .text-card.correct-answer {
+            border-color: #2a9d8f;
+            background: linear-gradient(
+                135deg,
+                var(--surface),
+                rgba(74,222,128,.12)
+            );
+
+            box-shadow: 0 0 0 4px rgba(42,157,143,0.10),
+                0 10px 25px rgba(42,157,143,0.12);
+        }
+
+        .text-card.correct-answer:hover {
+            border-color: #2a9d8f;
+        }
+
+        .text-card.wrong-answer {
+            border-color: var(--gold);
+            background: linear-gradient(
+                135deg,
+                var(--surface),
+                rgba(255,107,107,.12)
+            );
+
+            box-shadow: 0 0 0 4px rgba(214,40,40,0.10),
+                0 10px 25px rgba(214,40,40,0.12);
+        }
+
+        .text-card.wrong-answer:hover {
+            border-color: var(--gold);
+        }
+
+        .text-number {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--on-brand);
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .text-card p {
+            line-height: 1.75;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        /* ========================================= */
+        /* ANSWER BOX */
+        /* ========================================= */
+
+        .answer-box {
+            margin-top: 18px;
+            min-height: 52px;
+            padding: 12px 15px;
+            background: var(--surface-2);
+            border: 2px dashed var(--line);
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            color: var(--muted);
+            font-weight: bold;
+        }
+
+        .answer-box span {
+            flex: 1;
+        }
+
+        .answer-box.filled {
+            border-color: #2a9d8f;
+            background: rgba(74,222,128,.12);
+            animation: answerPop 0.45s ease;
+        }
+
+        .answer-box.correct {
+            border-color: #2a9d8f;
+            background: rgba(74,222,128,.12);
+            color: #176b5f;
+        }
+
+        .answer-box.wrong {
+            border-color: var(--gold);
+            background: rgba(255,107,107,.12);
+            color: #a51d1d;
+        }
+
+        .correct-answer-text {
+            display: block;
+            margin-top: 8px;
+            padding: 9px 12px;
+            background: rgba(74,222,128,.12);
+            border: 1px solid #2a9d8f;
+            border-radius: 9px;
+            color: #176b5f;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .wrong-answer-text {
+            display: block;
+            margin-bottom: 6px;
+            color: #a51d1d;
+            font-weight: bold;
+        }
+
+        .answer-content {
+            width: 100%;
+        }
+
+        @keyframes answerPop {
+            0% {
+                transform: scale(0.97);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .remove-answer {
+            margin-left: 10px;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: var(--surface-2);
+            color: #000000;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .remove-answer:hover {
+            background: #000000;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* ========================================= */
+        /* HEADINGS */
+        /* ========================================= */
+
+        .headings {
+            position: sticky;
+            top: 20px;
+            background: var(--surface);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 3px solid var(--gold-soft);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .headings h2 {
+            color: var(--accent-text);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .heading {
+            position: relative;
+            background: var(--surface-2);
+            border: 2px solid var(--gold-soft);
+            border-radius: 12px;
+            padding: 14px 45px 14px 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            line-height: 1.45;
+        }
+
+        .heading:hover {
+            background: rgba(214,178,94,.14);
+            transform: translateX(-3px);
+        }
+
+        .heading.selected {
+            border-color: var(--gold);
+            background: rgba(255,107,107,.12);
+            box-shadow: 0 0 0 3px rgba(214,40,40,0.10);
+        }
+
+        .heading.used {
+            opacity: 0.5;
+            background: var(--surface-2);
+            border-color: #aaa;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .heading.used:hover {
+            transform: none;
+            background: var(--surface-2);
+        }
+
+        .heading.used::after {
+            content: "✓";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #2a9d8f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .letter {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--on-brand);
+            font-weight: bold;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        /* ========================================= */
+        /* CONTROLS */
+        /* ========================================= */
+
+        .controls {
+            margin-top: 30px;
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 25px;
+            margin: 5px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-answer {
+            background: var(--gold);
+            color: var(--on-brand);
+        }
+
+        .btn-repeat {
+            background: var(--gold-soft);
+            color: #5c4300;
+        }
+
+        .btn-back {
+            background: #333;
+            color: white;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(74,222,128,.12);
+            border: 2px solid #2a9d8f;
+            color: #176b5f;
+            font-size: 22px;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            animation: resultShow 0.5s ease;
+        }
+
+        @keyframes resultShow {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========================================= */
+        /* OFFER MODAL */
+        /* ========================================= */
+
+        .offer-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .offer-modal.show {
+            display: flex;
+        }
+
+        .offer-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            animation: offerShow 0.3s ease;
+        }
+
+        .offer-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .offer-box h2 {
+            color: var(--accent-text);
+            margin-bottom: 12px;
+        }
+
+        .offer-box p {
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .offer-item {
+            background: var(--surface-2);
+            border: 2px solid var(--gold-soft);
+            border-radius: 12px;
+            padding: 13px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .offer-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            background: var(--surface-2);
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .offer-close:hover {
+            background: var(--gold);
+            color: var(--on-brand);
+        }
+
+        @keyframes offerShow {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========================================= */
+        /* FOOTER */
+        /* ========================================= */
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: var(--muted);
+        }
+
+        /* ========================================= */
+        /* RESPONSIVE */
+        /* ========================================= */
+
+        @media (max-width: 850px) {
+
+            .exercise {
+                grid-template-columns: 1fr;
+            }
+
+            .headings {
+                position: static;
+                max-height: none;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .text-card p {
+                font-size: 15px;
+            }
+
+            .top-navigation {
+                flex-wrap: wrap;
+            }
+
+            .page-progress {
+                order: 3;
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .top-navigation {
+                width: 92%;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 9px 11px;
+                font-size: 13px;
+            }
+
+            .nav-offer {
+                padding: 9px 12px;
+            }
+
+            .logo {
+                width: 55px;
+                height: 55px;
+            }
+
+            header h1 {
+                font-size: 21px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .text-card {
+                padding: 17px;
+            }
+
+            .heading {
+                padding: 12px 40px 12px 10px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .offer-box {
+                padding: 25px 18px;
+            }
+
+        }
+
+    </style>
+
+<!-- seo:start (tools/seo.py) -->
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deutsch Einfach">
+<meta property="og:title" content="Deutsch Einfach – Leseverstehen Teil 1">
+<meta property="og:url" content="https://deutsch-einfach.online/thema1.html">
+<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-48.png" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+</head>
+
+
+<body>
+
+
+<!-- ========================================= -->
+<!-- TOP NAVIGATION -->
+<!-- ========================================= -->
+
+<div class="top-navigation">
+
+    <div class="nav-left">
+
+        <button
+            class="nav-btn nav-back"
+            onclick="goBack()"
+        >
+            ← Zurück
+        </button>
+
+        <button
+            class="nav-btn nav-home"
+            onclick="goHome()"
+        >
+            🏠 Home
+        </button>
+
+    </div>
+
+
+    <div class="page-progress">
+
+        📖 Lesen Teil 1
+
+        <br>
+
+        Thema 1 / 45
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <button
+            class="nav-btn nav-offer"
+            onclick="showOffer()"
+        >
+            💼 Angebot
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- HEADER -->
+<!-- ========================================= -->
+
+<header>
+
+    <img
+        src="assets/icon-192.png"
+        class="logo"
+        alt="Deutsch Einfach Logo"
+    >
+
+    <h1>
+        Deutsch Einfach 🇩🇪
+    </h1>
+
+    <p>
+        Leseverstehen Teil 1
+    </p>
+
+    <div class="badge">
+        🟢 Sport ist gesund – Grundversion
+    </div>
+
+</header>
+
+
+<!-- ========================================= -->
+<!-- MAIN -->
+<!-- ========================================= -->
+
+<div class="container">
+
+
+    <div class="intro">
+
+        <h2>
+            📝 Aufgabe
+        </h2>
+
+        <p>
+            Lies die fünf Texte aufmerksam durch und ordne jedem Text
+            die passende Überschrift zu.
+            Klicke zuerst auf einen Text und danach auf die passende Überschrift.
+        </p>
+
+    </div>
+
+
+    <div class="exercise">
+
+
+        <!-- ================================= -->
+        <!-- TEXTS -->
+        <!-- ================================= -->
+
+        <div class="texts">
+
+
+            <!-- TEXT 1 -->
+
+            <div
+                class="text-card"
+                id="text1"
+                onclick="selectText(1)"
+            >
+
+                <div class="text-number">
+                    1
+                </div>
+
+                <p>
+
+                    Der an der Ostküste Attikas in Griechenland lag in der Antike
+                    der Ort Marathon. Dort siegte der griechische König Milthiades
+                    im Jahr 490 vor Christus über das Heer der Perser. Der Sage nach
+                    soll ein Soldat die 42,2 km lange Strecke nach Athen gerannt sein,
+                    um die Nachricht dieses für Griechenland wichtigen Sieges zu
+                    überbringen. Bei seiner Ankunft in Athen brach er, noch während
+                    er die Nachricht verkündete, vor Erschöpfung tot zusammen.
+                    Auf diese Legende geht eine sportliche Disziplin zurück:
+                    der Marathonlauf. Bereits seit 1896 ist er olympische Disziplin,
+                    seit 1984 auch für Frauen. Die Streckenlänge von 42.195 m wurde
+                    1924 festgelegt. Der Marathonlauf gilt als einziger Leistungssport,
+                    der bis ins hohe Alter ausgeübt werden kann. Wissenschaftler
+                    erklären das mit der menschlichen Evolution. Der Mensch jagte
+                    in der Frühzeit seine Beute so lange vor sich her, bis diese
+                    vor Erschöpfung nicht mehr weiter konnte. Die Fähigkeit,
+                    ausdauernd über lange Strecken zu rennen, ist also in den
+                    menschlichen Genen verankert.
+
+                </p>
+
+                <div
+                    class="answer-box"
+                    id="answer1"
+                >
+                    Wähle eine Überschrift
+                </div>
+
+            </div>
+
+
+            <!-- TEXT 2 -->
+
+            <div
+                class="text-card"
+                id="text2"
+                onclick="selectText(2)"
+            >
+
+                <div class="text-number">
+                    2
+                </div>
+
+                <p>
+
+                    Warum soll sich der Mensch nun auf Straßen und Wegen
+                    fortbewegen? Sich in Feld und Wald, über Stock und Stein
+                    fortzubewegen, ist mindestens ebenso interessant. Daher erfand
+                    die Autoindustrie den Geländewagen und die Fahrradindustrie
+                    das Mountainbike. Da fehlte eigentlich nur noch eine
+                    Neuentwicklung eines Gefährts, dessen Mobilitätsmöglichkeiten
+                    bisher relativ begrenzt waren: der Kinderwagen. Doch das ist
+                    jetzt auch vorbei: Im Trend liegt jetzt der Jogging-Stroller,
+                    ein Kinderwagen mit nur noch drei bereiften Rädern. Diese neuen
+                    Transportmittel für Babys können sportbegeisterte und von
+                    grenzenloser Mobilität träumende Eltern jetzt samt Kind beim
+                    Joggen oder beim Inlineskaten vor sich herschieben. Die Babys
+                    sollen begeistert sein von der Geschwindigkeit, die mit solchen
+                    Geräten erreichbar ist. Doch der die Gerätesicherheit prüfende
+                    TÜV, bei Fahrzeugbesitzern in Deutschland schon seit langem
+                    als Spielverderber bekannt, warnte vor den Jogging-Strollern:
+                    Sie haben einen ungünstigen Schwerpunkt auf der Hinterachse,
+                    d.h. sie kippen leicht nach hinten um, und sie können sich
+                    leicht selbständig machen - jedenfalls solange, bis die Babys
+                    das Bremsen gelernt haben.
+
+                </p>
+
+                <div
+                    class="answer-box"
+                    id="answer2"
+                >
+                    Wähle eine Überschrift
+                </div>
+
+            </div>
+
+
+            <!-- TEXT 3 -->
+
+            <div
+                class="text-card"
+                id="text3"
+                onclick="selectText(3)"
+            >
+
+                <div class="text-number">
+                    3
+                </div>
+
+                <p>
+
+                    Schweizer Forscher haben herausgefunden, dass nur 6 Minuten
+                    Hochleistungstraining pro Woche – also weniger als eine Minute
+                    pro Tag – ausreichen, um den Körper fit zu halten. In einem
+                    Versuch mit mehreren Probanden nahm eine Gruppe an einem
+                    traditionellen Ausdauertraining teil, mit ein bis zwei
+                    Trainingsstunden täglich. Die zweite Gruppe führte dagegen
+                    täglich 60 Sekunden dauernde Radsprints durch, wobei die
+                    Teilnehmer quasi aus dem Stand Höchstgeschwindigkeit erreichen
+                    mussten. Das Ergebnis war überraschend: Beide Gruppen zeigten
+                    die gleichen gesundheitlichen Verbesserungen. Die Muskeln
+                    nahmen gleich viel Sauerstoff auf, und auch die Werte des für
+                    die Sauerstoffaufnahme verantwortlichen Zitratenzyms waren
+                    gleich. Sehr kurze und hochintensive sportliche Übungen
+                    verbessern die Fitness also genauso wie das zeitaufwendige
+                    traditionelle Ausdauertraining.
+
+                </p>
+
+                <div
+                    class="answer-box"
+                    id="answer3"
+                >
+                    Wähle eine Überschrift
+                </div>
+
+            </div>
+
+
+            <!-- TEXT 4 -->
+
+            <div
+                class="text-card"
+                id="text4"
+                onclick="selectText(4)"
+            >
+
+                <div class="text-number">
+                    4
+                </div>
+
+                <p>
+
+                    Mehr Bewegung als Ausgleich für zu langes Sitzen im Büro
+                    und in der Freizeit ist zurzeit angesagt, um Übergewicht,
+                    Bluthochdruck und Herz-Kreislauf-Erkrankungen vorzubeugen
+                    und um fit zu bleiben. Gerade für Einsteiger gibt es jedoch
+                    bei den die Ausdauer trainierenden Sportarten wie dem Joggen
+                    einige Grundregeln, die beachtet werden müssen, will man
+                    gesundheitliche Schäden vermeiden. Die ersten Trainingseinheiten
+                    sollen nicht länger als 20 bis 30 Minuten dauern und zweimal
+                    pro Woche durchgeführt werden. Der Puls sollte nie den Wert
+                    200 minus Lebensalter überschreiten, bei einem 20-Jährigen
+                    kann er also bei 180, bei einem 60-Jährigen hingegen nur bei
+                    140 liegen. Außerdem gilt für alle, die beim Sport abnehmen
+                    möchten: Je höher der Pulsschlag, desto weniger Fett wird
+                    verbrannt. Hoher Pulsschlag lässt Sporttreibenden langsamer
+                    abnehmen.
+
+                </p>
+
+                <div
+                    class="answer-box"
+                    id="answer4"
+                >
+                    Wähle eine Überschrift
+                </div>
+
+            </div>
+
+
+            <!-- TEXT 5 -->
+
+            <div
+                class="text-card"
+                id="text5"
+                onclick="selectText(5)"
+            >
+
+                <div class="text-number">
+                    5
+                </div>
+
+                <p>
+
+                    Viele frischgebackene Eltern stehen einem riesigen Angebot
+                    an Kinderwagen gegenüber, das in Kinderläden und Großmärkten
+                    feilgeboten wird. Doch welcher ist der richtige? Experten
+                    raten, beim Kauf dieses für die ersten Jahre mit dem Kleinkind
+                    wichtigen Gefährts auf ein paar Dinge zu achten. Erstens sollte
+                    die Matratze nicht zu weich sein, damit das Kind nicht einsinkt,
+                    wodurch die Atmung behindert werden kann. Zweitens sollten die
+                    Räder gefedert sein, um Erschütterungen auf unebenen Wegen
+                    auszugleichen. Ein hoher Wagen schützt die Babys vor dem
+                    Auspuff der Autos an Straßenkreuzungen. Zusammenklappbare
+                    Wagen passen in jeden Kofferraum und lassen sich fast überallhin
+                    mitnehmen. Der Wagen sollte vor allem kippsicher sein und keine
+                    scharfen Kanten haben, an denen sich die Kinder verletzen können.
+                    Vom TÜV geprüfte Kinderwagen erhalten ein Prüfzeichen. Damit
+                    haben die Eltern eine gewisse Sicherheit, dass der Kinderwagen
+                    auch nach Dauergebrauch nicht zu einem Sicherheitsrisiko für
+                    ihr Kind werden kann.
+
+                </p>
+
+                <div
+                    class="answer-box"
+                    id="answer5"
+                >
+                    Wähle eine Überschrift
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- HEADINGS -->
+        <!-- ================================= -->
+
+        <div class="headings">
+
+            <h2>
+                Überschriften
+            </h2>
+
+
+            <div
+                class="heading"
+                id="headingA"
+                onclick="selectHeading('A')"
+            >
+                <span class="letter">A</span>
+                Sport ist gesund - wenn man einige wichtige Regeln beachtet.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingB"
+                onclick="selectHeading('B')"
+            >
+                <span class="letter">B</span>
+                Griechische Sportler so erfolgreich wie nie zuvor.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingC"
+                onclick="selectHeading('C')"
+            >
+                <span class="letter">C</span>
+                Fitness auch mit wenig Zeitaufwand erreichbar.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingD"
+                onclick="selectHeading('D')"
+            >
+                <span class="letter">D</span>
+                Geprüfte Qualität für Babys.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingE"
+                onclick="selectHeading('E')"
+            >
+                <span class="letter">E</span>
+                Bluthochdruck beschleunigt das Abnehmen.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingF"
+                onclick="selectHeading('F')"
+            >
+                <span class="letter">F</span>
+                Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingG"
+                onclick="selectHeading('G')"
+            >
+                <span class="letter">G</span>
+                Täglich kurzes Sprints besser als langes Ausdauertraining.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingH"
+                onclick="selectHeading('H')"
+            >
+                <span class="letter">H</span>
+                Ein Leistungssport für jedes Alter.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingI"
+                onclick="selectHeading('I')"
+            >
+                <span class="letter">I</span>
+                Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.
+            </div>
+
+
+            <div
+                class="heading"
+                id="headingJ"
+                onclick="selectHeading('J')"
+            >
+                <span class="letter">J</span>
+                Autoindustrie: In Zukunft Mobilität ohne Grenzen.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- CONTROLS -->
+    <!-- ========================================= -->
+
+    <div class="controls">
+
+        <button
+            class="btn btn-answer"
+            onclick="checkAnswers()"
+        >
+            ✅ Antwort
+        </button>
+
+
+        <button
+            class="btn btn-repeat"
+            onclick="repeatExercise()"
+        >
+            🔄 Wiederholen
+        </button>
+
+
+        <button
+            class="btn btn-back"
+            onclick="goBack()"
+        >
+            ← Zurück
+        </button>
+
+
+        <div
+            class="result"
+            id="result"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- OFFER MODAL -->
+<!-- ========================================= -->
+
+<div
+    id="offerModal"
+    class="offer-modal"
+>
+
+    <div class="offer-box">
+
+        <button
+            class="offer-close"
+            onclick="closeOffer()"
+        >
+            ✕
+        </button>
+
+
+        <div class="offer-icon">
+            💼
+        </div>
+
+
+        <h2>
+            Unsere Angebote
+        </h2>
+
+
+        <p>
+
+            Entdecke unsere Angebote von
+            <strong>Deutsch Einfach</strong>
+            und bereite dich optimal auf
+            die TELC B1 & B2 Prüfung vor.
+
+        </p>
+
+
+        <div class="offer-item">
+            🇩🇪 Deutsch B1
+        </div>
+
+
+        <div class="offer-item">
+            🇩🇪 Deutsch B2
+        </div>
+
+
+        <div class="offer-item">
+            📚 TELC Prüfungsvorbereitung
+        </div>
+
+
+        <button
+            class="btn btn-back"
+            onclick="closeOffer()"
+        >
+            Schließen
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- FOOTER -->
+<!-- ========================================= -->
+
+<footer>
+
+    Deutsch Einfach 🇩🇪 – TELC B1 & B2 Prüfungsvorbereitung
+
+</footer>
+
+
+<script type="module">
+
+    /* ========================================= */
+    /* FIREBASE */
+    /* ========================================= */
+
+    import { initializeApp, getApps, getApp }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc
+    }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+        authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+
+        projectId: "deutsch-einfach-4c81f",
+
+        storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+
+        messagingSenderId: "152448766933",
+
+        appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+        measurementId: "G-9QV234Z0KZ"
+
+    };
+
+
+    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+    const db = getFirestore(app);
+
+
+    let currentUser = null;
+
+
+    onAuthStateChanged(auth, function(user) {
+
+        currentUser = user;
+
+        if (!user) {
+
+            console.log(
+                "Kein Benutzer angemeldet."
+            );
+
+        } else {
+
+            console.log(
+                "Benutzer angemeldet:",
+                user.email
+            );
+
+        }
+
+    });
+
+
+    /* ========================================= */
+    /* PROGRESS SYSTEM */
+    /* ========================================= */
+
+    async function saveThemaProgress() {
+
+        if (!currentUser) {
+
+            alert(
+                "⚠️ Du musst angemeldet sein, " +
+                "damit dein Fortschritt gespeichert werden kann."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const userSnapshot =
+                await getDoc(userRef);
+
+
+            let userData = {};
+
+
+            if (userSnapshot.exists()) {
+
+                userData =
+                    userSnapshot.data();
+
+            }
+
+
+            /* ================================= */
+            /* NEW PROGRESS SYSTEM */
+            /* ================================= */
+
+            const oldProgress =
+                userData.progress || {};
+
+
+            const lesenProgress =
+                oldProgress.lesen || {};
+
+
+            const teil1Progress =
+                lesenProgress.teil1 || {};
+
+
+            teil1Progress.thema1 = true;
+
+
+            const newProgress = {
+
+                ...oldProgress,
+
+                lesen: {
+
+                    ...lesenProgress,
+
+                    teil1: {
+
+                        ...teil1Progress
+
+                    }
+
+                }
+
+            };
+
+
+            /* ================================= */
+            /* LEGACY SYSTEM KEPT */
+            /* ================================= */
+
+            const completedThemas =
+                userData.completedThemas || {};
+
+
+            completedThemas.thema1 = true;
+
+
+            await setDoc(
+
+                userRef,
+
+                {
+
+                    progress: newProgress,
+
+                    completedThemas:
+                        completedThemas
+
+                },
+
+                {
+
+                    merge: true
+
+                }
+
+            );
+
+
+            console.log(
+                "Thema 1 erfolgreich abgeschlossen."
+            );
+
+
+            alert(
+                "🎉 Sehr gut!\n\n" +
+                "Thema 1 wurde erfolgreich abgeschlossen. ✅\n\n" +
+                "Dein Fortschritt wurde gespeichert."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Progress error:",
+                error
+            );
+
+
+            alert(
+                "⚠️ Dein Ergebnis ist richtig, " +
+                "aber dein Fortschritt konnte nicht gespeichert werden."
+            );
+
+        }
+
+    }
+
+
+    /* ========================================= */
+    /* EXERCISE */
+    /* ========================================= */
+
+    let selectedText = null;
+
+
+    let userAnswers = {
+
+        1: null,
+        2: null,
+        3: null,
+        4: null,
+        5: null
+
+    };
+
+
+    const answers = {
+
+        1: "H",
+        2: "F",
+        3: "C",
+        4: "A",
+        5: "D"
+
+    };
+
+
+    const headingTitles = {
+
+        A:
+            "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
+
+        B:
+            "Griechische Sportler so erfolgreich wie nie zuvor.",
+
+        C:
+            "Fitness auch mit wenig Zeitaufwand erreichbar.",
+
+        D:
+            "Geprüfte Qualität für Babys.",
+
+        E:
+            "Bluthochdruck beschleunigt das Abnehmen.",
+
+        F:
+            "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
+
+        G:
+            "Täglich kurzes Sprints besser als langes Ausdauertraining.",
+
+        H:
+            "Ein Leistungssport für jedes Alter.",
+
+        I:
+            "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
+
+        J:
+            "Autoindustrie: In Zukunft Mobilität ohne Grenzen."
+
+    };
+
+
+    /* ========================================= */
+    /* TEXT AUSWÄHLEN */
+    /* ========================================= */
+
+    window.selectText = function(number) {
+
+        selectedText = number;
+
+
+        document
+            .querySelectorAll(".text-card")
+            .forEach(card => {
+
+                card.classList.remove(
+                    "selected"
+                );
+
+            });
+
+
+        const selectedCard =
+            document.getElementById(
+                "text" + number
+            );
+
+
+        selectedCard.classList.add(
+            "selected"
+        );
+
+
+        document
+            .querySelectorAll(".heading")
+            .forEach(h => {
+
+                h.classList.remove(
+                    "selected"
+                );
+
+            });
+
+    };
+
+
+    /* ========================================= */
+    /* ÜBERSCHRIFT AUSWÄHLEN */
+    /* ========================================= */
+
+    window.selectHeading = function(letter) {
+
+        if (!selectedText) {
+
+            alert(
+                "Bitte zuerst einen Text auswählen."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Prüfen, ob die Überschrift
+         * schon für einen anderen Text benutzt wird.
+         */
+
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
+
+            if (
+                i !== selectedText &&
+                userAnswers[i] === letter
+            ) {
+
+                alert(
+                    "⚠️ Diese Überschrift wurde bereits verwendet.\n\n" +
+                    "Wenn du sie für einen anderen Text benutzen möchtest, " +
+                    "entferne sie zuerst mit ✕."
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        const oldAnswer =
+            userAnswers[selectedText];
+
+
+        /*
+         * Alte Antwort freigeben.
+         */
+
+        if (oldAnswer) {
+
+            document
+                .getElementById(
+                    "heading" + oldAnswer
+                )
+                .classList.remove(
+                    "used"
+                );
+
+        }
+
+
+        /*
+         * Neue Antwort speichern.
+         */
+
+        userAnswers[selectedText] =
+            letter;
+
+
+        document
+            .getElementById(
+                "heading" + letter
+            )
+            .classList.add(
+                "used"
+            );
+
+
+        document
+            .querySelectorAll(".heading")
+            .forEach(h => {
+
+                h.classList.remove(
+                    "selected"
+                );
+
+            });
+
+
+        document
+            .getElementById(
+                "text" + selectedText
+            )
+            .classList.add(
+                "selected"
+            );
+
+
+        const answerBox =
+            document.getElementById(
+                "answer" + selectedText
+            );
+
+
+        answerBox.innerHTML = `
+
+            <div class="answer-content">
+
+                <span>
+                    ${letter} — ${headingTitles[letter]}
+                </span>
+
+                <button
+                    class="remove-answer"
+                    onclick="removeAnswer(${selectedText}, event)"
+                    title="Antwort entfernen"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+        `;
+
+
+        answerBox.classList.remove(
+            "wrong",
+            "correct"
+        );
+
+
+        answerBox.classList.add(
+            "filled"
+        );
+
+
+        document
+            .getElementById(
+                "text" + selectedText
+            )
+            .classList.remove(
+                "correct-answer",
+                "wrong-answer"
+            );
+
+
+        setTimeout(() => {
+
+            answerBox.classList.remove(
+                "filled"
+            );
+
+        }, 450);
+
+    };
+
+
+    /* ========================================= */
+    /* ANTWORT ENTFERNEN */
+    /* ========================================= */
+
+    window.removeAnswer = function(
+        textNumber,
+        event
+    ) {
+
+        if (event) {
+
+            event.stopPropagation();
+
+        }
+
+
+        const oldAnswer =
+            userAnswers[textNumber];
+
+
+        if (!oldAnswer) {
+
+            return;
+
+        }
+
+
+        document
+            .getElementById(
+                "heading" + oldAnswer
+            )
+            .classList.remove(
+                "used"
+            );
+
+
+        userAnswers[textNumber] =
+            null;
+
+
+        const answerBox =
+            document.getElementById(
+                "answer" + textNumber
+            );
+
+
+        answerBox.innerHTML =
+            "Wähle eine Überschrift";
+
+
+        answerBox.classList.remove(
+            "filled",
+            "correct",
+            "wrong"
+        );
+
+
+        document
+            .getElementById(
+                "text" + textNumber
+            )
+            .classList.remove(
+                "correct-answer",
+                "wrong-answer"
+            );
+
+
+        document
+            .getElementById(
+                "text" + textNumber
+            )
+            .classList.remove(
+                "selected"
+            );
+
+
+        if (
+            selectedText === textNumber
+        ) {
+
+            selectedText = null;
+
+        }
+
+    };
+
+
+    /* ========================================= */
+    /* ANTWORTEN PRÜFEN */
+    /* ========================================= */
+
+    window.checkAnswers = async function() {
+
+        let score = 0;
+
+
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
+
+            const answerBox =
+                document.getElementById(
+                    "answer" + i
+                );
+
+
+            const textCard =
+                document.getElementById(
+                    "text" + i
+                );
+
+
+            const userAnswer =
+                userAnswers[i];
+
+
+            answerBox.classList.remove(
+                "correct",
+                "wrong"
+            );
+
+
+            textCard.classList.remove(
+                "correct-answer",
+                "wrong-answer"
+            );
+
+
+            /* =============================== */
+            /* RICHTIG */
+            /* =============================== */
+
+            if (
+                userAnswer &&
+                userAnswer === answers[i]
+            ) {
+
+                score++;
+
+
+                answerBox.classList.add(
+                    "correct"
+                );
+
+
+                textCard.classList.add(
+                    "correct-answer"
+                );
+
+
+                answerBox.innerHTML = `
+
+                    <div class="answer-content">
+
+                        <span>
+                            ✅ ${userAnswer} — Richtig
+                        </span>
+
+                        <button
+                            class="remove-answer"
+                            onclick="removeAnswer(${i}, event)"
+                            title="Antwort entfernen"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* =============================== */
+            /* KEINE ANTWORT */
+            /* =============================== */
+
+            else if (!userAnswer) {
+
+                answerBox.classList.add(
+                    "wrong"
+                );
+
+
+                textCard.classList.add(
+                    "wrong-answer"
+                );
+
+
+                answerBox.innerHTML = `
+
+                    <div class="answer-content">
+
+                        <span class="wrong-answer-text">
+                            ❌ Keine Antwort
+                        </span>
+
+                        <span class="correct-answer-text">
+                            ✅ Richtige Antwort:
+                            ${answers[i]} — ${headingTitles[answers[i]]}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* =============================== */
+            /* FALSCHE ANTWORT */
+            /* =============================== */
+
+            else {
+
+                answerBox.classList.add(
+                    "wrong"
+                );
+
+
+                textCard.classList.add(
+                    "wrong-answer"
+                );
+
+
+                answerBox.innerHTML = `
+
+                    <div class="answer-content">
+
+                        <span class="wrong-answer-text">
+                            ❌ Deine Antwort:
+                            ${userAnswer} — Falsch
+                        </span>
+
+                        <span class="correct-answer-text">
+                            ✅ Richtige Antwort:
+                            ${answers[i]} — ${headingTitles[answers[i]]}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+
+        if (score === 5) {
+
+            result.textContent =
+                "🏆 Ergebnis: 5 / 5 — Sehr gut! 🎉";
+
+
+            await saveThemaProgress();
+
+        }
+
+        else {
+
+            result.textContent =
+                "Ergebnis: " +
+                score +
+                " / 5";
+
+        }
+
+
+        result.classList.remove(
+            "show"
+        );
+
+
+        void result.offsetWidth;
+
+
+        result.classList.add(
+            "show"
+        );
+
+    };
+
+
+    /* ========================================= */
+    /* WIEDERHOLEN */
+    /* ========================================= */
+
+    window.repeatExercise = function() {
+
+        userAnswers = {
+
+            1: null,
+            2: null,
+            3: null,
+            4: null,
+            5: null
+
+        };
+
+
+        selectedText = null;
+
+
+        document
+            .querySelectorAll(".text-card")
+            .forEach(card => {
+
+                card.classList.remove(
+                    "selected",
+                    "correct-answer",
+                    "wrong-answer"
+                );
+
+            });
+
+
+        document
+            .querySelectorAll(".heading")
+            .forEach(heading => {
+
+                heading.classList.remove(
+                    "used",
+                    "selected"
+                );
+
+            });
+
+
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
+
+            const answerBox =
+                document.getElementById(
+                    "answer" + i
+                );
+
+
+            answerBox.innerHTML =
+                "Wähle eine Überschrift";
+
+
+            answerBox.classList.remove(
+                "filled",
+                "correct",
+                "wrong"
+            );
+
+        }
+
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+
+        result.classList.remove(
+            "show"
+        );
+
+
+        result.textContent = "";
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    };
+
+
+    /* ========================================= */
+    /* HOME */
+    /* ========================================= */
+
+    window.goHome = function() {
+
+        window.location.href="./";
+
+    };
+
+
+    /* ========================================= */
+    /* ZURÜCK */
+    /* ========================================= */
+
+    window.goBack = function() {
+
+        window.location.href =
+            "lesen-teil1.html";
+
+    };
+
+
+    /* ========================================= */
+    /* ANGEBOT */
+    /* ========================================= */
+
+    window.showOffer = function() {
+
+        document
+            .getElementById("offerModal")
+            .classList.add("show");
+
+    };
+
+
+    window.closeOffer = function() {
+
+        document
+            .getElementById("offerModal")
+            .classList.remove("show");
+
+    };
+
+
+    /* ========================================= */
+    /* MODAL OUTSIDE CLICK */
+    /* ========================================= */
+
+    document
+        .getElementById("offerModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeOffer();
+
+                }
+
+            }
+        );
+
+
+</script>
+
+<script src="assets/session-guard.js?v=f21ad6fd"></script>
+<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/app-install.js?v=90458a45" defer></script>
+</body>
+
+</html>
+

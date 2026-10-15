@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=582e5683"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bewerbung و ترجمة الوثائق للألمانية – المغرب | Deutsch Einfach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
+<link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
+<script src="assets/stars.js?v=93c940c6" defer></script>
+<script src="assets/progress.js?v=222ee4fc"></script>
+<link rel="stylesheet" href="assets/site-header.css?v=35abe044">
+<link rel="stylesheet" href="assets/section.css?v=18839cb2">
+<style>
+/* ===== صفحة Bewerbung + ترجمة ===== */
+.bw { direction: rtl; text-align: right; max-width: var(--shell, 1180px); margin: 0 auto; padding: 0 var(--gutter, 18px) 70px; }
+.bw *, .bw *::before, .bw *::after { box-sizing: border-box; }
+.bw a { text-decoration: none; }
+
+/* ---------- الرأس ---------- */
+.bw-hero {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; align-items: center;
+    margin: 26px 0 26px; padding: 44px 40px; border-radius: 30px;
+    background:
+        radial-gradient(60% 80% at 15% 20%, rgba(242,183,5,.22), transparent 60%),
+        radial-gradient(50% 70% at 90% 90%, rgba(255,74,107,.35), transparent 60%),
+        linear-gradient(135deg, #2a0a14 0%, #7a0d26 48%, #b30e30 100%);
+    color: #fff; box-shadow: 0 40px 80px -40px rgba(122,13,38,.75);
+}
+.bw-hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+    background-size: 22px 22px; mask-image: linear-gradient(180deg, #000 30%, transparent);
+}
+.bw-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+    font-weight: 800; font-size: 13px;
+}
+.bw-badge i { width: 8px; height: 8px; border-radius: 50%; background: #f2b705; box-shadow: 0 0 0 0 rgba(242,183,5,.7); animation: bw-ping 1.8s infinite; }
+@keyframes bw-ping { 70% { box-shadow: 0 0 0 10px rgba(242,183,5,0); } 100% { box-shadow: 0 0 0 0 rgba(242,183,5,0); } }
+.bw-hero h1 { font-size: clamp(2rem, 4.2vw, 3.3rem); line-height: 1.25; font-weight: 900; margin: 16px 0 12px; letter-spacing: -.02em; }
+.bw-hero h1 .gold {
+    background: linear-gradient(90deg, #ffd34d, #f2b705 40%, #fff3c4 50%, #f2b705 60%, #ffd34d);
+    background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: bw-shine 4s ease-in-out infinite;
+}
+@keyframes bw-shine { 0%, 40% { background-position: 100% 0; } 80%, 100% { background-position: 0 0; } }
+.bw-hero p.lead { color: rgba(255,255,255,.86); font-size: 1.08rem; line-height: 1.9; margin: 0 0 22px; max-width: 54ch; }
+.bw-hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.bw-btn {
+    position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 22px; border-radius: 14px; font-weight: 900; font-size: 15.5px; cursor: pointer; border: 0;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.bw-btn:hover { transform: translateY(-2px); }
+.bw-btn-gold { background: linear-gradient(135deg, #ffe07a, #f2b705); color: #3a1500 !important; box-shadow: 0 16px 32px -14px rgba(242,183,5,.9); }
+.bw-btn-gold::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.7), transparent);
+    animation: bw-sweep 3.2s ease-in-out infinite;
+}
+@keyframes bw-sweep { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
+.bw-btn-ghost { background: rgba(255,255,255,.1); color: #fff !important; border: 1px solid rgba(255,255,255,.3); }
+.bw-trust { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,.82); }
+.bw-trust span::before { content: "✓ "; color: #f2b705; font-weight: 900; }
+
+/* ---------- المشهد ديال الوثائق ---------- */
+.bw-scene { position: relative; height: 380px; perspective: 1000px; }
+.bw-doc {
+    position: absolute; width: 230px; border-radius: 16px; padding: 18px 18px 16px;
+    background: #fff; color: #101a36; box-shadow: 0 30px 60px -25px rgba(0,0,0,.6);
+    transform-origin: center; direction: ltr; text-align: left;
+}
+.bw-doc h5 { margin: 0 0 10px; font-size: 12px; font-weight: 900; letter-spacing: .04em; color: #b30e30; display: flex; align-items: center; gap: 6px; }
+.bw-doc .ln { height: 7px; border-radius: 4px; background: #e6e9f2; margin: 7px 0; transform-origin: left; }
+.bw-doc .ln.dark { background: #c7cdde; }
+.bw-doc-cv { right: 34%; top: 8px; z-index: 3; animation: bw-float1 6s ease-in-out infinite; }
+.bw-doc-letter { right: 2%; top: 70px; z-index: 2; transform: rotate(7deg); animation: bw-float2 7s ease-in-out infinite; }
+.bw-doc-dip { right: 52%; top: 150px; z-index: 1; transform: rotate(-8deg); animation: bw-float3 8s ease-in-out infinite; }
+@keyframes bw-float1 { 50% { transform: translateY(-12px) rotate(-1deg); } }
+@keyframes bw-float2 { 0%, 100% { transform: rotate(7deg); } 50% { transform: translateY(-16px) rotate(4deg); } }
+@keyframes bw-float3 { 0%, 100% { transform: rotate(-8deg); } 50% { transform: translateY(-10px) rotate(-5deg); } }
+.bw-doc-cv .photo { float: right; width: 38px; height: 46px; border-radius: 8px; background: linear-gradient(135deg, #ffe1e5, #f6c7cf); margin-left: 10px; }
+.bw-doc .ln.type { animation: bw-type 3.2s ease-in-out infinite; }
+.bw-doc .ln.type:nth-of-type(3) { animation-delay: .25s; }
+.bw-doc .ln.type:nth-of-type(4) { animation-delay: .5s; }
+.bw-doc .ln.type:nth-of-type(5) { animation-delay: .75s; }
+@keyframes bw-type { 0% { transform: scaleX(0); } 35%, 85% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: .9; } }
+.bw-lang { display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 12.5px; margin-top: 10px; }
+.bw-lang b { padding: 3px 8px; border-radius: 6px; background: #f4f6fb; }
+.bw-lang em { font-style: normal; color: #b30e30; animation: bw-arrow 1.4s ease-in-out infinite; display: inline-block; }
+@keyframes bw-arrow { 50% { transform: translateX(4px); } }
+.bw-stamp {
+    position: absolute; left: 6%; bottom: 26px; z-index: 4;
+    width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; text-align: center;
+    border: 4px solid #0f9d58; color: #0f9d58; background: rgba(255,255,255,.95);
+    font-weight: 900; font-size: 15px; line-height: 1.1; transform: rotate(-14deg) scale(0);
+    animation: bw-stamp 6s cubic-bezier(.2,1.6,.4,1) infinite; box-shadow: 0 18px 30px -16px rgba(0,0,0,.5);
+}
+.bw-stamp small { display: block; font-size: 11px; }
+@keyframes bw-stamp { 0%, 30% { transform: rotate(-14deg) scale(0); opacity: 0; } 38% { transform: rotate(-14deg) scale(1.25); opacity: 1; } 44%, 88% { transform: rotate(-14deg) scale(1); opacity: 1; } 100% { transform: rotate(-14deg) scale(0); opacity: 0; } }
+.bw-plane {
+    position: absolute; right: 2%; bottom: 40px; font-size: 34px; z-index: 4;
+    animation: bw-fly 6s ease-in-out infinite; filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+}
+@keyframes bw-fly { 0%, 45% { transform: translate(0,0) rotate(0); opacity: 0; } 55% { opacity: 1; } 90% { transform: translate(-160px,-260px) rotate(-18deg); opacity: 1; } 100% { transform: translate(-190px,-300px) rotate(-20deg); opacity: 0; } }
+.bw-flag { position: absolute; left: 12%; top: 0; font-size: 38px; z-index: 4; animation: bw-bob 3s ease-in-out infinite; }
+@keyframes bw-bob { 50% { transform: translateY(-8px); } }
+
+/* ---------- الأرقام ---------- */
+.bw-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0 0 30px; }
+.bw-stat { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px; text-align: center; box-shadow: var(--shadow); }
+.bw-stat b { display: block; font-size: 1.9rem; font-weight: 900; color: var(--brand); direction: ltr; }
+.bw-stat span { color: var(--muted); font-weight: 700; font-size: 14px; }
+
+/* ---------- العروض ---------- */
+.bw-title { text-align: center; margin: 46px 0 22px; }
+.bw-title small { display: inline-block; color: var(--brand); font-weight: 900; font-size: 13px; letter-spacing: .06em; margin-bottom: 6px; }
+.bw-title h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 900; margin: 0; }
+.bw-title p { color: var(--muted); margin: 8px auto 0; max-width: 60ch; line-height: 1.8; }
+.bw-offers { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.bw-card {
+    position: relative; border-radius: 26px; padding: 30px 28px 26px; background: var(--surface);
+    border: 1px solid var(--line); box-shadow: var(--shadow-lg, var(--shadow));
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.bw-card:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -35px rgba(122,13,38,.55); }
+.bw-card.hot { border: 2px solid transparent; background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, #f2b705, #e3163f, #f2b705) border-box; background-size: 100% 100%, 300% 300%;
+    animation: bw-border 6s linear infinite; }
+@keyframes bw-border { 0% { background-position: 0 0, 0% 50%; } 100% { background-position: 0 0, 300% 50%; } }
+.bw-flag-tag { position: absolute; top: -14px; right: 26px; padding: 6px 14px; border-radius: 999px; font-weight: 900; font-size: 13px; color: #3a1500; background: linear-gradient(135deg, #ffe07a, #f2b705); box-shadow: 0 10px 20px -10px rgba(242,183,5,.9); }
+.bw-ico { width: 60px; height: 60px; border-radius: 18px; display: grid; place-items: center; font-size: 28px; margin-bottom: 14px;
+    background: color-mix(in srgb, var(--brand) 12%, transparent); }
+.bw-card h3 { margin: 0 0 4px; font-size: 1.45rem; font-weight: 900; }
+.bw-card .sub { color: var(--muted); margin: 0 0 16px; }
+.bw-price { display: flex; align-items: baseline; gap: 8px; margin: 0 0 18px; }
+.bw-price b { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--text); direction: ltr; }
+.bw-price span { font-weight: 900; color: var(--brand); font-size: 1.2rem; }
+.bw-price em { font-style: normal; color: var(--muted); font-weight: 700; }
+.bw-list { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 10px; }
+.bw-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.7; }
+.bw-list li::before { content: "✓"; flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 13px; color: #fff; background: var(--ok, #0f9d58); margin-top: 2px; }
+.bw-list li b { font-weight: 900; }
+.bw-card .bw-btn { width: 100%; justify-content: center; }
+.bw-btn-red { background: var(--grad-brand); color: #fff !important; box-shadow: 0 16px 30px -14px var(--brand); }
+
+/* ---------- الحاسبة ---------- */
+.bw-calc {
+    margin: 34px 0 0; border-radius: 26px; padding: 28px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 26px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow);
+}
+.bw-calc h3 { margin: 0 0 6px; font-weight: 900; font-size: 1.3rem; }
+.bw-calc p { margin: 0 0 18px; color: var(--muted); }
+.bw-range-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.bw-range-row input[type=range] { flex: 1; accent-color: var(--brand); height: 6px; }
+.bw-pages { min-width: 92px; text-align: center; font-weight: 900; padding: 8px 10px; border-radius: 12px; background: var(--surface-2); }
+.bw-check { display: flex; align-items: center; gap: 10px; font-weight: 800; cursor: pointer; user-select: none; }
+.bw-check input { width: 20px; height: 20px; accent-color: var(--brand); }
+.bw-total {
+    text-align: center; border-radius: 20px; padding: 22px; color: #fff;
+    background: linear-gradient(135deg, #7a0d26, #e3163f);
+}
+.bw-total > span { display: block; font-weight: 800; opacity: .85; }
+.bw-total b { display: block; font-size: 2.8rem; font-weight: 900; direction: ltr; line-height: 1.2; transition: transform .2s; }
+.bw-total b.bump { transform: scale(1.12); }
+.bw-total .bw-btn { margin-top: 12px; width: 100%; justify-content: center; }
+
+/* ---------- الخطوات ---------- */
+.bw-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; position: relative; }
+.bw-step { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 24px 20px; text-align: center; box-shadow: var(--shadow); }
+.bw-step .num { width: 54px; height: 54px; margin: -50px auto 12px; border-radius: 50%; display: grid; place-items: center; font-size: 24px;
+    background: var(--surface); border: 3px solid var(--brand); box-shadow: 0 10px 20px -10px var(--brand); }
+.bw-step h4 { margin: 0 0 6px; font-weight: 900; font-size: 1.1rem; }
+.bw-step p { margin: 0; color: var(--muted); line-height: 1.8; font-size: 14.5px; }
+.bw-steps-wrap { padding-top: 26px; }
+
+/* ---------- الوثائق اللي كنترجمو ---------- */
+.bw-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.bw-chips span { padding: 9px 16px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-weight: 800; font-size: 14.5px; box-shadow: var(--shadow); }
+
+/* ---------- أسئلة ---------- */
+.bw-faq { max-width: 820px; margin: 0 auto; }
+.bw-faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; }
+.bw-faq summary { cursor: pointer; font-weight: 900; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+.bw-faq summary::-webkit-details-marker { display: none; }
+.bw-faq summary::after { content: "+"; color: var(--brand); font-size: 22px; line-height: 1; transition: transform .2s; }
+.bw-faq details[open] summary::after { transform: rotate(45deg); }
+.bw-faq details p { margin: 10px 0 0; color: var(--muted); line-height: 1.85; }
+
+/* ---------- آخر الصفحة ---------- */
+.bw-final {
+    margin: 50px 0 0; text-align: center; border-radius: 30px; padding: 42px 22px; color: #fff; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #2a0a14, #7a0d26 55%, #e3163f);
+}
+.bw-final h2 { margin: 0 0 8px; font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 900; }
+.bw-final p { margin: 0 0 20px; color: rgba(255,255,255,.85); }
+
+/* ---------- الظهور ملي كتنزل ---------- */
+.bw-reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s cubic-bezier(.22,.8,.3,1); }
+.bw-reveal.in { opacity: 1; transform: none; }
+.bw-reveal.d1 { transition-delay: .08s; } .bw-reveal.d2 { transition-delay: .16s; } .bw-reveal.d3 { transition-delay: .24s; }
+
+/* ---------- WhatsApp عائم ---------- */
+.bw-fab {
+    position: fixed; left: 18px; bottom: 18px; z-index: 50; width: 58px; height: 58px; border-radius: 50%;
+    display: grid; place-items: center; background: #25d366; color: #fff; box-shadow: 0 14px 30px -10px rgba(37,211,102,.8);
+    animation: bw-fab 2.6s ease-in-out infinite;
+}
+.bw-fab svg { width: 30px; height: 30px; }
+@keyframes bw-fab { 0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,.55), 0 14px 30px -10px rgba(37,211,102,.8); } 50% { box-shadow: 0 0 0 14px rgba(37,211,102,0), 0 14px 30px -10px rgba(37,211,102,.8); } }
+
+@media (max-width: 900px) {
+    .bw-hero { grid-template-columns: 1fr; padding: 32px 22px 10px; text-align: center; }
+    .bw-hero p.lead { margin-inline: auto; }
+    .bw-hero-cta, .bw-trust { justify-content: center; }
+    .bw-scene { height: 330px; max-width: 420px; width: 100%; margin: 0 auto; }
+    .bw-offers, .bw-calc { grid-template-columns: 1fr; }
+    .bw-steps { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 560px) {
+    .bw-doc { width: 180px; padding: 14px; }
+    .bw-doc-cv { right: 30%; }
+    .bw-doc-dip { right: 46%; top: 160px; }
+    .bw-stamp { width: 86px; height: 86px; font-size: 13px; left: auto; right: 6%; bottom: 0; }
+    .bw-plane { right: auto; left: 10%; bottom: 10px; }
+    .bw-flag { left: auto; right: 4%; top: 0; font-size: 30px; }
+    .bw-stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .bw-stat { padding: 12px 6px; }
+    .bw-stat b { font-size: 1.35rem; }
+    .bw-stat span { font-size: 12px; }
+    .bw-card { padding: 26px 18px 20px; }
+    .bw-price b { font-size: 2.5rem; }
+    .bw-calc { padding: 20px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bw *, .bw *::before, .bw *::after, .bw-fab { animation: none !important; }
+    .bw-stamp { transform: rotate(-14deg) scale(1); opacity: 1; }
+    .bw-plane { opacity: 0; }
+    .bw-reveal { opacity: 1; transform: none; transition: none; }
+}
+</style>
+<!-- seo:start (tools/seo.py) -->
+<meta name="description" content="كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك للألمانية عند مترجم محلّف ب 150 درهم للورقة. Bewerbung schreiben lassen &amp; Übersetzung für Deutschland.">
+<link rel="canonical" href="https://deutsch-einfach.online/bewerbung.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deutsch Einfach">
+<meta property="og:title" content="Bewerbung و ترجمة الوثائق للألمانية – المغرب | Deutsch Einfach">
+<meta property="og:description" content="كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك للألمانية عند مترجم محلّف ب 150 درهم للورقة. Bewerbung schreiben lassen &amp; Übersetzung für Deutschland.">
+<meta property="og:url" content="https://deutsch-einfach.online/bewerbung.html">
+<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-48.png" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+</head>
+<body>
+
+<div id="site-header" data-active=""></div>
+<script src="assets/site-header.js?v=f512f48d"></script>
+
+<main class="bw">
+
+    <!-- ===== الرأس ===== -->
+    <section class="bw-hero">
+        <div>
+            <span class="bw-badge"><i></i> خدمة جديدة · Bewerbung & Übersetzung</span>
+            <h1>الدوسي ديالك لألمانيا<br><span class="gold">واجد ومترجم</span> — بلا صداع</h1>
+            <p class="lead">
+                كنكتبو ليك <b>Bewerbung كاملة بالألمانية</b> (Lebenslauf و Anschreiben) على حساب الخدمة ولا الـ Ausbildung
+                اللي باغي، وكنترجمو <b>الوثائق ديالك للألمانية</b> عند مترجم محلّف، رسمية ومختومة. نتا ركز على الامتحان، والأوراق خليها علينا.
+            </p>
+            <div class="bw-hero-cta">
+                <a class="bw-btn bw-btn-gold" href="#offers" data-scroll>شوف العروض ↓</a>
+                <a class="bw-btn bw-btn-ghost" data-wa="سؤال">💬 سولنا ف WhatsApp</a>
+            </div>
+            <div class="bw-trust">
+                <span>CV على الطريقة الألمانية</span>
+                <span>Anschreiben مكتوب ليك بوحدك</span>
+                <span>PDF جاهز للإرسال</span>
+            </div>
+        </div>
+
+        <div class="bw-scene" aria-hidden="true">
+            <div class="bw-flag">🇩🇪</div>
+            <div class="bw-doc bw-doc-cv">
+                <h5>📄 LEBENSLAUF</h5>
+                <div class="photo"></div>
+                <div class="ln dark" style="width:60%"></div>
+                <div class="ln type" style="width:80%"></div>
+                <div class="ln type" style="width:70%"></div>
+                <div class="ln type" style="width:88%"></div>
+                <div class="ln" style="width:50%"></div>
+                <div class="ln" style="width:76%"></div>
+            </div>
+            <div class="bw-doc bw-doc-letter">
+                <h5>✉️ ANSCHREIBEN</h5>
+                <div class="ln dark" style="width:45%"></div>
+                <div class="ln" style="width:95%"></div>
+                <div class="ln" style="width:90%"></div>
+                <div class="ln" style="width:97%"></div>
+                <div class="ln" style="width:70%"></div>
+                <div class="ln dark" style="width:35%;margin-top:12px"></div>
+            </div>
+            <div class="bw-doc bw-doc-dip">
+                <h5>🎓 DIPLOM</h5>
+                <div class="ln" style="width:85%"></div>
+                <div class="ln" style="width:65%"></div>
+                <div class="bw-lang"><b>العربية</b><em>→</em><b>Deutsch</b></div>
+            </div>
+            <div class="bw-stamp">✓<span>FERTIG<small>جاهز</small></span></div>
+            <div class="bw-plane">✈️</div>
+        </div>
+    </section>
+
+    <!-- ===== أرقام ===== -->
+    <div class="bw-stats">
+        <div class="bw-stat bw-reveal"><b data-count="200">0</b><span>درهم · Bewerbung كاملة</span></div>
+        <div class="bw-stat bw-reveal d1"><b data-count="150">0</b><span>درهم · للورقة المترجمة</span></div>
+        <div class="bw-stat bw-reveal d2"><b>🇲🇦→🇩🇪</b><span>من الدار حتى ألمانيا</span></div>
+    </div>
+
+    <!-- ===== العروض ===== -->
+    <div class="bw-title bw-reveal" id="offers">
+        <small>العروض</small>
+        <h2>اختار اللي محتاج</h2>
+        <p>جوج خدمات واضحين، بثمن ثابت. ماكاين لا مفاجآت لا زيادات.</p>
+    </div>
+
+    <div class="bw-offers">
+        <article class="bw-card hot bw-reveal">
+            <span class="bw-flag-tag">⭐ الأكثر طلباً</span>
+            <div class="bw-ico">📁</div>
+            <h3>Bewerbung كاملة</h3>
+            <p class="sub">الدوسي ديال الترشيح، مكتوب بالألمانية ومرتب</p>
+            <div class="bw-price"><b>200</b><span>DH</span><em>· مرة وحدة</em></div>
+            <ul class="bw-list">
+                <li><span><b>Lebenslauf</b> — CV على الطريقة الألمانية (tabellarisch)، منظم ونقي</span></li>
+                <li><span><b>Anschreiben</b> — رسالة التحفيز مكتوبة ليك على حساب الخدمة ولا الـ Ausbildung</span></li>
+                <li><span>تصميم احترافي و <b>PDF جاهز</b> تصيفطو مباشرة</span></li>
+                <li><span>تعديل حتى ترضى على النتيجة</span></li>
+            </ul>
+            <a class="bw-btn bw-btn-gold" data-wa="Bewerbung كاملة – 200 DH">بغيت Bewerbung ←</a>
+        </article>
+
+        <article class="bw-card bw-reveal d1">
+            <div class="bw-ico">🌐</div>
+            <h3>ترجمة محلّفة للوثائق</h3>
+            <p class="sub">عند <b>مترجم محلّف</b> (vereidigter Übersetzer) — من العربية ولا الفرنسية للألمانية</p>
+            <div class="bw-price"><b>150</b><span>DH</span><em>· للورقة</em></div>
+            <ul class="bw-list">
+                <li><span>ترجمة <b>رسمية ومحلّفة</b> (beglaubigt)، موقّعة ومختومة</span></li>
+                <li><span>مقبولة ف <b>السفارة</b> والإدارات والمشغّلين ف ألمانيا</span></li>
+                <li><span>نفس الترتيب ديال الوثيقة الأصلية</span></li>
+                <li><span>الدبلومات، كشف النقط، شهادة العمل، وثائق الحالة المدنية…</span></li>
+            </ul>
+            <a class="bw-btn bw-btn-red" data-wa="ترجمة محلّفة للوثائق – 150 DH للورقة">بغيت نترجم ←</a>
+        </article>
+    </div>
+
+    <!-- ===== الحاسبة ===== -->
+    <section class="bw-calc bw-reveal">
+        <div>
+            <h3>🧮 حسب الثمن ديالك</h3>
+            <p>شحال من ورقة بغيتي تترجم؟ وزيد Bewerbung إلا محتاجها.</p>
+            <div class="bw-range-row">
+                <input type="range" id="bw-pages" min="0" max="20" value="3" aria-label="عدد الأوراق">
+                <div class="bw-pages"><span id="bw-pages-n">3</span> ورقات</div>
+            </div>
+            <label class="bw-check"><input type="checkbox" id="bw-with" checked> زيد Bewerbung كاملة (200 DH)</label>
+        </div>
+        <div class="bw-total">
+            <span>المجموع</span>
+            <b><span id="bw-total">650</span> DH</b>
+            <a class="bw-btn bw-btn-gold" id="bw-calc-go">صيفط الطلب ف WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- ===== كيفاش ===== -->
+    <div class="bw-title bw-reveal">
+        <small>كيفاش كتخدم</small>
+        <h2>3 خطوات وصافي</h2>
+    </div>
+    <div class="bw-steps-wrap">
+        <div class="bw-steps">
+            <div class="bw-step bw-reveal"><div class="num">📲</div><h4>صيفط لينا ف WhatsApp</h4><p>قول لينا شنو محتاج، وصيفط صور الوثائق ولا المعلومات ديالك.</p></div>
+            <div class="bw-step bw-reveal d1"><div class="num">✍️</div><h4>كنخدمو عليها</h4><p>كنكتبو الـ Bewerbung ولا كنترجمو الوراق، وكنوريوك قبل ما نساليو.</p></div>
+            <div class="bw-step bw-reveal d2"><div class="num">📩</div><h4>كتوصلك جاهزة</h4><p>PDF نقي ومنظم، تصيفطو للمشغل ولا للمدرسة مباشرة.</p></div>
+        </div>
+    </div>
+
+    <!-- ===== شنو كنترجمو ===== -->
+    <div class="bw-title bw-reveal">
+        <small>الترجمة</small>
+        <h2>شنو كنترجمو ليك؟</h2>
+    </div>
+    <div class="bw-chips bw-reveal">
+        <span>🎓 الباكالوريا</span><span>📜 الدبلوم</span><span>📊 كشف النقط</span><span>💼 شهادة العمل</span>
+        <span>🏥 شواهد التمريض</span><span>🪪 عقد الازدياد</span><span>💍 عقد الزواج</span><span>📄 السجل العدلي</span>
+    </div>
+
+    <!-- ===== أسئلة ===== -->
+    <div class="bw-title bw-reveal">
+        <small>أسئلة</small>
+        <h2>كيسولونا بزاف</h2>
+    </div>
+    <div class="bw-faq bw-reveal">
+        <details><summary>شحال كتاخد Bewerbung باش توجد؟</summary><p>على حساب المعلومات اللي كتصيفط لينا. سولنا ف WhatsApp وكنقولو ليك المدة قبل ما تخلص.</p></details>
+        <details><summary>واش الـ Anschreiben كيكون ديالي أنا بوحدي؟</summary><p>إيه. كنكتبوه على حساب الخدمة ولا الـ Ausbildung اللي باغي، والتجربة ديالك — ماشي نموذج واحد للناس كاملين.</p></details>
+        <details><summary>واش الترجمة محلفة (beglaubigt)؟</summary><p>إيه. الترجمة كتدار عند مترجم محلّف (vereidigter Übersetzer)، وكتوصلك موقّعة ومختومة بالطابع ديالو، رسمية وجاهزة تقدمها للإدارات والسفارة والمشغّلين ف ألمانيا.</p></details>
+        <details><summary>كيفاش نخلص؟</summary><p>تواصل معانا ف WhatsApp وكنعطيوك طريقة الأداء.</p></details>
+    </div>
+
+    <!-- ===== آخر الصفحة ===== -->
+    <section class="bw-final bw-reveal">
+        <h2>الدوسي ديالك يستاهل يكون مزيان ✨</h2>
+        <p>Bewerbung واجدة وترجمة نقية — باش تبان قدام المشغل بحال شي واحد عارف شنو كيدير.</p>
+        <a class="bw-btn bw-btn-gold" data-wa="سؤال">💬 تواصل معنا ف WhatsApp</a>
+    </section>
+
+</main>
+
+<a class="bw-fab" data-wa="سؤال" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.03c-.24.68-1.43 1.32-1.97 1.37-.5.05-.98.24-3.32-.69-2.8-1.11-4.58-3.97-4.72-4.15-.14-.19-1.13-1.5-1.13-2.87 0-1.36.71-2.03.97-2.31.25-.27.55-.34.73-.34l.53.01c.17 0 .4-.06.62.48.24.56.8 1.94.87 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.37-.42.49-.14.14-.29.29-.12.57.17.28.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.27 1.4.28.14.45.12.61-.07.17-.19.71-.83.9-1.11.19-.28.38-.23.63-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.32.07.12.07.68-.17 1.36z"/></svg>
+</a>
+
+<script>
+(function () {
+    "use strict";
+    var TEL = "212776551898";
+
+    function email() {
+        try { var a = window.__deutschEinfachAuth; return (a && a.currentUser && a.currentUser.email) || ""; }
+        catch (e) { return ""; }
+    }
+    function wa(text) {
+        var lines = ["السلام عليكم 👋"];
+        if (text && text !== "سؤال") {
+            lines.push("بغيت الخدمة ديال Deutsch Einfach:");
+            lines.push("📦 " + text);
+        } else {
+            lines.push("عندي سؤال على خدمة Bewerbung والترجمة.");
+        }
+        var mail = email();
+        if (mail) lines.push("📧 " + mail);
+        return "https://wa.me/" + TEL + "?text=" + encodeURIComponent(lines.join("\n"));
+    }
+
+    document.querySelectorAll("[data-wa]").forEach(function (a) {
+        a.href = wa(a.getAttribute("data-wa"));
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.addEventListener("click", function () { a.href = wa(a.getAttribute("data-wa")); });
+    });
+
+    var scroll = document.querySelector("[data-scroll]");
+    if (scroll) scroll.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("offers").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    /* ---- الحاسبة ---- */
+    var range = document.getElementById("bw-pages");
+    var withB = document.getElementById("bw-with");
+    var out = document.getElementById("bw-total");
+    var nOut = document.getElementById("bw-pages-n");
+    var go = document.getElementById("bw-calc-go");
+    function calc() {
+        var n = +range.value;
+        var total = n * 150 + (withB.checked ? 200 : 0);
+        nOut.textContent = n;
+        out.textContent = total;
+        out.parentNode.classList.remove("bump");
+        void out.parentNode.offsetWidth;
+        out.parentNode.classList.add("bump");
+        setTimeout(function () { out.parentNode.classList.remove("bump"); }, 200);
+        var parts = [];
+        if (withB.checked) parts.push("Bewerbung كاملة (200 DH)");
+        if (n) parts.push("ترجمة " + n + " ورقات (" + (n * 150) + " DH)");
+        go.href = wa((parts.join(" + ") || "سؤال") + (parts.length ? " — المجموع: " + total + " DH" : ""));
+        go.target = "_blank";
+        go.rel = "noopener";
+    }
+    range.addEventListener("input", calc);
+    withB.addEventListener("change", calc);
+    calc();
+
+    /* ---- الظهور + العداد ---- */
+    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function count(el) {
+        var end = +el.getAttribute("data-count"), t0 = null;
+        if (still) { el.textContent = end; return; }
+        function step(t) {
+            if (!t0) t0 = t;
+            var p = Math.min(1, (t - t0) / 1100);
+            el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+    var items = document.querySelectorAll(".bw-reveal");
+    if (!("IntersectionObserver" in window)) {
+        items.forEach(function (el) { el.classList.add("in"); });
+        document.querySelectorAll("[data-count]").forEach(count);
+        return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            e.target.classList.add("in");
+            e.target.querySelectorAll("[data-count]").forEach(count);
+            io.unobserve(e.target);
+        });
+    }, { threshold: .15 });
+    items.forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script src="assets/session-guard.js?v=f21ad6fd"></script>
+<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/app-install.js?v=90458a45" defer></script>
+</body>
+</html>

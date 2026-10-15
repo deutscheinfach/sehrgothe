@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=582e5683"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hören Teil 1 – Die tschechische Stadt Pilsen | Deutsch Einfach</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css?v=aa908c1b">
+<script src="assets/stars.js?v=93c940c6" defer></script>
+<script src="assets/progress.js?v=222ee4fc"></script>
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: var(--gold);
+            --red-dark: var(--gold-dark);
+            --yellow: var(--gold-soft);
+
+            --bg: var(--paper, #faf9f7);
+            --card: #ffffff;
+            --text: #14161f;
+            --muted: #5b6172;
+
+            --border: rgba(20,22,31,.10);
+
+            --green: #0f9d58;
+            --green-bg: rgba(15,157,88,.10);
+
+            --wrong: var(--danger);
+            --wrong-bg: rgba(255,107,107,.12);
+
+            --shadow: 0 10px 30px rgba(20,22,31,.08);
+        }
+
+        html.dark {
+            --bg: #08090c;
+            --card: #121419;
+            --text: #f5f4f0;
+            --muted: #b9b6ad;
+
+            --border: rgba(255,255,255,.08);
+
+            --green: #4ade80;
+            --green-bg: rgba(74,222,128,.12);
+
+            --wrong: var(--danger);
+            --wrong-bg: rgba(255,107,107,.12);
+
+            --shadow: 0 10px 30px rgba(0,0,0,.35);
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+
+            font-family: Inter, Arial, sans-serif;
+
+            min-height: 100vh;
+
+            transition: background 0.25s ease,
+                color 0.25s ease;
+        }
+
+        /* =========================
+           TOP HEADER
+        ========================= */
+
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: var(--card);
+
+            border-bottom: 1px solid var(--border);
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .top-header-inner {
+            max-width: 1150px;
+            margin: auto;
+
+            min-height: 68px;
+
+            padding: 10px 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            text-decoration: none;
+            color: var(--text);
+
+            font-weight: 800;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                    135deg,
+                    var(--red),
+                    var(--danger)
+                );
+
+            color: var(--on-brand);
+
+            font-weight: 900;
+            font-size: 17px;
+
+            box-shadow: 0 5px 15px rgba(214,0,0,0.25);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .brand-text strong {
+            font-size: 15px;
+        }
+
+        .brand-text span {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn {
+            min-width: 42px;
+            height: 42px;
+
+            padding: 0 10px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            background: var(--card);
+            color: var(--text);
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+        .header-btn:hover {
+            border-color: var(--red);
+            color: var(--accent-text);
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .quiz-page {
+            max-width: 1050px;
+            margin: auto;
+
+            padding: 35px 18px 70px;
+        }
+
+        /* =========================
+           BREADCRUMB
+        ========================= */
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-text);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .breadcrumb i {
+            font-size: 11px;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .quiz-header {
+            background: linear-gradient(
+                    135deg,
+                    var(--red),
+                    var(--red-dark)
+                );
+
+            color: var(--on-brand);
+
+            border-radius: 22px;
+
+            padding: 28px 25px;
+
+            box-shadow: 0 14px 35px rgba(214,0,0,0.20);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .quiz-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.08);
+
+            right: -55px;
+            top: -65px;
+        }
+
+        .quiz-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 7px;
+
+            background: rgba(255,255,255,0.15);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            padding: 7px 11px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 12px;
+        }
+
+        .quiz-header h1 {
+            margin: 0 0 8px;
+
+            font-size: clamp(25px, 4vw, 36px);
+
+            line-height: 1.2;
+        }
+
+        .quiz-header p {
+            margin: 0;
+
+            opacity: 0.9;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           INFO CARDS
+        ========================= */
+
+        .info-row {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-top: 18px;
+        }
+
+        .info-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 15px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .info-card i {
+            color: var(--accent-text);
+
+            margin-bottom: 7px;
+
+            font-size: 17px;
+        }
+
+        .info-card strong {
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 3px;
+        }
+
+        .info-card span {
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           QUIZ CARD
+        ========================= */
+
+        .quiz-container {
+            margin-top: 20px;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+        }
+
+        .quiz-title {
+            padding: 20px 20px 10px;
+        }
+
+        .quiz-title h2 {
+            margin: 0;
+
+            font-size: 19px;
+        }
+
+        .quiz-title p {
+            margin: 6px 0 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           QUESTIONS
+        ========================= */
+
+        .questions {
+            padding: 10px 20px 20px;
+        }
+
+        .question-row {
+            display: grid;
+
+            grid-template-columns: 1fr auto;
+
+            gap: 18px;
+
+            align-items: center;
+
+            padding: 18px 15px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            margin-bottom: 12px;
+
+            transition: background 0.2s,
+                border 0.2s,
+                transform 0.2s;
+        }
+
+        .question-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-row:hover {
+            transform: translateY(-1px);
+        }
+
+        .question-row.correct {
+            border-color: var(--green);
+
+            background: var(--green-bg);
+        }
+
+        .question-row.wrong {
+            border-color: var(--wrong);
+
+            background: var(--wrong-bg);
+        }
+
+        .question-text {
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            font-weight: 600;
+        }
+
+        .question-number {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 28px;
+            height: 28px;
+
+            border-radius: 9px;
+
+            background: var(--red);
+
+            color: var(--on-brand);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-right: 7px;
+        }
+
+        /* =========================
+           RADIO OPTIONS
+        ========================= */
+
+        .answers {
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+        }
+
+        .radio-option {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 12px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            background: var(--card);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: border 0.2s,
+                background 0.2s;
+        }
+
+        .radio-option:hover {
+            border-color: var(--red);
+        }
+
+        .radio-option input {
+            accent-color: var(--red);
+
+            cursor: pointer;
+        }
+
+        .radio-option.correct-answer-option {
+            border-color: var(--green);
+
+            background: var(--green-bg);
+
+            color: var(--green);
+
+            box-shadow: 0 0 0 2px rgba(22,128,60,0.08);
+        }
+
+        .radio-option.correct-answer-option::after {
+            content: "✓";
+
+            font-weight: 900;
+
+            margin-left: 2px;
+        }
+
+        /* =========================
+           SOLUTION BADGE
+        ========================= */
+
+        .solution-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-left: 8px;
+
+            margin-top: 6px;
+
+            padding: 5px 9px;
+
+            border-radius: 8px;
+
+            background: var(--green-bg);
+
+            color: var(--green);
+
+            border: 1px solid rgba(22,128,60,0.20);
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .action-buttons {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            padding: 22px 20px 25px;
+        }
+
+        .quiz-btn {
+            border: none;
+
+            border-radius: 13px;
+
+            min-height: 46px;
+
+            padding: 0 18px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: transform 0.2s,
+                box-shadow 0.2s,
+                opacity 0.2s;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-check {
+            background: var(--red);
+
+            color: var(--on-brand);
+
+            box-shadow: 0 7px 18px rgba(214,0,0,0.22);
+        }
+
+        .btn-show {
+            background: #22252a;
+
+            color: white;
+
+            box-shadow: 0 7px 18px rgba(0,0,0,0.15);
+        }
+
+        .btn-retry {
+            background: var(--yellow);
+
+            color: var(--text);
+
+            box-shadow: 0 7px 18px rgba(242,197,0,0.20);
+        }
+
+        html.dark .btn-show {
+            background: var(--surface-2);
+            color: #161616;
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .result-box {
+            margin: 0 20px 20px;
+
+            min-height: 0;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            font-weight: 800;
+
+            font-size: 15px;
+        }
+
+        .result-box:not(:empty) {
+            padding: 15px;
+
+            border: 1px solid var(--border);
+
+            background: rgba(128,128,128,0.05);
+        }
+
+        .result-success {
+            color: var(--green);
+        }
+
+        .result-info {
+            color: var(--accent-text);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .page-footer {
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            margin-top: 25px;
+        }
+
+        .page-footer strong {
+            color: var(--accent-text);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            .quiz-page {
+                padding: 22px 12px 50px;
+            }
+
+            .top-header-inner {
+                padding: 9px 12px;
+            }
+
+            .brand-text span {
+                display: none;
+            }
+
+            .info-row {
+                grid-template-columns: 1fr;
+            }
+
+            .question-row {
+                grid-template-columns: 1fr;
+
+                gap: 13px;
+            }
+
+            .answers {
+                justify-content: flex-start;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .quiz-btn {
+                width: 100%;
+            }
+
+            .quiz-header {
+                border-radius: 18px;
+
+                padding: 23px 18px;
+            }
+
+            .quiz-container {
+                border-radius: 18px;
+            }
+        }
+
+    </style>
+<style id="v4" media="not all">
+/* v4 — ذهبي وأسود */
+:root {
+  --bg: #0e0e11; --card: #16161b; --text: #ece7dc; --muted: #a39d90;
+  --border: rgba(255,255,255,.08); --green: #3ecf8e; --green-bg: rgba(62,207,142,.12);
+  --shadow: 0 20px 50px -24px rgba(0,0,0,.85);
+}
+body { background: radial-gradient(circle at 12% 6%, rgba(214,178,94,.10), transparent 40%), linear-gradient(180deg,#111115,#0b0b0e) !important; color: var(--text); }
+.top-header { background: rgba(18,18,22,.95); border-bottom: 1px solid rgba(214,178,94,.18); box-shadow: 0 10px 24px -18px rgba(0,0,0,.9); }
+.quiz-header { background: linear-gradient(145deg,#202027,#141418 55%,#0d0d10) !important; border: 1px solid rgba(214,178,94,.26); color: var(--text); box-shadow: 0 24px 50px -28px rgba(0,0,0,.9) !important; }
+.info-card, .quiz-container, .question-row { background: var(--card) !important; border-color: var(--border) !important; color: var(--text); }
+.question-number { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
+.radio-option { background: #1e1e24 !important; color: var(--text) !important; border-color: rgba(255,255,255,.1) !important; }
+.btn-check { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
+.btn-show { background: #26262e !important; color: var(--accent-text) !important; border: 1.5px solid rgba(214,178,94,.45) !important; }
+.btn-retry { background: transparent !important; color: var(--text) !important; border: 1.5px solid rgba(255,255,255,.28) !important; }
+</style>
+<!-- seo:start (tools/seo.py) -->
+<meta name="description" content="TELC B2 Hören Teil 1 – Die tschechische Stadt Pilsen. Deutsch Einfach">
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deutsch Einfach">
+<meta property="og:title" content="Hören Teil 1 – Die tschechische Stadt Pilsen | Deutsch Einfach">
+<meta property="og:description" content="TELC B2 Hören Teil 1 – Die tschechische Stadt Pilsen. Deutsch Einfach">
+<meta property="og:url" content="https://deutsch-einfach.online/die-tschechische-stadt-pilsen.html">
+<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-48.png" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+</head>
+
+<body
+    data-exercise-id="Die tschechische Stadt Pilsen"
+    data-section="Hören Teil 1"
+    data-quiz-id="quiz16"
+    data-qid="q_Die tschechische Stadt Pilsen">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="top-header">
+
+        <div class="top-header-inner">
+
+            <!-- STARTSEITE -->
+            <a
+                href="./"
+                class="brand"
+                id="startseiteBrand"
+                title="Startseite">
+
+                <div class="brand-logo">
+                    DE
+                </div>
+
+                <div class="brand-text">
+
+                    <strong>Deutsch Einfach</strong>
+
+                    <span>
+                        TELC B1 & B2
+                    </span>
+
+                </div>
+
+            </a>
+
+            <div class="header-actions">
+
+                <!-- DARK MODE -->
+                <button
+                    type="button"
+                    class="header-btn"
+                    onclick="toggleDarkMode()"
+                    title="Dark Mode">
+
+                    <i class="fa-solid fa-moon"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="quiz-page">
+
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb">
+
+            <a href="b2-hoeren.html">
+                Hören
+            </a>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+            <span>
+                Teil 1
+            </span>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+            <strong>
+                Die tschechische Stadt Pilsen
+            </strong>
+
+        </div>
+
+
+        <!-- HERO -->
+
+        <section class="quiz-header">
+
+            <div class="quiz-header-content">
+
+                <div class="level-badge">
+
+                    <i class="fa-solid fa-headphones"></i>
+
+                    TELC B2 – Hören Teil 1
+
+                </div>
+
+                <h1>
+                    Die tschechische Stadt Pilsen
+                </h1>
+
+                <p>
+                    Höre die Informationen aufmerksam und entscheide:
+                    Richtig oder Falsch?
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- INFO -->
+
+        <section class="info-row">
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <strong>
+                    5 Aussagen
+                </strong>
+
+                <span>
+                    Entscheide Richtig oder Falsch.
+                </span>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-star"></i>
+
+                <strong>
+                    Maximal 5 Punkte
+                </strong>
+
+                <span>
+                    Jede richtige Antwort = 1 Punkt.
+                </span>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <i class="fa-solid fa-rotate"></i>
+
+                <strong>
+                    Wiederholbar
+                </strong>
+
+                <span>
+                    Du kannst die Aufgabe jederzeit neu machen.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUIZ -->
+
+        <section class="quiz-container">
+
+            <div class="quiz-title">
+
+                <h2>
+                    Aussagen
+                </h2>
+
+                <p>
+                    Wähle bei jeder Aussage eine Antwort.
+                </p>
+
+            </div>
+
+
+            <form id="quizForm">
+
+                <div class="questions">
+
+
+                    <!-- QUESTION 1 -->
+
+                    <div
+                        class="question-row"
+                        data-question="q16_1">
+
+                        <div class="question-text">
+
+                            <span class="question-number">
+                                1
+                            </span>
+
+                            Die tschechische Stadt Pilsen ist europäische Kulturhauptstadt 2015.
+                        </div>
+
+
+                        <div class="answers">
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_1"
+                                    value="richtig">
+
+                                Richtig
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_1"
+                                    value="falsch">
+
+                                Falsch
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION 2 -->
+
+                    <div
+                        class="question-row"
+                        data-question="q16_2">
+
+                        <div class="question-text">
+
+                            <span class="question-number">
+                                2
+                            </span>
+
+                            In der Nähe von St. Veit an der Glan gab es einen Autounfall mit einem Toten.
+                        </div>
+
+
+                        <div class="answers">
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_2"
+                                    value="richtig">
+
+                                Richtig
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_2"
+                                    value="falsch">
+
+                                Falsch
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION 3 -->
+
+                    <div
+                        class="question-row"
+                        data-question="q16_3">
+
+                        <div class="question-text">
+
+                            <span class="question-number">
+                                3
+                            </span>
+
+                            Den Film „Everest“ kann man schon jetzt in allen europäischen Kinos sehen.
+                        </div>
+
+
+                        <div class="answers">
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_3"
+                                    value="richtig">
+
+                                Richtig
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_3"
+                                    value="falsch">
+
+                                Falsch
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION 4 -->
+
+                    <div
+                        class="question-row"
+                        data-question="q16_4">
+
+                        <div class="question-text">
+
+                            <span class="question-number">
+                                4
+                            </span>
+
+                            Nach Gewittern wird es im Nordwesten Österreichs wieder wärmer.
+                        </div>
+
+
+                        <div class="answers">
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_4"
+                                    value="richtig">
+
+                                Richtig
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_4"
+                                    value="falsch">
+
+                                Falsch
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION 5 -->
+
+                    <div
+                        class="question-row"
+                        data-question="q16_5">
+
+                        <div class="question-text">
+
+                            <span class="question-number">
+                                5
+                            </span>
+
+                            Wassermänner haben in dieser Woche rundum Glück in Beruf, Gesundheit und Liebe.
+                        </div>
+
+
+                        <div class="answers">
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_5"
+                                    value="richtig">
+
+                                Richtig
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="q16_5"
+                                    value="falsch">
+
+                                Falsch
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="action-buttons">
+
+                    <button
+                        type="button"
+                        class="quiz-btn btn-check"
+                        onclick="checkAnswers('16')">
+
+                        <i class="fa-solid fa-check-double"></i>
+
+                        Antworten prüfen
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quiz-btn btn-show"
+                        onclick="showAnswers('16')">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                        Antworten anzeigen
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quiz-btn btn-retry"
+                        onclick="retryQuiz('16')">
+
+                        <i class="fa-solid fa-rotate-right"></i>
+
+                        Nochmal versuchen
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- RESULT -->
+
+            <div
+                id="result16"
+                class="result-box"
+                aria-live="polite">
+            </div>
+
+        </section>
+
+
+        <div class="page-footer">
+
+            <strong>Deutsch Einfach</strong>
+
+            · TELC B1 & B2
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         SCRIPTS
+    ========================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+        /* ==========================================
+           CORRECT ANSWERS
+        ========================================== */
+
+        const correctAnswers = {
+
+            q16_1: "richtig",
+
+            q16_2: "richtig",
+
+            q16_3: "falsch",
+
+            q16_4: "falsch",
+
+            q16_5: "falsch"
+
+        };
+
+
+        /* ==========================================
+           QUESTIONS
+        ========================================== */
+
+        const questionNames = [
+
+            "q16_1",
+            "q16_2",
+            "q16_3",
+            "q16_4",
+            "q16_5"
+
+        ];
+
+
+        /* ==========================================
+           GET ROW
+        ========================================== */
+
+        function getQuestionRow(name) {
+
+            return document.querySelector(
+                '.question-row[data-question="' + name + '"]'
+            );
+
+        }
+
+
+        /* ==========================================
+           REMOVE SOLUTIONS
+        ========================================== */
+
+        function clearAnswerReveal() {
+
+            questionNames.forEach(function(name) {
+
+                const row = getQuestionRow(name);
+
+                if (!row) return;
+
+
+                row.classList.remove(
+                    "correct",
+                    "wrong"
+                );
+
+
+                const labels =
+                    row.querySelectorAll(".radio-option");
+
+
+                labels.forEach(function(label) {
+
+                    label.classList.remove(
+                        "correct-answer-option"
+                    );
+
+                });
+
+
+                const badge =
+                    row.querySelector(
+                        ".solution-badge"
+                    );
+
+
+                if (badge) {
+
+                    badge.remove();
+
+                }
+
+            });
+
+        }
+
+
+        /* ==========================================
+           SHOW ANSWERS
+        ========================================== */
+
+        function showAnswers(quizNumber) {
+
+            clearAnswerReveal();
+
+
+            questionNames.forEach(function(name) {
+
+                const row =
+                    getQuestionRow(name);
+
+                if (!row) return;
+
+
+                const correct =
+                    correctAnswers[name];
+
+
+                const inputs =
+                    row.querySelectorAll(
+                        'input[name="' + name + '"]'
+                    );
+
+
+                inputs.forEach(function(input) {
+
+                    const label =
+                        input.closest(".radio-option");
+
+
+                    if (
+                        label &&
+                        input.value === correct
+                    ) {
+
+                        label.classList.add(
+                            "correct-answer-option"
+                        );
+
+                    }
+
+                });
+
+
+                const text =
+                    row.querySelector(
+                        ".question-text"
+                    );
+
+
+                if (text) {
+
+                    const badge =
+                        document.createElement("span");
+
+
+                    badge.className =
+                        "solution-badge";
+
+
+                    badge.dataset.solution =
+                        "true";
+
+
+                    badge.innerHTML =
+                        '<i class="fa-solid fa-lightbulb"></i> ' +
+                        'Lösung: ' +
+                        (
+                            correct === "richtig"
+                                ? "Richtig"
+                                : "Falsch"
+                        );
+
+
+                    text.appendChild(badge);
+
+                }
+
+            });
+
+
+            const result =
+                document.getElementById(
+                    "result" + quizNumber
+                );
+
+
+            if (result) {
+
+                result.innerHTML =
+                    '<span class="result-info">' +
+                    '<i class="fa-solid fa-eye"></i> ' +
+                    'Die richtigen Antworten werden angezeigt. ' +
+                    'Du kannst die Aufgabe jetzt noch einmal versuchen.' +
+                    '</span>';
+
+            }
+
+        }
+
+
+        /* ==========================================
+           CHECK ANSWERS
+        ========================================== */
+
+        function checkAnswers(quizNumber) {
+
+            clearAnswerReveal();
+
+
+            let score = 0;
+
+            const total =
+                questionNames.length;
+
+
+            questionNames.forEach(function(name) {
+
+                const row =
+                    getQuestionRow(name);
+
+                if (!row) return;
+
+
+                const selected =
+                    document.querySelector(
+                        'input[name="' +
+                        name +
+                        '"]:checked'
+                    );
+
+
+                if (!selected) {
+
+                    return;
+
+                }
+
+
+                if (
+                    selected.value ===
+                    correctAnswers[name]
+                ) {
+
+                    score++;
+
+                    row.classList.add(
+                        "correct"
+                    );
+
+                } else {
+
+                    row.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            });
+
+
+            const result =
+                document.getElementById(
+                    "result" + quizNumber
+                );
+
+
+            if (result) {
+
+                if (score === total) {
+
+                    result.innerHTML =
+                        '<span class="result-success">' +
+                        '<i class="fa-solid fa-trophy"></i> ' +
+                        score +
+                        ' von ' +
+                        total +
+                        ' richtig – Sehr gut!' +
+                        '</span>';
+
+                } else {
+
+                    result.innerHTML =
+                        '<span class="result-info">' +
+                        '<i class="fa-solid fa-chart-simple"></i> ' +
+                        score +
+                        ' von ' +
+                        total +
+                        ' richtig' +
+                        '</span>';
+
+                }
+
+            }
+
+
+            saveScoreToPortal(
+                score,
+                total
+            );
+
+        }
+
+
+        /* ==========================================
+           SAVE SCORE
+        ========================================== */
+
+        function saveScoreToPortal(score, max) {
+
+            try {
+
+                const key =
+                    "telc_b2_scores_v3";
+
+
+                let data = {};
+
+
+                try {
+
+                    data =
+                        JSON.parse(
+                            localStorage.getItem(key)
+                        ) || {};
+
+                } catch (e) {
+
+                    data = {};
+
+                }
+
+
+                data["q_50_euro"] = {
+
+                    s: score,
+
+                    m: max,
+
+                    sec:
+                        "Hören Teil 1 – 50 Euro"
+
+                };
+
+
+                localStorage.setItem(
+                    key,
+                    JSON.stringify(data)
+                );
+
+
+            } catch (error) {
+
+                console.warn(
+                    "Score konnte nicht gespeichert werden:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ==========================================
+           RETRY / RESET
+        ========================================== */
+
+        function retryQuiz(quizNumber) {
+
+            questionNames.forEach(function(name) {
+
+                const inputs =
+                    document.querySelectorAll(
+                        'input[name="' + name + '"]'
+                    );
+
+
+                inputs.forEach(function(input) {
+
+                    input.checked = false;
+
+                });
+
+            });
+
+
+            clearAnswerReveal();
+
+
+            const result =
+                document.getElementById(
+                    "result" + quizNumber
+                );
+
+
+            if (result) {
+
+                result.innerHTML = "";
+
+            }
+
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        }
+
+
+        /* ==========================================
+           DARK MODE FALLBACK
+        ========================================== */
+
+        function toggleDarkMode() {
+
+            document.documentElement.classList.toggle(
+                "dark"
+            );
+
+
+            const enabled =
+                document.documentElement.classList.contains(
+                    "dark"
+                );
+
+
+            localStorage.setItem(
+                "deutsch_einfach_dark_mode",
+                enabled ? "1" : "0"
+            );
+
+        }
+
+
+        /* ==========================================
+           LOAD DARK MODE
+        ========================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                const saved =
+                    localStorage.getItem(
+                        "deutsch_einfach_dark_mode"
+                    );
+
+
+                if (saved === "1") {
+
+                    document.documentElement.classList.add(
+                        "dark"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ==========================================
+           FIX STARTSEITE
+           Keeps every Startseite link pointing
+           directly to index.html.
+        ========================================== */
+
+        (function() {
+
+            const STARTSEITE_PATH = "./";
+
+
+            function fixStartseiteLinks() {
+
+                const links =
+                    document.querySelectorAll("a");
+
+
+                links.forEach(function(link) {
+
+                    const text =
+                        (link.textContent || "")
+                        .trim()
+                        .toLowerCase();
+
+
+                    const title =
+                        (link.getAttribute("title") || "")
+                        .trim()
+                        .toLowerCase();
+
+
+                    const id =
+                        (link.id || "")
+                        .trim()
+                        .toLowerCase();
+
+
+                    if (
+                        text.includes("startseite") ||
+                        title === "startseite" ||
+                        id.includes("startseite")
+                    ) {
+
+                        link.setAttribute(
+                            "href",
+                            STARTSEITE_PATH
+                        );
+
+                        link.onclick = null;
+
+                    }
+
+                });
+
+            }
+
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                function() {
+
+                    fixStartseiteLinks();
+
+
+                    if (document.body) {
+
+                        const observer =
+                            new MutationObserver(
+                                function() {
+
+                                    fixStartseiteLinks();
+
+                                }
+                            );
+
+
+                        observer.observe(
+                            document.body,
+                            {
+                                childList: true,
+                                subtree: true
+                            }
+                        );
+
+                    }
+
+                }
+            );
+
+        })();
+
+    </script>
+
+<script src="assets/session-guard.js?v=f21ad6fd"></script>
+<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/app-install.js?v=90458a45" defer></script>
+</body>
+</html>
+
+
+
